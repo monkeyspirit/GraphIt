@@ -1,0 +1,50 @@
+-------------------------------------------
+Saved and renominated nodes and transitions
+-------------------------------------------
+Node state   | id  | renomination label
+ 10 20 30  ϵ ϵ ϵ 	0 		0
+ 10 20 31  ϵ ϵ e2 	1 		1
+ 10 21 31  e3 ϵ ϵ 	2 		2
+ 10 21 30  ϵ ϵ ϵ 	3 		3
+ 10 20 30  e3 ϵ ϵ 	4 		4
+ 10 20 31  e3 ϵ e2 	5 		5
+ 10 20 30  ϵ ϵ e2 	6 		6
+ 10 21 30  e3 ϵ ϵ 	7 		7
+ 10 21 31  e3 ϵ e2 	8 		8
+ 10 21 31  ϵ ϵ e2 	11 		9
+ 10 21 31  ϵ ϵ ϵ 	12 		10
+ 10 20 31  e3 ϵ ϵ 	13 		11
+ 10 20 31  ϵ ϵ ϵ 	14 		12
+
+---Edge---
+* the id here are the id before the renomination *
+source id | label | destination id | o label | r label
+	0	 -> t3a	 -> 	1 				 o3 	 ϵ
+	1	 -> t2a	 -> 	2 				 o2 	 ϵ
+	2	 -> t3b	 -> 	3 				 ϵ 		 ϵ
+	3	 -> t2b	 -> 	4 				 ϵ 		 r
+	4	 -> t3a	 -> 	5 				 o3 	 ϵ
+	5	 -> t3b	 -> 	6 				 ϵ 		 ϵ
+	6	 -> t2a	 -> 	7 				 o2 	 ϵ
+	7	 -> t3a	 -> 	8 				 o3 	 ϵ
+	8	 -> t3c	 -> 	11 				 ϵ 		 f
+	11	 -> t2b	 -> 	5 				 ϵ 		 r
+	5	 -> t3c	 -> 	1 				 ϵ 		 f
+	3	 -> t3a	 -> 	11 				 o3 	 ϵ
+	2	 -> t3c	 -> 	12 				 ϵ 		 f
+	12	 -> t2b	 -> 	13 				 ϵ 		 r
+	13	 -> t3b	 -> 	0 				 ϵ 		 ϵ
+	13	 -> t3c	 -> 	14 				 ϵ 		 f
+
+----------------------------
+Cutted nodes and transitions
+----------------------------
+Node state   | id  
+ 10 21 30  ϵ ϵ e2 	9
+ 10 20 30  e3 ϵ e2 	10
+
+---Edge---
+* the id here are the id before the renomination *
+source id | label | destination id | o label | r label
+	8	 -> t3b	 -> 	9 				 ϵ 		 ϵ
+	9	 -> t2b	 -> 	10 				 ϵ 		 r

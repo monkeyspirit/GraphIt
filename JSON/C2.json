@@ -1,0 +1,22 @@
+{
+    "name": "C2",
+    "states": [
+        "20",
+        "21"
+    ],
+    "final_states": "",
+    "edges": [
+        {
+            "source": "20",
+            "label": "t2a",
+            "destination": "21",
+            "transition_link": []
+        },
+        {
+            "source": "21",
+            "label": "t2b",
+            "destination": "20",
+            "transition_link": []
+        }
+    ]
+}

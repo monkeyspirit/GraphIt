@@ -1,0 +1,9 @@
+digraph 7 {
+	"14 2" [shape=circle]
+	"qf -" [shape=doublecircle]
+	"0 0" [shape=circle]
+	"14 2" -> "qf -" [label="ϵ"]
+	"0 0" -> "qf -" [label=f]
+	"0 0" -> "14 2" [label=frf]
+	"0 0" -> "qf -" [label=fr]
+}

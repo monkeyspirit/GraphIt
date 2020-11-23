@@ -1,0 +1,26 @@
+{
+    "id": 17,
+    "nodes": [
+        {
+            "fsms_states": {
+                "S": "0",
+                "B": "0"
+            },
+            "links_states": {
+                "L": "\u03f5"
+            },
+            "label": " 0 0  \u03f5",
+            "id": 0,
+            "reachable_nodes": [],
+            "isFinal": 1,
+            "isReachingFinal": 0,
+            "edges": [],
+            "renomination_label": ""
+        }
+    ],
+    "nodes_after_cutting": [],
+    "cutted_nodes": [],
+    "transitions": [],
+    "transitions_after_cutting": [],
+    "cutted_transitions": []
+}

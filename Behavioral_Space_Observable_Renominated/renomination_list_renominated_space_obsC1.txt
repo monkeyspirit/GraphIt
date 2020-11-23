@@ -1,0 +1,34 @@
+-------------------------------------------
+Saved nodes and transitions
+-------------------------------------------
+id | observation index 
+0 			0
+1 			1
+2 			2
+3 			2
+12 			2
+13 			2
+0 			2
+14 			2
+
+---Edge---
+* the id here are the id before the renomination *
+source id | label | destination id | o label | observation index | r label 
+	0	 -> t3a	 -> 	1 				 o3 		 1 				 ϵ
+	1	 -> t2a	 -> 	2 				 o2 		 2 				 ϵ
+	2	 -> t3b	 -> 	3 				 ϵ 			 2 				 ϵ
+	2	 -> t3c	 -> 	12 				 ϵ 			 2 				 f
+	12	 -> t2b	 -> 	13 				 ϵ 			 2 				 r
+	13	 -> t3b	 -> 	0 				 ϵ 			 2 				 ϵ
+	13	 -> t3c	 -> 	14 				 ϵ 			 2 				 f
+
+----------------------------
+Cutted nodes and transitions
+----------------------------
+id | observation index 
+4 	2
+
+---Edge---
+* the id here are the id before the renomination *
+source id | label | destination id | o label | observation index | r label 
+	3	 -> t2b	 -> 	4 				 ϵ 			 2 				 r

@@ -1,0 +1,66 @@
+{
+    "fsms": [
+        {
+            "name": "C2",
+            "states": [
+                "20",
+                "21"
+            ],
+            "final_states": "",
+            "edges": [
+                {
+                    "source": "20",
+                    "label": "t2a",
+                    "destination": "21",
+                    "transition_link": []
+                },
+                {
+                    "source": "21",
+                    "label": "t2b",
+                    "destination": "20",
+                    "transition_link": []
+                }
+            ]
+        },
+        {
+            "name": "C3",
+            "states": [
+                "30",
+                "31"
+            ],
+            "final_states": "",
+            "edges": [
+                {
+                    "source": "30",
+                    "label": "t3a",
+                    "destination": "31"
+                },
+                {
+                    "source": "31",
+                    "label": "t3b",
+                    "destination": "30"
+                },
+                {
+                    "source": "31",
+                    "label": "t3c",
+                    "destination": "31"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "source": "C3",
+            "name": "L2",
+            "destination": "C2",
+            "state": "\u03f5"
+        },
+        {
+            "source": "C2",
+            "name": "L3",
+            "destination": "C3",
+            "state": "\u03f5"
+        }
+    ]
+
+}

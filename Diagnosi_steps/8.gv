@@ -1,0 +1,3 @@
+digraph 8 {
+	"0 0" -> "qf -" [label="f|fr|frf"]
+}

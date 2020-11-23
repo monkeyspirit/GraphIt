@@ -1,0 +1,99 @@
+{
+    "fsms": [
+        {
+            "name": "C1",
+            "states": [
+                "10",
+                "11"
+            ],
+            "final_states": "",
+            "edges": [
+                {
+                    "source": "10",
+                    "label": "t1a",
+                    "destination": "11",
+                    "transition_link": []
+                },
+                {
+                    "source": "11",
+                    "label": "t1b",
+                    "destination": "10",
+                    "transition_link": []
+                },
+                {
+                    "source": "10",
+                    "label": "t1c",
+                    "destination": "11",
+                    "transition_link": []
+                }
+            ]
+        },
+        {
+            "name": "C2",
+            "states": [
+                "20",
+                "21"
+            ],
+            "final_states": "",
+            "edges": [
+                {
+                    "source": "20",
+                    "label": "t2a",
+                    "destination": "21",
+                    "transition_link": []
+                },
+                {
+                    "source": "21",
+                    "label": "t2b",
+                    "destination": "20",
+                    "transition_link": []
+                }
+            ]
+        },
+        {
+            "name": "C3",
+            "states": [
+                "30",
+                "31"
+            ],
+            "final_states": "",
+            "edges": [
+                {
+                    "source": "30",
+                    "label": "t3a",
+                    "destination": "31"
+                },
+                {
+                    "source": "31",
+                    "label": "t3b",
+                    "destination": "30"
+                },
+                {
+                    "source": "31",
+                    "label": "t3c",
+                    "destination": "31"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "source": "C1",
+            "name": "L3",
+            "destination": "C3",
+            "state": "\u03f5"
+        },
+        {
+            "source": "C3",
+            "name": "L1",
+            "destination": "C1",
+            "state": "\u03f5"
+        },
+        {
+            "source": "C2",
+            "name": "L2",
+            "destination": "C3",
+            "state": "\u03f5"
+        }
+    ]
+}
