@@ -53,50 +53,54 @@ def save_fsm_as_json(fsm):
 
 def read_fsm_from_txt():
     # get file object
-    f = open("input.txt", "r")
+    filename = filedialog.askopenfilename()
+    f = open(filename, "r")
     c = 0
     name = ""
     states = []
     final_states = []
     edges = []
 
-    while (True):
-        # read next line
-        if c == 0:
-            line = f.readline()
-            name = line[:-1]
-        elif c == 1:
-            line = f.readline()
-            line = line[:-1]
-            split_states = line.split(",")
-            for state in split_states:
-                states.append(state)
-        elif c == 2:
-            line = f.readline()
-            line = line[:-1]
-            split_states = line.split(",")
-            for state in split_states:
-                final_states.append(state)
-        else:
-            line = f.readline()
-            split_line = line.split("/")
-            split_line.remove(split_line[len(split_line)-1])
-            for edge_full in split_line:
-                # print(edge_full)
-                edge_split = edge_full.split(",")
-                list = []
-                for e in edge_split:
-                    list.append(e)
+    # First line: name
+    line = f.readline()
+    name = line[:-1]
 
-                edge = Edge(list[0], list[2], list[1])
-                edges.append(edge)
+    # Second line: states
+    line = f.readline()
+    line = line[:-1]
+    split_states = line.split(",")
+
+    for state in split_states:
+        states.append(state)
+
+    # Thrid line: final state/s
+    line = f.readline()
+    if line != "":
+        line = line[:-1]
+        split_states = line.split(",")
+        for state in split_states:
+            final_states.append(state)
 
 
-        # if line is empty, you are done with all lines in the file
-        c += 1
-        if not line:
-            break
+    # Fourth line: edges
+    line = f.readline()
+    line = line[:-1]
+    split_line = line.split("/")
+
+    for edge_full in split_line:
+        # print(edge_full)
+        edge_split = edge_full.split(",")
+        list = []
+        for e in edge_split:
+            list.append(e)
+
+        edge = Edge(list[0], list[2], list[1])
+
+        edges.append(edge)
+
+
         # you can access the line
+
     fsm = FiniteStateMachine(name, states, final_states, edges)
 
     # close file

@@ -1,7 +1,0 @@
-digraph finite_state_machine {
-	10 [shape=circle]
-	11 [shape=circle]
-	10 -> 11 [label=t1a]
-	11 -> 10 [label=t1b]
-	10 -> 11 [label=t1c]
-}

@@ -42,25 +42,32 @@ def read_network_from_json():
 
 def read_link_from_txt():
     # get file object
-    f = open("link_input.txt", "r")
+    filename = filedialog.askopenfilename()
+    f = open(filename, "r")
     c = 0
-    source = ""
-    name = ""
-    destination = ""
-    state =""
+
+    links = []
 
     # read next line
-    line = f.readline()
-    line = line[:-1]
-    split_line = line.split(",")
-    el = []
-    for i in split_line:
-        el.append(i)
+    while(True):
+        source = ""
+        name = ""
+        destination = ""
+        state = ""
+        line = f.readline()
+        if not line:
+            break
+        line = line[:-1]
+        split_line = line.split(",")
+        el = []
+        for i in split_line:
+            el.append(i)
 
 
-    # you can access the line
-    link = Link(el[0], el[1], el[2], el[3])
+        # you can access the line
+        link = Link(el[0], el[1], el[2], el[3])
+        links.append(link)
 
     # close file
     f.close()
-    return link
+    return links

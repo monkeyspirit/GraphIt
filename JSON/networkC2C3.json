@@ -6,7 +6,9 @@
                 "20",
                 "21"
             ],
-            "final_states": "",
+            "final_states": [
+                ""
+            ],
             "edges": [
                 {
                     "source": "20",
@@ -28,22 +30,27 @@
                 "30",
                 "31"
             ],
-            "final_states": "",
+            "final_states": [
+                ""
+            ],
             "edges": [
                 {
                     "source": "30",
                     "label": "t3a",
-                    "destination": "31"
+                    "destination": "31",
+                    "transition_link": []
                 },
                 {
                     "source": "31",
                     "label": "t3b",
-                    "destination": "30"
+                    "destination": "30",
+                    "transition_link": []
                 },
                 {
                     "source": "31",
                     "label": "t3c",
-                    "destination": "31"
+                    "destination": "31",
+                    "transition_link": []
                 }
             ]
         }
@@ -62,5 +69,4 @@
             "state": "\u03f5"
         }
     ]
-
 }

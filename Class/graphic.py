@@ -21,7 +21,7 @@ def draw_graphic_from_txt_file(event=None):
         f.node(state, shape='circle')
 
     final_states = i.readline()
-    if final_states != "":
+    if final_states != [] and final_states != "":
         final_states = final_states[:-1]
         f.node(final_states, shape='doublecircle')
 
@@ -43,11 +43,12 @@ def draw_FSM_graphic(fsm):
     for state in fsm.states:
         f.node(state, shape='circle')
 
+
     for state in fsm.final_states:
-        f.node(state, shape='doublecircle')
+        if state != "":
+            f.node(state, shape='doublecircle')
 
     for edge_fsm in fsm.edges:
-        # print(type(edge_fsm))
         f.edge(edge_fsm.source, edge_fsm.destination, edge_fsm.label)
 
     f.render(directory="FSM_graph")
@@ -1215,7 +1216,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
         destination = str(t.destination[0]) + " " + str(t.destination[1])
         d.edge(source, destination, t.label)
     d.render(directory="Diagnosi_steps")
-    return img
+    return img, exp
 
 
 def remove_duplicated_transition(e_transition_list):
@@ -1247,10 +1248,10 @@ def semplify_paralle_path(e_transition_list):
                             if t2.label == "ϵ":
                                 label = "ϵ"
                             else:
-                                label = t2.label
+                                label = t2.label + "|ϵ"
                         else:
                             if t2.label == "ϵ":
-                                label = t1.label
+                                label = t1.label + "|ϵ"
                             else:
                                 label = t1.label + "|" + t2.label
 
