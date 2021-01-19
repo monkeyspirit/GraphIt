@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- mobile metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<!-- site metas -->
+<title>Caricamento rete</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">	
+<!-- bootstrap css -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<!-- style css -->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!-- Responsive-->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- fevicon -->
+<link rel="icon" href="images/fevicon.png" type="image/gif" />
+<!-- Scrollbar Custom CSS -->
+<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<!-- Tweaks for older IEs-->
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+<!-- owl stylesheets --> 
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/owl.theme.default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
+</head>
+<body>
+	<header>
+		<div class="layout_padding banner_section_start">
+         <!-- header inner -->
+         <div class="header">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                     <div class="full">
+                        <div class="center-desk">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                     <div class="menu-area">
+                        <div class="limit-box">
+                           <nav class="main-menu">
+                              <ul class="menu-area-main">
+                                 <li class="active"><a href="index_home.html">Home</a></li>
+                                 <li><a href="#start">Automi</a></li>
+                                 <li><a href="#link">Link</a></li>
+                                 <li><a href="#transition">Transizioni</a></li>
+                              </ul>
+                           </nav>
+                        </div>
+                     </div>
+                 </div>
+               </div>
+            </div>
+         </div>
+         <!-- end header inner -->		
+	<!-- banner start-->
+	<div class="layout_padding banner_section">
+		<div class="container">
+			<h1 class="about_text"><strong>Caricamento di una rete di automi</strong></h1>
+			<p class="about_taital">In questa pagina viene presentata la sintassi con cui costruire i file .txt degli
+				automi a stati finiti, dei link e delle transizioni. <br>
+				<span style="color: #c91728">NB: I file che viene chiesto di creare devono essere file .TXT separati: un file per ogni automa, un file per tutti i link e un file per le transizioni (come mostrato negli esempi).</span>
+			</p>
+
+
+		</div>
+    </div>
+	</header>
+	<!-- banner end-->
+	<!-- about start-->
+	<div id="start" class="layout_padding about_section">
+		<div class="container">
+			<div class="row">
+		        <div class="col-md-6">
+					<div><img src="images/example_picture_fsm.png" style="max-width: 100%;"></div>
+		        	<div><img src="images/example_fsm.png" style="max-width: 100%;"></div>
+
+		        </div>
+		        <div class="col-md-6">
+					<h1 class="about_text" style="font-size: 45px"><strong>Automi a stati finiti</strong></h1>
+		        	<p class="about_taital">Negli automi a stati finiti si deve tenere conto di 4 elementi:
+						<br><br> → <span style="color: #1C92ED">Nome</span> : è il nome dell'automa.
+						<br><br>→ <span style="color: #1C92ED">Stati</span>: sono gli stati dell'automa. Poiché ne possono esistere più di uno devono essere
+						separati tra di loro da una ",".
+						<br><br>→ <span style="color: #1C92ED">Stati finali</span>: sono gli stati finali dell'automa. Possono non esistere, in questo caso dovrà essere lasciata
+						vuota la riga corrispondente (come nell'immagine d'esempio), altrimenti se ne esistono più di uno gli stati finali vanno separati da una ",".
+						<br><br>→ <span style="color: #1C92ED">Transizioni</span>: sono le transizioni tra gli stati dell'automa, sono identificate da 3 parametri: <strong>stato iniziale</strong>
+						, <strong>stato finale</strong> e <strong>etichetta</strong>. I parametri sono separati tra di loro da una ",". Più transizioni
+						sono separate tra loro da "/" (come nell'immagine d'esempio).<br>
+
+					</p>
+		        	<button class="read_more"><a href="#">↑</a></button>
+		        </div>
+			</div>
+		</div>
+	</div>
+	<!-- product start-->
+	<div id="link" class="layout_padding product_section ">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<h1 class="about_text" style="font-size: 45px"><strong>Link</strong></h1>
+		        	<p class="about_taital">In questo file sono contenuti i link tra gli automi
+						che compongono la rete di automi. Il file dei link prevede di riservare per <span style="color: #ed1c24">
+							ogni link una riga</span>. Ogni riga deve contenere:
+						<br><br> → <span style="color: #1C92ED">Automa di partenza</span> : è il nome dell'automa da cui esce il link.
+						<br><br> → <span style="color: #1C92ED">Nome</span> : è il nome del link.
+						<br><br> → <span style="color: #1C92ED">Automa di arrivo</span> : è il nome dell'automa in cui entra il link.
+						<br><br> → <span style="color: #1C92ED">Stato</span> : è lo stato del link, nell'esempio entrambi i link sono <span style="color: #ed1c24">vuoti</span> e viene quindi utilizzato il simbolo <span style="color: #ed1c24">ϵ</span>.<br><br>
+						<span style="color: #1C92ED">NB: Tutti i parametri sono tra loro separati da ",".</span>
+
+
+					</p>
+		        	<button class="read_more"><a href="#">↑</a></button>
+		        </div>
+		        <div class="col-md-6">
+					<div><img src="images/example_link_picture.png" style="max-width: 100%;"></div>
+		        	<div><img src="images/example_link.png" style="max-width: 100%;"></div>
+
+		        </div>
+
+			</div>
+		</div>
+	</div>
+	<!-- product end-->
+	<!-- Gallery start-->
+	<div id="transition" class="layout_padding2 gallery_section">
+		<div class="container">
+			<div class="row">
+		        <div class="col-md-6">
+					<div><img src="images/example_transition1.png" style="max-width: 100%;"></div>
+		        	<div><img src="images/example_transition2.png" style="max-width: 100%;"></div>
+					<div><img src="images/example_transitions.png" style="max-width: 100%;"></div>
+
+		        </div>
+		        <div class="col-md-6">
+					<h1 class="about_text" style="font-size: 45px"><strong>Transizioni</strong></h1>
+		        	<p class="about_taital">Il file delle transizioni è il file più complesso
+						perché contiene tutte le transizioni nella rete e i dati ad esse relativi.
+						Il file delle transizioni prevede di riservare <span style="color: #ed1c24">
+							per ogni transizione una riga</span>. Ogni riga deve contenere:
+
+						<br><br> → <span style="color: #1C92ED">Nome automa</span> : è il nome dell'automa.
+						<br><br>→ <span style="color: #1C92ED">Etichetta</span>: è l'etichetta che identifica la transizione.
+						<br><br>→ <span style="color: #1C92ED">Eventi in ingresso</span>: sono gli eventi che servono alla transizione per scattare, ovvero per essere abilitata. Devono essere contenuti all'interno di "{" e "}" e per ogni evento deve essere identificato il link su cui l'evento
+						deve trovarsi, per separare il link e il suo evento si usa ":" (nell'esempio sulla riga 1 si ha per gli eventi in ingresso come link L2 su cui si trova e2). Nel caso in cui ci siano più eventi in ingresso si separano tra loro con la ",". Se non ci sono eventi in ingresso si lasciano "{}" vuote. L'evento identifica lo<span style="color: red"> stato attuale </span>del link.
+						<br><br>→ <span style="color: #1C92ED">Eventi in uscita</span>: sono gli eventi che si troveranno sul link a transizione scattata. Devono essere contenuti all'interno di "{" e "}" e per ogni evento deve essere identificato il link su cui l'evento
+						si troverà, per separare il link e il suo evento si usa ":" (nell'esempio sulla riga 1 si ha per gli eventi in uscita come link L3 su cui si trova e3). Nel caso in cui ci siano più eventi in uscita si separano tra loro con la ",". Se non ci sono eventi in uscita si lasciano "{}" vuote. L'evento identifica lo<span style="color: #fd7e14"> stato prossimo </span>del link.
+						<br><br>→ <span style="color: #1C92ED">Etichetta di rilevanza</span>: è l'etichetta di rilevanza associata alla transizione, se non è presente un'etichetta deve essere inserito il simbolo <span style="color: #ed1c24">ϵ</span>.
+						<br><br>→ <span style="color: #1C92ED">Etichetta di osservabilità</span>:è l'etichetta di
+						osservabilità associata alla transizione, se non è presente un'etichetta deve essere inserito
+						il simbolo <span style="color: #ed1c24">ϵ</span>.
+						<br><br>
+						<span style="color: #1C92ED">NB: Tutti i parametri sono tra loro separati da ",".</span>
+
+					</p>
+		        	<button class="read_more"><a href="#">↑</a></button>
+		        </div>
+			</div>
+		</div>
+	</div>
+	<!-- end Gallery-->
+
+	<!-- copyright start-->
+    <div class="copyright_section">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12">
+    				<p class="copyright_taital">2020 Created by Maria Saleri - Template by <a href="https://html.design">Free html  Templates</p>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+
+	<!-- copyright end-->
+
+    <!-- Javascript files-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <!-- javascript --> 
+      <script src="js/owl.carousel.js"></script>
+      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+      <script>
+      $(document).ready(function(){
+      $(".fancybox").fancybox({
+         openEffect: "none",
+         closeEffect: "none"
+         });
+         
+         $(".zoom").hover(function(){
+         
+         $(this).addClass('transition');
+         }, function(){
+         
+         $(this).removeClass('transition');
+         });
+         });
+         </script> 
+
+         <script>
+      // This example adds a marker to indicate the position of Bondi Beach in Sydney,
+      // Australia.
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: 40.645037, lng: -73.880224},
+          });
+
+        var image = 'images/location_point.png';
+          var beachMarker = new google.maps.Marker({
+             position: {lat: 40.645037, lng: -73.880224},
+             map: map,
+             icon: image
+          });
+        }
+        </script>
+        <!-- google map js -->
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
+        <!-- end google map js -->
+
+
+
+
+</body>
+</html>

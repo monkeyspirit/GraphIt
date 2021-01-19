@@ -1,0 +1,16 @@
+In questo file viene presentata la sintassi con cui costruire i file .txt
+degli automi a stati finiti, dei link e delle transizioni.
+Le parti nelle parentesi non andranno scritte nel file,
+servono solocome indicazione nella lettura di questa guida.
+
+Automi a stati finiti:
+C2                  (Nome automa, solo 1)
+20,21               (Stati automa: sono più di 1, separati
+                      da una ",")
+                    (Stati finali: possono non essercene,
+                     come in questo caso, altrimenti
+                     vanno separati da una ",")
+20,21,t2a/21,20,t2b (Transizioni tra gli stati: in questo
+                     caso sono 2 separate da "/" e definite
+                     dallo stato iniziale, quello finale e
+                     dall'etichetta, tutto separato da ",")
