@@ -25,8 +25,8 @@ class NetworkEncoder(JSONEncoder):
         return o.__dict__
 
 
-def save_network_as_json(n1):
-    with open("JSON/network" + n1.fsms[0].name + n1.fsms[1].name + ".json", "w") as write_file:
+def save_network_as_json(n1, filename):
+    with open("JSON/network" + filename + ".json", "w") as write_file:
         json.dump(n1, write_file, indent=4, cls=NetworkEncoder)
 
 
