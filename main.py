@@ -246,7 +246,7 @@ if __name__ == '__main__':
             images = []
             text = []
             for i in range(int(len(fsms))):
-                images.append(sg.Image(filename='FSM_graph/fsm' + fsms[i].name + '.png'))
+                images.append(sg.Image(filename='Output/FSM_graph/fsm' + fsms[i].name + '.png'))
                 text.append(sg.Text(fsms[i].name), )
 
             # Define the window's contents
@@ -338,9 +338,9 @@ if __name__ == '__main__':
 
             def show_behavioral_space():
                 column1 = [[sg.Text('Spazio con LABEL')],
-                           [sg.Image(filename='Behavioral_Space/' + filename_be + '.gv.png')]]
+                           [sg.Image(filename='Output/Behavioral_Space/' + filename_be + '.gv.png')]]
                 column2 = [[sg.Text('Spazio con ID')],
-                           [sg.Image(filename='Behavioral_Space/' + filename_be + '_id.gv.png')]]
+                           [sg.Image(filename='Output/Behavioral_Space/' + filename_be + '_id.gv.png')]]
                 behavioral_layout = [
                     [
                         sg.Column(column1, size=(600, 800), scrollable=True),
@@ -360,10 +360,10 @@ if __name__ == '__main__':
                 filename_re_be = 'renominated_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space_r = behavioral_space_renominated(n1, full_space)
                 network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
-                                                                                         'Diagramma salvato in: Behavioral_Space_Renominated/'
+                                                                                         'Diagramma salvato in: Output/Behavioral_Space_Renominated/'
                                                            + filename_re_be  + "\nFile di "
                                                                                          "ridenominazione spazio comportamentale salvato in:\n"
-                                                                                         "Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                                                                                         "Output/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
 
 
                 network_window['be_re_diag'].update(disabled=False)
@@ -373,9 +373,9 @@ if __name__ == '__main__':
 
             def show_re_be_space():
                 column_re1 = [[sg.Text('Spazio con ID rinominati')],
-                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
+                              [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
                 column_re2 = [[sg.Text('Spazio con ID vecchi')],
-                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
+                              [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
 
                 re_behavioral_layout = [
                     [
@@ -397,7 +397,7 @@ if __name__ == '__main__':
                         show_renomination_file_be()
 
             def show_renomination_file_be():
-                file = open(file="Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                file = open(file="Output/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
                 renomination_be_layout = [
                     [
                         sg.Button('Vedi diagramma', key='be_re_diag')
@@ -463,7 +463,7 @@ if __name__ == '__main__':
                 for o in obs:
                     obs_name = obs_name + o + " "
 
-                column_ob1 = [[sg.Image(filename='Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
+                column_ob1 = [[sg.Image(filename='Output/Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
                 obs_layout = [
 
                     [
@@ -498,7 +498,7 @@ if __name__ == '__main__':
 
             def show_re_obs_space():
                 column_re_ob1 = [
-                    [sg.Image(filename='Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
+                    [sg.Image(filename='Output/Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
 
                 obs_name = ""
                 for o in obs:
@@ -527,7 +527,7 @@ if __name__ == '__main__':
 
             def show_renomination_file_obs():
                 file = open(
-                    file="Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
+                    file="Output/Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
                 renomination_obs_layout = [
                     [
                         sg.Button('Vedi diagramma', key='obs_re_diag')
@@ -563,7 +563,7 @@ if __name__ == '__main__':
             def show_diagnosi():
                 images_diagnosis = []
                 for i in range(int(n_img) + 1):
-                    images_diagnosis.append(sg.Image(filename='Diagnosi_steps/' + str(i + 1) + '.gv.png'))
+                    images_diagnosis.append(sg.Image(filename='Output/Diagnosi_steps/' + str(i + 1) + '.gv.png'))
 
                 diagnosi_layout = [
                     [
@@ -630,7 +630,7 @@ if __name__ == '__main__':
                     sg.Text('Diagramma della rete')
                 ],
                 [
-                    sg.Image(filename='Network_graph/network' + n1.fsms[0].name + n1.fsms[1].name + '.png')
+                    sg.Image(filename='Output/Network_graph/network' + n1.fsms[0].name + n1.fsms[1].name + '.png')
                 ]
             ]
 
@@ -797,7 +797,7 @@ if __name__ == '__main__':
                 images = []
                 text = []
                 for i in range(len(name_fsm_images)):
-                    images.append(sg.Image(filename='FSM_graph/fsm' + name_fsm_images[i] + '.png'))
+                    images.append(sg.Image(filename='Output/FSM_graph/fsm' + name_fsm_images[i] + '.png'))
                     text.append(sg.Text(name_fsm_images[i]), )
 
                 # Define the window's contents
@@ -855,9 +855,9 @@ if __name__ == '__main__':
 
             def show_behavioral_space():
                 column1 = [[sg.Text('Spazio con LABEL')],
-                           [sg.Image(filename='Behavioral_Space/' + filename_be + '.gv.png')]]
+                           [sg.Image(filename='Output/Behavioral_Space/' + filename_be + '.gv.png')]]
                 column2 = [[sg.Text('Spazio con ID')],
-                           [sg.Image(filename='Behavioral_Space/' + filename_be + '_id.gv.png')]]
+                           [sg.Image(filename='Output/Behavioral_Space/' + filename_be + '_id.gv.png')]]
                 behavioral_layout = [
                     [
                         sg.Column(column1, size=(600, 800), scrollable=True),
@@ -877,10 +877,10 @@ if __name__ == '__main__':
                 filename_re_be = 'renominated_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space_r = behavioral_space_renominated(n1, full_space)
                 load_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
-                                                                                         'Diagramma salvato in: Behavioral_Space_Renominated/'
+                                                                                         'Diagramma salvato in: Output/Behavioral_Space_Renominated/'
                                                            + filename_re_be  + "\nFile di "
                                                                                          "ridenominazione spazio comportamentale salvato in:\n"
-                                                                                         "Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                                                                                         "Output/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
 
 
                 load_window['be_re_diag'].update(disabled=False)
@@ -890,9 +890,9 @@ if __name__ == '__main__':
 
             def show_re_be_space():
                 column_re1 = [[sg.Text('Spazio con ID rinominati')],
-                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
+                              [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
                 column_re2 = [[sg.Text('Spazio con ID vecchi')],
-                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
+                              [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
 
                 re_behavioral_layout = [
                     [
@@ -914,7 +914,7 @@ if __name__ == '__main__':
                         show_renomination_file_be()
 
             def show_renomination_file_be():
-                file = open(file="Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                file = open(file="Output/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
                 renomination_be_layout = [
                     [
                         sg.Button('Vedi diagramma', key='be_re_diag')
@@ -980,7 +980,7 @@ if __name__ == '__main__':
                 for o in obs:
                     obs_name = obs_name + o + " "
 
-                column_ob1 = [[sg.Image(filename='Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
+                column_ob1 = [[sg.Image(filename='Output/Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
                 obs_layout = [
 
                     [
@@ -1015,7 +1015,7 @@ if __name__ == '__main__':
 
             def show_re_obs_space():
                 column_re_ob1 = [
-                    [sg.Image(filename='Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
+                    [sg.Image(filename='Output/Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
 
                 obs_name = ""
                 for o in obs:
@@ -1044,7 +1044,7 @@ if __name__ == '__main__':
 
             def show_renomination_file_obs():
                 file = open(
-                    file="Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
+                    file="Output/Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
                 renomination_obs_layout = [
                     [
                         sg.Button('Vedi diagramma', key='obs_re_diag')
@@ -1079,7 +1079,7 @@ if __name__ == '__main__':
             def show_diagnosi():
                 images_diagnosis = []
                 for i in range(int(n_img) + 1):
-                    images_diagnosis.append(sg.Image(filename='Diagnosi_steps/' + str(i + 1) + '.gv.png'))
+                    images_diagnosis.append(sg.Image(filename='Output/Diagnosi_steps/' + str(i + 1) + '.gv.png'))
 
                 diagnosi_layout = [
                     [
@@ -1102,7 +1102,7 @@ if __name__ == '__main__':
             load_net_buttons = [
                 [
                     sg.Text('Diagramma della rete'),
-                    sg.Image(filename="Network_graph/network" + names + ".png")
+                    sg.Image(filename="Output/Network_graph/network" + names + ".png")
                 ],
                 [
                     sg.Button('Mostra i diagrammi degli automi', key='show_fsms'),

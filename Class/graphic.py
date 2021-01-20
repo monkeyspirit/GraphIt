@@ -32,7 +32,7 @@ def draw_graphic_from_txt_file(event=None):
         f.edge(array_edge[0], array_edge[1], array_edge[2])
     i.close()
 
-    f.render(directory="FSM_graph")
+    f.render(directory="Output/FSM_graph")
 
     return name, states, final_states, edges
 
@@ -51,7 +51,7 @@ def draw_FSM_graphic(fsm):
     for edge_fsm in fsm.edges:
         f.edge(edge_fsm.source, edge_fsm.destination, edge_fsm.label)
 
-    f.render(directory="FSM_graph")
+    f.render(directory="Output/FSM_graph")
 
 
 def draw_network_graphic(n1):
@@ -63,7 +63,7 @@ def draw_network_graphic(n1):
     for link in n1.links:
         f.edge(link.source, link.destination, link.name)
 
-    f.render(directory="Network_graph")
+    f.render(directory="Output/Network_graph")
 
 
 # ------------ INTRO FUNCTION ------------
@@ -125,7 +125,7 @@ def create_behavioral_space(filename, n1, transitions):
     find_nodes(node, f, n1, transitions, space_nodes, space_transitions)
 
     # "render" is the function to plot the graph, "directory" is the directory of the save
-    f.render(directory="Behavioral_Space")
+    f.render(directory="Output/Behavioral_Space")
 
     # The same space is printend also with the ID, not with LABEL
     # # g is another graphviz component
@@ -140,7 +140,7 @@ def create_behavioral_space(filename, n1, transitions):
         else:
             g.node(str(node.id), shape="circle")
 
-    g.render(directory="Behavioral_Space")
+    g.render(directory="Output/Behavioral_Space")
 
     # Call the function to add to each node the list of the reachable nodes
     organize_reachable_nodes(space_nodes)
@@ -560,10 +560,10 @@ def create_behavioral_space_renominated(filename, space):
                 transition_after.transition_link.observability_label) + '</FONT>>')
 
     # Print the graph
-    f.render(directory="Behavioral_Space_Renominated")
+    f.render(directory="Output/Behavioral_Space_Renominated")
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
 
-    save_renomination_file(space, "Behavioral_Space_Renominated/renomination_list_" + filename + ".txt")
+    save_renomination_file(space, "Output/Behavioral_Space_Renominated/renomination_list_" + filename + ".txt")
 
     # The same space is printend also with the ID, not with LABEL
     # g is another graphviz component
@@ -597,7 +597,7 @@ def create_behavioral_space_renominated(filename, space):
         else:
             g.node(str(node.id), shape="circle")
 
-    g.render(directory="Behavioral_Space_Renominated")
+    g.render(directory="Output/Behavioral_Space_Renominated")
 
 
 # ------------ INTRO FUNCTION ------------
@@ -639,7 +639,7 @@ def create_behavioral_space_from_obs(filename, obs, space):
             f.node(label, shape="circle")
 
     # Print the graph
-    f.render(directory="Behavioral_Space_Observable")
+    f.render(directory="Output/Behavioral_Space_Observable")
 
     obs_space = Space(obs_space_nodes, obs_space_transitions)
 
@@ -885,8 +885,8 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
                    transition.observability_label) + '</FONT>' + " " + '<FONT COLOR="red">' + str(
                    transition.relevance_label) + '</FONT>>')
 
-    f.render(directory="Behavioral_Space_Observable_Renominated")
-    save_renomination_file_obs(space, "Behavioral_Space_Observable_Renominated/renomination_list_" + filename + ".txt")
+    f.render(directory="Output/Behavioral_Space_Observable_Renominated")
+    save_renomination_file_obs(space, "Output/Behavioral_Space_Observable_Renominated/renomination_list_" + filename + ".txt")
 
 
 # ------------ INTRO FUNCTION ------------
@@ -1111,7 +1111,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
             destination = str(t.destination[0]) + " " + str(t.destination[1])
             d.edge(source, destination, t.label)
 
-        d.render(directory="Diagnosi_steps")
+        d.render(directory="Output/Diagnosi_steps")
         img += 1
         count += 1
         semplify_paralle_path(e_transition_list)
@@ -1211,7 +1211,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
         source = str(t.source[0]) + " " + str(t.source[1])
         destination = str(t.destination[0]) + " " + str(t.destination[1])
         d.edge(source, destination, t.label)
-    d.render(directory="Diagnosi_steps")
+    d.render(directory="Output/Diagnosi_steps")
     return img, exp
 
 
@@ -1280,6 +1280,3 @@ def count_edges_in_node(node, e_transition_list):
 
     return min_i
 
-
-def save_expression_list(space, filename):
-    print("Qui")
