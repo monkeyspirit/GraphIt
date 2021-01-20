@@ -550,11 +550,14 @@ if __name__ == '__main__':
             def calculate_diagnosi_space():
                 network_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
                 global n_img, exp
+                n_img, exp = diagnosis(n1, obs_space_r, obs)
+
                 network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n'
                                                                                          'Diagramma salvato in: '
-                                                                                         'Diagnosi_steps/')
+                                                                                         'Diagnosi_steps/\n'+
+                                                           '> Espressione regolare: '+exp)
 
-                n_img, exp = diagnosis(n1, obs_space_r, obs)
+
                 network_window['diag_diag'].update(disabled=False)
 
             def show_diagnosi():
@@ -1064,11 +1067,13 @@ if __name__ == '__main__':
             def calculate_diagnosi_space():
                 load_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
                 global n_img, exp
+                n_img, exp = diagnosis(n1, obs_space_r, obs)
                 load_window['output_network_op'].update(values['output_network_op'] + '> Completato\n'
                                                                                          'Diagramma salvato in: '
-                                                                                         'Diagnosi_steps/')
+                                                                                         'Diagnosi_steps\n'+
+                                                           '> Espressione regolare: '+exp)
 
-                n_img, exp = diagnosis(n1, obs_space_r, obs)
+
                 load_window['diag_diag'].update(disabled=False)
 
             def show_diagnosi():
