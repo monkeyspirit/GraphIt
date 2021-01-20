@@ -40,8 +40,6 @@ class ObservableNode:
         self.observation_index = observation_index
 
 
-
-
 class ObservableTransition:
     def __init__(self, label, observation_index, source, destination, observability_label, relevance_label):
         self.label = label
@@ -75,8 +73,6 @@ class Node:
         self.renomination_label = ""
 
 
-
-
 class SpaceEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__
@@ -97,13 +93,13 @@ def read_space_from_json():
         space = json.loads(data_str, object_hook=lambda d: SimpleNamespace(**d))
         return space
 
+
 def read_transitions_from_txt():
     # get file object
     filename = filedialog.askopenfilename()
     f = open(filename, "r")
 
     transitions = []
-
 
     while (True):
         fsm = ""
@@ -125,7 +121,6 @@ def read_transitions_from_txt():
         for el in split_line:
             list.append(el)
 
-
         fsm = list[0]
         label = list[1]
         input_list = list[2][1:-1]
@@ -137,7 +132,6 @@ def read_transitions_from_txt():
                     split_input = input.split(":")
                     input_dic.update({split_input[0]: split_input[1]})
 
-
         output_list = list[3][1:-1]
         output_list = output_list.split(",")
         output_dic = {}
@@ -148,7 +142,6 @@ def read_transitions_from_txt():
                     output_dic.update({split_output[0]: split_output[1]})
         obs_label = list[4]
         rel_label = list[5]
-
 
         # you can access the line
         # print(list)

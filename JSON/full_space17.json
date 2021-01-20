@@ -4,48 +4,55 @@
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
+                    "B": "0",
+                    "S": "0"
                 },
                 "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
+                    "L": "\u03f5"
                 },
-                "label": " 20 30  \u03f5 \u03f5",
+                "label": " 0 0  \u03f5",
                 "id": 0,
                 "reachable_nodes": [
                     1,
                     2,
                     3,
-                    4,
-                    5,
+                    0,
                     6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    0,
-                    14
+                    4,
+                    5
                 ],
                 "isFinal": 1,
                 "isReachingFinal": 0,
                 "edges": [
                     {
                         "source": 0,
-                        "label": "t3a",
+                        "label": "s1",
                         "destination": 1,
                         "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
+                            "fsm": "S",
+                            "label": "s1",
                             "input": {},
                             "output": {
-                                "L2": "e2"
+                                "L": "op"
                             },
                             "relevance_label": "\u03f5",
-                            "observability_label": "o3"
+                            "observability_label": "act"
+                        }
+                    },
+                    {
+                        "source": 0,
+                        "label": "s3",
+                        "destination": 7,
+                        "transition_link": {
+                            "fsm": "S",
+                            "label": "s3",
+                            "input": {},
+                            "output": {
+                                "L": "cl"
+                            },
+                            "relevance_label": "f1",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
@@ -57,63 +64,62 @@
             ],
             "reachable_nodes": [
                 "1, 1",
-                "2, 2",
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
+                "6, 1"
             ],
             "observation_index": 0
         },
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
+                    "B": "0",
+                    "S": "1"
                 },
                 "links_states": {
-                    "L2": "e2",
-                    "L3": "\u03f5"
+                    "L": "op"
                 },
-                "label": " 20 31  e2 \u03f5",
+                "label": " 0 1  op",
                 "id": 1,
                 "reachable_nodes": [
                     2,
                     3,
-                    4,
+                    0,
+                    1,
                     5,
                     6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    12,
-                    13,
-                    0,
-                    14
+                    4
                 ],
                 "isFinal": 0,
                 "isReachingFinal": 0,
                 "edges": [
                     {
                         "source": 1,
-                        "label": "t2a",
+                        "label": "b1",
                         "destination": 2,
                         "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2a",
+                            "fsm": "B",
+                            "label": "b1",
                             "input": {
-                                "L2": "e2"
+                                "L": "op"
                             },
-                            "output": {
-                                "L3": "e3"
-                            },
+                            "output": {},
                             "relevance_label": "\u03f5",
-                            "observability_label": "o2"
+                            "observability_label": "opn"
+                        }
+                    },
+                    {
+                        "source": 1,
+                        "label": "b3",
+                        "destination": 6,
+                        "transition_link": {
+                            "fsm": "B",
+                            "label": "b3",
+                            "input": {
+                                "L": "op"
+                            },
+                            "output": {},
+                            "relevance_label": "f3",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
@@ -121,490 +127,135 @@
             },
             "id": 1,
             "direct_reachable": [
-                "2, 2"
+                "6, 1"
             ],
             "reachable_nodes": [
-                "2, 2",
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
+                "6, 1",
+                "1, 1"
             ],
             "observation_index": 1
         },
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "21",
-                    "C3": "31"
+                    "B": "0",
+                    "S": "1"
                 },
                 "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
+                    "L": "\u03f5"
                 },
-                "label": " 21 31  \u03f5 e3",
-                "id": 2,
+                "label": " 0 1  \u03f5",
+                "id": 6,
                 "reachable_nodes": [
-                    3,
-                    4,
-                    5,
-                    6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    2,
-                    12,
-                    13,
                     0,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 2,
-                        "label": "t3b",
-                        "destination": 3,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3b",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "\u03f5",
-                            "observability_label": "\u03f5"
-                        }
-                    },
-                    {
-                        "source": 2,
-                        "label": "t3c",
-                        "destination": 12,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3c",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "f",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 2
-            },
-            "id": 2,
-            "direct_reachable": [
-                "3, 2",
-                "12, 2"
-            ],
-            "reachable_nodes": [
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "21",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 21 30  \u03f5 \u03f5",
-                "id": 3,
-                "reachable_nodes": [
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
                     1,
                     2,
                     3,
-                    12,
-                    13,
-                    0,
-                    14
+                    6,
+                    4,
+                    5
                 ],
                 "isFinal": 1,
                 "isReachingFinal": 0,
                 "edges": [
                     {
-                        "source": 3,
-                        "label": "t2b",
-                        "destination": 4,
+                        "source": 6,
+                        "label": "s2",
+                        "destination": 7,
                         "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2b",
+                            "fsm": "S",
+                            "label": "s2",
                             "input": {},
                             "output": {
-                                "L3": "e3"
+                                "L": "cl"
                             },
-                            "relevance_label": "r",
-                            "observability_label": "\u03f5"
+                            "relevance_label": "\u03f5",
+                            "observability_label": "sby"
                         }
                     },
                     {
-                        "source": 3,
-                        "label": "t3a",
-                        "destination": 11,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
-                            "input": {},
-                            "output": {
-                                "L2": "e2"
-                            },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
-                        }
-                    }
-                ],
-                "renomination_label": 3
-            },
-            "id": 3,
-            "direct_reachable": [
-                "4, 2"
-            ],
-            "reachable_nodes": [
-                "4, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
-                },
-                "label": " 20 30  \u03f5 e3",
-                "id": 4,
-                "reachable_nodes": [
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    2,
-                    3,
-                    4,
-                    12,
-                    13,
-                    0,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 4,
-                        "label": "t3a",
-                        "destination": 5,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
-                            "input": {},
-                            "output": {
-                                "L2": "e2"
-                            },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
-                        }
-                    }
-                ],
-                "renomination_label": 4
-            },
-            "id": 4,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "21",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 21 31  \u03f5 \u03f5",
-                "id": 12,
-                "reachable_nodes": [
-                    13,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    14
-                ],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 12,
-                        "label": "t2b",
-                        "destination": 13,
-                        "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2b",
-                            "input": {},
-                            "output": {
-                                "L3": "e3"
-                            },
-                            "relevance_label": "r",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 10
-            },
-            "id": 12,
-            "direct_reachable": [
-                "13, 2"
-            ],
-            "reachable_nodes": [
-                "13, 2",
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
-                },
-                "label": " 20 31  \u03f5 e3",
-                "id": 13,
-                "reachable_nodes": [
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 13,
-                        "label": "t3b",
-                        "destination": 0,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3b",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "\u03f5",
-                            "observability_label": "\u03f5"
-                        }
-                    },
-                    {
-                        "source": 13,
-                        "label": "t3c",
-                        "destination": 14,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3c",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "f",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 11
-            },
-            "id": 13,
-            "direct_reachable": [
-                "0, 2",
-                "14, 2"
-            ],
-            "reachable_nodes": [
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 20 30  \u03f5 \u03f5",
-                "id": 0,
-                "reachable_nodes": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    0,
-                    14
-                ],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 0,
-                        "label": "t3a",
+                        "source": 6,
+                        "label": "s4",
                         "destination": 1,
                         "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
+                            "fsm": "S",
+                            "label": "s4",
                             "input": {},
                             "output": {
-                                "L2": "e2"
+                                "L": "op"
                             },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
+                            "relevance_label": "f2",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
-                "renomination_label": 0
+                "renomination_label": 6
             },
-            "id": 0,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 20 31  \u03f5 \u03f5",
-                "id": 14,
-                "reachable_nodes": [],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [],
-                "renomination_label": 12
-            },
-            "id": 14,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
+            "id": 6,
+            "direct_reachable": [
+                "1, 1"
+            ],
+            "reachable_nodes": [
+                "1, 1",
+                "6, 1"
+            ],
+            "observation_index": 1
         }
     ],
     "nodes_after_cutting": [
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
+                    "B": "0",
+                    "S": "0"
                 },
                 "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
+                    "L": "\u03f5"
                 },
-                "label": " 20 30  \u03f5 \u03f5",
+                "label": " 0 0  \u03f5",
                 "id": 0,
                 "reachable_nodes": [
                     1,
                     2,
                     3,
-                    4,
-                    5,
+                    0,
                     6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    0,
-                    14
+                    4,
+                    5
                 ],
                 "isFinal": 1,
                 "isReachingFinal": 0,
                 "edges": [
                     {
                         "source": 0,
-                        "label": "t3a",
+                        "label": "s1",
                         "destination": 1,
                         "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
+                            "fsm": "S",
+                            "label": "s1",
                             "input": {},
                             "output": {
-                                "L2": "e2"
+                                "L": "op"
                             },
                             "relevance_label": "\u03f5",
-                            "observability_label": "o3"
+                            "observability_label": "act"
+                        }
+                    },
+                    {
+                        "source": 0,
+                        "label": "s3",
+                        "destination": 7,
+                        "transition_link": {
+                            "fsm": "S",
+                            "label": "s3",
+                            "input": {},
+                            "output": {
+                                "L": "cl"
+                            },
+                            "relevance_label": "f1",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
@@ -616,63 +267,62 @@
             ],
             "reachable_nodes": [
                 "1, 1",
-                "2, 2",
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
+                "6, 1"
             ],
             "observation_index": 0
         },
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
+                    "B": "0",
+                    "S": "1"
                 },
                 "links_states": {
-                    "L2": "e2",
-                    "L3": "\u03f5"
+                    "L": "op"
                 },
-                "label": " 20 31  e2 \u03f5",
+                "label": " 0 1  op",
                 "id": 1,
                 "reachable_nodes": [
                     2,
                     3,
-                    4,
+                    0,
+                    1,
                     5,
                     6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    12,
-                    13,
-                    0,
-                    14
+                    4
                 ],
                 "isFinal": 0,
                 "isReachingFinal": 0,
                 "edges": [
                     {
                         "source": 1,
-                        "label": "t2a",
+                        "label": "b1",
                         "destination": 2,
                         "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2a",
+                            "fsm": "B",
+                            "label": "b1",
                             "input": {
-                                "L2": "e2"
+                                "L": "op"
                             },
-                            "output": {
-                                "L3": "e3"
-                            },
+                            "output": {},
                             "relevance_label": "\u03f5",
-                            "observability_label": "o2"
+                            "observability_label": "opn"
+                        }
+                    },
+                    {
+                        "source": 1,
+                        "label": "b3",
+                        "destination": 6,
+                        "transition_link": {
+                            "fsm": "B",
+                            "label": "b3",
+                            "input": {
+                                "L": "op"
+                            },
+                            "output": {},
+                            "relevance_label": "f3",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
@@ -680,494 +330,138 @@
             },
             "id": 1,
             "direct_reachable": [
-                "2, 2"
+                "6, 1"
             ],
             "reachable_nodes": [
-                "2, 2",
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
+                "6, 1",
+                "1, 1"
             ],
             "observation_index": 1
         },
         {
             "link_node": {
                 "fsms_states": {
-                    "C2": "21",
-                    "C3": "31"
+                    "B": "0",
+                    "S": "1"
                 },
                 "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
+                    "L": "\u03f5"
                 },
-                "label": " 21 31  \u03f5 e3",
-                "id": 2,
+                "label": " 0 1  \u03f5",
+                "id": 6,
                 "reachable_nodes": [
-                    3,
-                    4,
-                    5,
-                    6,
                     7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    2,
-                    12,
-                    13,
                     0,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 2,
-                        "label": "t3b",
-                        "destination": 3,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3b",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "\u03f5",
-                            "observability_label": "\u03f5"
-                        }
-                    },
-                    {
-                        "source": 2,
-                        "label": "t3c",
-                        "destination": 12,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3c",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "f",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 2
-            },
-            "id": 2,
-            "direct_reachable": [
-                "3, 2",
-                "12, 2"
-            ],
-            "reachable_nodes": [
-                "3, 2",
-                "4, 2",
-                "12, 2",
-                "13, 2",
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "21",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 21 30  \u03f5 \u03f5",
-                "id": 3,
-                "reachable_nodes": [
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
                     1,
                     2,
                     3,
-                    12,
-                    13,
-                    0,
-                    14
+                    6,
+                    4,
+                    5
                 ],
                 "isFinal": 1,
                 "isReachingFinal": 0,
                 "edges": [
                     {
-                        "source": 3,
-                        "label": "t2b",
-                        "destination": 4,
+                        "source": 6,
+                        "label": "s2",
+                        "destination": 7,
                         "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2b",
+                            "fsm": "S",
+                            "label": "s2",
                             "input": {},
                             "output": {
-                                "L3": "e3"
+                                "L": "cl"
                             },
-                            "relevance_label": "r",
-                            "observability_label": "\u03f5"
+                            "relevance_label": "\u03f5",
+                            "observability_label": "sby"
                         }
                     },
                     {
-                        "source": 3,
-                        "label": "t3a",
-                        "destination": 11,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
-                            "input": {},
-                            "output": {
-                                "L2": "e2"
-                            },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
-                        }
-                    }
-                ],
-                "renomination_label": 3
-            },
-            "id": 3,
-            "direct_reachable": [
-                "4, 2"
-            ],
-            "reachable_nodes": [
-                "4, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "21",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 21 31  \u03f5 \u03f5",
-                "id": 12,
-                "reachable_nodes": [
-                    13,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    14
-                ],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 12,
-                        "label": "t2b",
-                        "destination": 13,
-                        "transition_link": {
-                            "fsm": "C2",
-                            "label": "t2b",
-                            "input": {},
-                            "output": {
-                                "L3": "e3"
-                            },
-                            "relevance_label": "r",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 10
-            },
-            "id": 12,
-            "direct_reachable": [
-                "13, 2"
-            ],
-            "reachable_nodes": [
-                "13, 2",
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
-                },
-                "label": " 20 31  \u03f5 e3",
-                "id": 13,
-                "reachable_nodes": [
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 13,
-                        "label": "t3b",
-                        "destination": 0,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3b",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "\u03f5",
-                            "observability_label": "\u03f5"
-                        }
-                    },
-                    {
-                        "source": 13,
-                        "label": "t3c",
-                        "destination": 14,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3c",
-                            "input": {
-                                "L3": "e3"
-                            },
-                            "output": {},
-                            "relevance_label": "f",
-                            "observability_label": "\u03f5"
-                        }
-                    }
-                ],
-                "renomination_label": 11
-            },
-            "id": 13,
-            "direct_reachable": [
-                "0, 2",
-                "14, 2"
-            ],
-            "reachable_nodes": [
-                "0, 2",
-                "14, 2"
-            ],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 20 30  \u03f5 \u03f5",
-                "id": 0,
-                "reachable_nodes": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    0,
-                    14
-                ],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 0,
-                        "label": "t3a",
+                        "source": 6,
+                        "label": "s4",
                         "destination": 1,
                         "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
+                            "fsm": "S",
+                            "label": "s4",
                             "input": {},
                             "output": {
-                                "L2": "e2"
+                                "L": "op"
                             },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
+                            "relevance_label": "f2",
+                            "observability_label": "\u03f5"
                         }
                     }
                 ],
-                "renomination_label": 0
+                "renomination_label": 6
             },
-            "id": 0,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
-        },
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "31"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "\u03f5"
-                },
-                "label": " 20 31  \u03f5 \u03f5",
-                "id": 14,
-                "reachable_nodes": [],
-                "isFinal": 1,
-                "isReachingFinal": 0,
-                "edges": [],
-                "renomination_label": 12
-            },
-            "id": 14,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
+            "id": 6,
+            "direct_reachable": [
+                "1, 1"
+            ],
+            "reachable_nodes": [
+                "1, 1",
+                "6, 1"
+            ],
+            "observation_index": 1
         }
     ],
-    "cutted_nodes": [
-        {
-            "link_node": {
-                "fsms_states": {
-                    "C2": "20",
-                    "C3": "30"
-                },
-                "links_states": {
-                    "L2": "\u03f5",
-                    "L3": "e3"
-                },
-                "label": " 20 30  \u03f5 e3",
-                "id": 4,
-                "reachable_nodes": [
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    1,
-                    2,
-                    3,
-                    4,
-                    12,
-                    13,
-                    0,
-                    14
-                ],
-                "isFinal": 0,
-                "isReachingFinal": 0,
-                "edges": [
-                    {
-                        "source": 4,
-                        "label": "t3a",
-                        "destination": 5,
-                        "transition_link": {
-                            "fsm": "C3",
-                            "label": "t3a",
-                            "input": {},
-                            "output": {
-                                "L2": "e2"
-                            },
-                            "relevance_label": "\u03f5",
-                            "observability_label": "o3"
-                        }
-                    }
-                ],
-                "renomination_label": 4
-            },
-            "id": 4,
-            "direct_reachable": [],
-            "reachable_nodes": [],
-            "observation_index": 2
-        }
-    ],
+    "cutted_nodes": [],
     "transitions": [
         {
-            "label": "t3a",
+            "label": "s1",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
+                        "B": "0",
+                        "S": "0"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
+                        "L": "\u03f5"
                     },
-                    "label": " 20 30  \u03f5 \u03f5",
+                    "label": " 0 0  \u03f5",
                     "id": 0,
                     "reachable_nodes": [
                         1,
                         2,
                         3,
-                        4,
-                        5,
+                        0,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        0,
-                        14
+                        4,
+                        5
                     ],
                     "isFinal": 1,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 0,
-                            "label": "t3a",
+                            "label": "s1",
                             "destination": 1,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
+                                "fsm": "S",
+                                "label": "s1",
                                 "input": {},
                                 "output": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o3"
+                                "observability_label": "act"
+                            }
+                        },
+                        {
+                            "source": 0,
+                            "label": "s3",
+                            "destination": 7,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s3",
+                                "input": {},
+                                "output": {
+                                    "L": "cl"
+                                },
+                                "relevance_label": "f1",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -1179,63 +473,62 @@
                 ],
                 "reachable_nodes": [
                     "1, 1",
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1"
                 ],
                 "observation_index": 0
             },
             "destination": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "e2",
-                        "L3": "\u03f5"
+                        "L": "op"
                     },
-                    "label": " 20 31  e2 \u03f5",
+                    "label": " 0 1  op",
                     "id": 1,
                     "reachable_nodes": [
                         2,
                         3,
-                        4,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        12,
-                        13,
-                        0,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 1,
-                            "label": "t2a",
+                            "label": "b1",
                             "destination": 2,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2a",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "output": {
-                                    "L3": "e3"
-                                },
+                                "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o2"
+                                "observability_label": "opn"
+                            }
+                        },
+                        {
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
+                            "transition_link": {
+                                "fsm": "B",
+                                "label": "b3",
+                                "input": {
+                                    "L": "op"
+                                },
+                                "output": {},
+                                "relevance_label": "f3",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -1243,72 +536,72 @@
                 },
                 "id": 1,
                 "direct_reachable": [
-                    "2, 2"
+                    "6, 1"
                 ],
                 "reachable_nodes": [
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1",
+                    "1, 1"
                 ],
                 "observation_index": 1
             },
             "observation_index": 1,
-            "observability_label": "o3",
+            "observability_label": "act",
             "relevance_label": "\u03f5"
         },
         {
-            "label": "t2a",
+            "label": "b3",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "e2",
-                        "L3": "\u03f5"
+                        "L": "op"
                     },
-                    "label": " 20 31  e2 \u03f5",
+                    "label": " 0 1  op",
                     "id": 1,
                     "reachable_nodes": [
                         2,
                         3,
-                        4,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        12,
-                        13,
-                        0,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 1,
-                            "label": "t2a",
+                            "label": "b1",
                             "destination": 2,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2a",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "output": {
-                                    "L3": "e3"
-                                },
+                                "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o2"
+                                "observability_label": "opn"
+                            }
+                        },
+                        {
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
+                            "transition_link": {
+                                "fsm": "B",
+                                "label": "b3",
+                                "input": {
+                                    "L": "op"
+                                },
+                                "output": {},
+                                "relevance_label": "f3",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -1316,979 +609,276 @@
                 },
                 "id": 1,
                 "direct_reachable": [
-                    "2, 2"
+                    "6, 1"
                 ],
                 "reachable_nodes": [
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1",
+                    "1, 1"
                 ],
                 "observation_index": 1
             },
             "destination": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
+                        "L": "\u03f5"
                     },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
+                    "label": " 0 1  \u03f5",
+                    "id": 6,
                     "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
                         0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "o2",
-            "relevance_label": "\u03f5"
-        },
-        {
-            "label": "t3b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
-                    "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 30  \u03f5 \u03f5",
-                    "id": 3,
-                    "reachable_nodes": [
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
                         1,
                         2,
                         3,
-                        12,
-                        13,
-                        0,
-                        14
+                        6,
+                        4,
+                        5
                     ],
                     "isFinal": 1,
                     "isReachingFinal": 0,
                     "edges": [
                         {
-                            "source": 3,
-                            "label": "t2b",
-                            "destination": 4,
+                            "source": 6,
+                            "label": "s2",
+                            "destination": 7,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
+                                "fsm": "S",
+                                "label": "s2",
                                 "input": {},
                                 "output": {
-                                    "L3": "e3"
+                                    "L": "cl"
                                 },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
+                                "relevance_label": "\u03f5",
+                                "observability_label": "sby"
                             }
                         },
                         {
-                            "source": 3,
-                            "label": "t3a",
-                            "destination": 11,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 3
-                },
-                "id": 3,
-                "direct_reachable": [
-                    "4, 2"
-                ],
-                "reachable_nodes": [
-                    "4, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "\u03f5"
-        },
-        {
-            "label": "t2b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 30  \u03f5 \u03f5",
-                    "id": 3,
-                    "reachable_nodes": [
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        3,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 3,
-                            "label": "t2b",
-                            "destination": 4,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 3,
-                            "label": "t3a",
-                            "destination": 11,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 3
-                },
-                "id": 3,
-                "direct_reachable": [
-                    "4, 2"
-                ],
-                "reachable_nodes": [
-                    "4, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 30  \u03f5 e3",
-                    "id": 4,
-                    "reachable_nodes": [
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        3,
-                        4,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 4,
-                            "label": "t3a",
-                            "destination": 5,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 4
-                },
-                "id": 4,
-                "direct_reachable": [],
-                "reachable_nodes": [],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "r"
-        },
-        {
-            "label": "t3c",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
-                    "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 31  \u03f5 \u03f5",
-                    "id": 12,
-                    "reachable_nodes": [
-                        13,
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 12,
-                            "label": "t2b",
-                            "destination": 13,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 10
-                },
-                "id": 12,
-                "direct_reachable": [
-                    "13, 2"
-                ],
-                "reachable_nodes": [
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "f"
-        },
-        {
-            "label": "t2b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 31  \u03f5 \u03f5",
-                    "id": 12,
-                    "reachable_nodes": [
-                        13,
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 12,
-                            "label": "t2b",
-                            "destination": 13,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 10
-                },
-                "id": 12,
-                "direct_reachable": [
-                    "13, 2"
-                ],
-                "reachable_nodes": [
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
-                    "reachable_nodes": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 11
-                },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "r"
-        },
-        {
-            "label": "t3b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
-                    "reachable_nodes": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 11
-                },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 20 30  \u03f5 \u03f5",
-                    "id": 0,
-                    "reachable_nodes": [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 0,
-                            "label": "t3a",
+                            "source": 6,
+                            "label": "s4",
                             "destination": 1,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
+                                "fsm": "S",
+                                "label": "s4",
                                 "input": {},
                                 "output": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
+                                "relevance_label": "f2",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
-                    "renomination_label": 0
+                    "renomination_label": 6
                 },
-                "id": 0,
-                "direct_reachable": [],
-                "reachable_nodes": [],
-                "observation_index": 2
+                "id": 6,
+                "direct_reachable": [
+                    "1, 1"
+                ],
+                "reachable_nodes": [
+                    "1, 1",
+                    "6, 1"
+                ],
+                "observation_index": 1
             },
-            "observation_index": 2,
+            "observation_index": 1,
             "observability_label": "\u03f5",
-            "relevance_label": "\u03f5"
+            "relevance_label": "f3"
         },
         {
-            "label": "t3c",
+            "label": "s4",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
+                        "L": "\u03f5"
                     },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
+                    "label": " 0 1  \u03f5",
+                    "id": 6,
                     "reachable_nodes": [
+                        7,
                         0,
                         1,
                         2,
                         3,
+                        6,
                         4,
+                        5
+                    ],
+                    "isFinal": 1,
+                    "isReachingFinal": 0,
+                    "edges": [
+                        {
+                            "source": 6,
+                            "label": "s2",
+                            "destination": 7,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s2",
+                                "input": {},
+                                "output": {
+                                    "L": "cl"
+                                },
+                                "relevance_label": "\u03f5",
+                                "observability_label": "sby"
+                            }
+                        },
+                        {
+                            "source": 6,
+                            "label": "s4",
+                            "destination": 1,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s4",
+                                "input": {},
+                                "output": {
+                                    "L": "op"
+                                },
+                                "relevance_label": "f2",
+                                "observability_label": "\u03f5"
+                            }
+                        }
+                    ],
+                    "renomination_label": 6
+                },
+                "id": 6,
+                "direct_reachable": [
+                    "1, 1"
+                ],
+                "reachable_nodes": [
+                    "1, 1",
+                    "6, 1"
+                ],
+                "observation_index": 1
+            },
+            "destination": {
+                "link_node": {
+                    "fsms_states": {
+                        "B": "0",
+                        "S": "1"
+                    },
+                    "links_states": {
+                        "L": "op"
+                    },
+                    "label": " 0 1  op",
+                    "id": 1,
+                    "reachable_nodes": [
+                        2,
+                        3,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
+                            "source": 1,
+                            "label": "b1",
+                            "destination": 2,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L3": "e3"
+                                    "L": "op"
                                 },
                                 "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
+                                "observability_label": "opn"
                             }
                         },
                         {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
+                                "fsm": "B",
+                                "label": "b3",
                                 "input": {
-                                    "L3": "e3"
+                                    "L": "op"
                                 },
                                 "output": {},
-                                "relevance_label": "f",
+                                "relevance_label": "f3",
                                 "observability_label": "\u03f5"
                             }
                         }
                     ],
-                    "renomination_label": 11
+                    "renomination_label": 1
                 },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 20 31  \u03f5 \u03f5",
-                    "id": 14,
-                    "reachable_nodes": [],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [],
-                    "renomination_label": 12
-                },
-                "id": 14,
+                "id": 1,
                 "direct_reachable": [],
                 "reachable_nodes": [],
-                "observation_index": 2
+                "observation_index": 1
             },
-            "observation_index": 2,
+            "observation_index": 1,
             "observability_label": "\u03f5",
-            "relevance_label": "f"
+            "relevance_label": "f2"
         }
     ],
     "transitions_after_cutting": [
         {
-            "label": "t3a",
+            "label": "s1",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
+                        "B": "0",
+                        "S": "0"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
+                        "L": "\u03f5"
                     },
-                    "label": " 20 30  \u03f5 \u03f5",
+                    "label": " 0 0  \u03f5",
                     "id": 0,
                     "reachable_nodes": [
                         1,
                         2,
                         3,
-                        4,
-                        5,
+                        0,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        0,
-                        14
+                        4,
+                        5
                     ],
                     "isFinal": 1,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 0,
-                            "label": "t3a",
+                            "label": "s1",
                             "destination": 1,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
+                                "fsm": "S",
+                                "label": "s1",
                                 "input": {},
                                 "output": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o3"
+                                "observability_label": "act"
+                            }
+                        },
+                        {
+                            "source": 0,
+                            "label": "s3",
+                            "destination": 7,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s3",
+                                "input": {},
+                                "output": {
+                                    "L": "cl"
+                                },
+                                "relevance_label": "f1",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -2300,63 +890,62 @@
                 ],
                 "reachable_nodes": [
                     "1, 1",
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1"
                 ],
                 "observation_index": 0
             },
             "destination": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "e2",
-                        "L3": "\u03f5"
+                        "L": "op"
                     },
-                    "label": " 20 31  e2 \u03f5",
+                    "label": " 0 1  op",
                     "id": 1,
                     "reachable_nodes": [
                         2,
                         3,
-                        4,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        12,
-                        13,
-                        0,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 1,
-                            "label": "t2a",
+                            "label": "b1",
                             "destination": 2,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2a",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "output": {
-                                    "L3": "e3"
-                                },
+                                "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o2"
+                                "observability_label": "opn"
+                            }
+                        },
+                        {
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
+                            "transition_link": {
+                                "fsm": "B",
+                                "label": "b3",
+                                "input": {
+                                    "L": "op"
+                                },
+                                "output": {},
+                                "relevance_label": "f3",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -2364,72 +953,72 @@
                 },
                 "id": 1,
                 "direct_reachable": [
-                    "2, 2"
+                    "6, 1"
                 ],
                 "reachable_nodes": [
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1",
+                    "1, 1"
                 ],
                 "observation_index": 1
             },
             "observation_index": 1,
-            "observability_label": "o3",
+            "observability_label": "act",
             "relevance_label": "\u03f5"
         },
         {
-            "label": "t2a",
+            "label": "b3",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "e2",
-                        "L3": "\u03f5"
+                        "L": "op"
                     },
-                    "label": " 20 31  e2 \u03f5",
+                    "label": " 0 1  op",
                     "id": 1,
                     "reachable_nodes": [
                         2,
                         3,
-                        4,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        12,
-                        13,
-                        0,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
                             "source": 1,
-                            "label": "t2a",
+                            "label": "b1",
                             "destination": 2,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2a",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "output": {
-                                    "L3": "e3"
-                                },
+                                "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "o2"
+                                "observability_label": "opn"
+                            }
+                        },
+                        {
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
+                            "transition_link": {
+                                "fsm": "B",
+                                "label": "b3",
+                                "input": {
+                                    "L": "op"
+                                },
+                                "output": {},
+                                "relevance_label": "f3",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
@@ -2437,931 +1026,220 @@
                 },
                 "id": 1,
                 "direct_reachable": [
-                    "2, 2"
+                    "6, 1"
                 ],
                 "reachable_nodes": [
-                    "2, 2",
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
+                    "6, 1",
+                    "1, 1"
                 ],
                 "observation_index": 1
             },
             "destination": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
+                        "L": "\u03f5"
                     },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
+                    "label": " 0 1  \u03f5",
+                    "id": 6,
                     "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
                         0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "o2",
-            "relevance_label": "\u03f5"
-        },
-        {
-            "label": "t3b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
-                    "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 30  \u03f5 \u03f5",
-                    "id": 3,
-                    "reachable_nodes": [
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
                         1,
                         2,
                         3,
-                        12,
-                        13,
-                        0,
-                        14
+                        6,
+                        4,
+                        5
                     ],
                     "isFinal": 1,
                     "isReachingFinal": 0,
                     "edges": [
                         {
-                            "source": 3,
-                            "label": "t2b",
-                            "destination": 4,
+                            "source": 6,
+                            "label": "s2",
+                            "destination": 7,
                             "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
+                                "fsm": "S",
+                                "label": "s2",
                                 "input": {},
                                 "output": {
-                                    "L3": "e3"
+                                    "L": "cl"
                                 },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
+                                "relevance_label": "\u03f5",
+                                "observability_label": "sby"
                             }
                         },
                         {
-                            "source": 3,
-                            "label": "t3a",
-                            "destination": 11,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 3
-                },
-                "id": 3,
-                "direct_reachable": [
-                    "4, 2"
-                ],
-                "reachable_nodes": [
-                    "4, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "\u03f5"
-        },
-        {
-            "label": "t3c",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 21 31  \u03f5 e3",
-                    "id": 2,
-                    "reachable_nodes": [
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 2,
-                            "label": "t3b",
-                            "destination": 3,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 2,
-                            "label": "t3c",
-                            "destination": 12,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 2
-                },
-                "id": 2,
-                "direct_reachable": [
-                    "3, 2",
-                    "12, 2"
-                ],
-                "reachable_nodes": [
-                    "3, 2",
-                    "4, 2",
-                    "12, 2",
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 31  \u03f5 \u03f5",
-                    "id": 12,
-                    "reachable_nodes": [
-                        13,
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 12,
-                            "label": "t2b",
-                            "destination": 13,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 10
-                },
-                "id": 12,
-                "direct_reachable": [
-                    "13, 2"
-                ],
-                "reachable_nodes": [
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "f"
-        },
-        {
-            "label": "t2b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 31  \u03f5 \u03f5",
-                    "id": 12,
-                    "reachable_nodes": [
-                        13,
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 12,
-                            "label": "t2b",
-                            "destination": 13,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 10
-                },
-                "id": 12,
-                "direct_reachable": [
-                    "13, 2"
-                ],
-                "reachable_nodes": [
-                    "13, 2",
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
-                    "reachable_nodes": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 11
-                },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "r"
-        },
-        {
-            "label": "t3b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
-                    "reachable_nodes": [
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
-                                "input": {
-                                    "L3": "e3"
-                                },
-                                "output": {},
-                                "relevance_label": "f",
-                                "observability_label": "\u03f5"
-                            }
-                        }
-                    ],
-                    "renomination_label": 11
-                },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 20 30  \u03f5 \u03f5",
-                    "id": 0,
-                    "reachable_nodes": [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 0,
-                            "label": "t3a",
+                            "source": 6,
+                            "label": "s4",
                             "destination": 1,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
+                                "fsm": "S",
+                                "label": "s4",
                                 "input": {},
                                 "output": {
-                                    "L2": "e2"
+                                    "L": "op"
                                 },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
+                                "relevance_label": "f2",
+                                "observability_label": "\u03f5"
                             }
                         }
                     ],
-                    "renomination_label": 0
+                    "renomination_label": 6
                 },
-                "id": 0,
-                "direct_reachable": [],
-                "reachable_nodes": [],
-                "observation_index": 2
+                "id": 6,
+                "direct_reachable": [
+                    "1, 1"
+                ],
+                "reachable_nodes": [
+                    "1, 1",
+                    "6, 1"
+                ],
+                "observation_index": 1
             },
-            "observation_index": 2,
+            "observation_index": 1,
             "observability_label": "\u03f5",
-            "relevance_label": "\u03f5"
+            "relevance_label": "f3"
         },
         {
-            "label": "t3c",
+            "label": "s4",
             "source": {
                 "link_node": {
                     "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
+                        "B": "0",
+                        "S": "1"
                     },
                     "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
+                        "L": "\u03f5"
                     },
-                    "label": " 20 31  \u03f5 e3",
-                    "id": 13,
+                    "label": " 0 1  \u03f5",
+                    "id": 6,
                     "reachable_nodes": [
+                        7,
                         0,
                         1,
                         2,
                         3,
+                        6,
                         4,
+                        5
+                    ],
+                    "isFinal": 1,
+                    "isReachingFinal": 0,
+                    "edges": [
+                        {
+                            "source": 6,
+                            "label": "s2",
+                            "destination": 7,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s2",
+                                "input": {},
+                                "output": {
+                                    "L": "cl"
+                                },
+                                "relevance_label": "\u03f5",
+                                "observability_label": "sby"
+                            }
+                        },
+                        {
+                            "source": 6,
+                            "label": "s4",
+                            "destination": 1,
+                            "transition_link": {
+                                "fsm": "S",
+                                "label": "s4",
+                                "input": {},
+                                "output": {
+                                    "L": "op"
+                                },
+                                "relevance_label": "f2",
+                                "observability_label": "\u03f5"
+                            }
+                        }
+                    ],
+                    "renomination_label": 6
+                },
+                "id": 6,
+                "direct_reachable": [
+                    "1, 1"
+                ],
+                "reachable_nodes": [
+                    "1, 1",
+                    "6, 1"
+                ],
+                "observation_index": 1
+            },
+            "destination": {
+                "link_node": {
+                    "fsms_states": {
+                        "B": "0",
+                        "S": "1"
+                    },
+                    "links_states": {
+                        "L": "op"
+                    },
+                    "label": " 0 1  op",
+                    "id": 1,
+                    "reachable_nodes": [
+                        2,
+                        3,
+                        0,
+                        1,
                         5,
                         6,
                         7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12,
-                        13,
-                        14
+                        4
                     ],
                     "isFinal": 0,
                     "isReachingFinal": 0,
                     "edges": [
                         {
-                            "source": 13,
-                            "label": "t3b",
-                            "destination": 0,
+                            "source": 1,
+                            "label": "b1",
+                            "destination": 2,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3b",
+                                "fsm": "B",
+                                "label": "b1",
                                 "input": {
-                                    "L3": "e3"
+                                    "L": "op"
                                 },
                                 "output": {},
                                 "relevance_label": "\u03f5",
-                                "observability_label": "\u03f5"
+                                "observability_label": "opn"
                             }
                         },
                         {
-                            "source": 13,
-                            "label": "t3c",
-                            "destination": 14,
+                            "source": 1,
+                            "label": "b3",
+                            "destination": 6,
                             "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3c",
+                                "fsm": "B",
+                                "label": "b3",
                                 "input": {
-                                    "L3": "e3"
+                                    "L": "op"
                                 },
                                 "output": {},
-                                "relevance_label": "f",
+                                "relevance_label": "f3",
                                 "observability_label": "\u03f5"
                             }
                         }
                     ],
-                    "renomination_label": 11
+                    "renomination_label": 1
                 },
-                "id": 13,
-                "direct_reachable": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "reachable_nodes": [
-                    "0, 2",
-                    "14, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "31"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 20 31  \u03f5 \u03f5",
-                    "id": 14,
-                    "reachable_nodes": [],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [],
-                    "renomination_label": 12
-                },
-                "id": 14,
+                "id": 1,
                 "direct_reachable": [],
                 "reachable_nodes": [],
-                "observation_index": 2
+                "observation_index": 1
             },
-            "observation_index": 2,
+            "observation_index": 1,
             "observability_label": "\u03f5",
-            "relevance_label": "f"
+            "relevance_label": "f2"
         }
     ],
-    "cutted_transitions": [
-        {
-            "label": "t2b",
-            "source": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "21",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "\u03f5"
-                    },
-                    "label": " 21 30  \u03f5 \u03f5",
-                    "id": 3,
-                    "reachable_nodes": [
-                        4,
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        3,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 1,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 3,
-                            "label": "t2b",
-                            "destination": 4,
-                            "transition_link": {
-                                "fsm": "C2",
-                                "label": "t2b",
-                                "input": {},
-                                "output": {
-                                    "L3": "e3"
-                                },
-                                "relevance_label": "r",
-                                "observability_label": "\u03f5"
-                            }
-                        },
-                        {
-                            "source": 3,
-                            "label": "t3a",
-                            "destination": 11,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 3
-                },
-                "id": 3,
-                "direct_reachable": [
-                    "4, 2"
-                ],
-                "reachable_nodes": [
-                    "4, 2"
-                ],
-                "observation_index": 2
-            },
-            "destination": {
-                "link_node": {
-                    "fsms_states": {
-                        "C2": "20",
-                        "C3": "30"
-                    },
-                    "links_states": {
-                        "L2": "\u03f5",
-                        "L3": "e3"
-                    },
-                    "label": " 20 30  \u03f5 e3",
-                    "id": 4,
-                    "reachable_nodes": [
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                        1,
-                        2,
-                        3,
-                        4,
-                        12,
-                        13,
-                        0,
-                        14
-                    ],
-                    "isFinal": 0,
-                    "isReachingFinal": 0,
-                    "edges": [
-                        {
-                            "source": 4,
-                            "label": "t3a",
-                            "destination": 5,
-                            "transition_link": {
-                                "fsm": "C3",
-                                "label": "t3a",
-                                "input": {},
-                                "output": {
-                                    "L2": "e2"
-                                },
-                                "relevance_label": "\u03f5",
-                                "observability_label": "o3"
-                            }
-                        }
-                    ],
-                    "renomination_label": 4
-                },
-                "id": 4,
-                "direct_reachable": [],
-                "reachable_nodes": [],
-                "observation_index": 2
-            },
-            "observation_index": 2,
-            "observability_label": "\u03f5",
-            "relevance_label": "r"
-        }
-    ]
+    "cutted_transitions": []
 }

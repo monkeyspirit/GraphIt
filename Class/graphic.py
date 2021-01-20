@@ -72,6 +72,7 @@ def draw_network_graphic(n1):
 # - n1: is the network
 # - transitions: is the list of the transitions in the network
 def create_behavioral_space(filename, n1, transitions):
+    Node.count = -1
     # f is the graphviz component to plot the graph
     f = Digraph(filename, format='png')
 
@@ -948,10 +949,10 @@ def save_renomination_file(space, filename):
     out_file.write("-------------------------------------------\n")
     out_file.write("Saved and renominated nodes and transitions\n")
     out_file.write("-------------------------------------------\n")
-    out_file.write("Node state   | id  | renomination label\n")
+    out_file.write("Node state     |      id   |  renomination label\n")
 
     for node in space.nodes_after_cutting:
-        out_file.write(node.label + " \t" + str(node.id) + " \t\t" + str(node.renomination_label) + "\n")
+        out_file.write(node.label + " \t" + str(node.id) + " \t" + str(node.renomination_label) + "\n")
 
     print_transition_pretty(space.transitions_after_cutting, out_file)
 
@@ -959,7 +960,7 @@ def save_renomination_file(space, filename):
     out_file.write("Cutted nodes and transitions\n")
     out_file.write("----------------------------\n")
 
-    out_file.write("Node state   | id  \n")
+    out_file.write("Node state      |     id  \n")
     for node in space.cutted_nodes:
         out_file.write(node.label + " \t" + str(node.id) + "\n")
 
@@ -976,7 +977,7 @@ def save_renomination_file_obs(space, filename):
     out_file.write("id | observation index \n")
 
     for node in space.nodes_after_cutting:
-        out_file.write(str(node.id) + " \t\t\t" + str(node.observation_index) + "\n")
+        out_file.write(str(node.id) + " \t" + str(node.observation_index) + "\n")
 
     print_transition_pretty_obs(space.transitions_after_cutting, out_file)
 
@@ -994,22 +995,23 @@ def save_renomination_file_obs(space, filename):
 
 
 # ------------ INTRO FUNCTION ------------
-# This is function is used to print with a better style the trnasitions in the file of the renomination
+# This is function is used to print with a better style the transition in the file of the renomination
 def print_transition_pretty(transitions, out_file):
     out_file.write("\n---Edge---\n")
     out_file.write("* the id here are the id before the renomination *\n")
     out_file.write("source id | label | destination id | o label | r label\n")
     for transition in transitions:
-        if len(str(transition.transition_link.observability_label)) == 1:
-            out_file.write("\t" + str(transition.source) + "\t -> " + str(transition.label) + "\t -> \t" + str(
-                transition.destination) + " \t\t\t\t " + str(
-                transition.transition_link.observability_label) + " \t\t " + str(
+        if len(str(transition.transition_link.observability_label)) > 2:
+            out_file.write(str(transition.source) + "\t   " + str(transition.label) + "\t      " + str(
+                transition.destination) + "\t         " + str(
+                transition.transition_link.observability_label) + "\t       " + str(
                 transition.transition_link.relevance_label) + "\n")
         else:
-            out_file.write("\t" + str(transition.source) + "\t -> " + str(transition.label) + "\t -> \t" + str(
-                transition.destination) + " \t\t\t\t " + str(
-                transition.transition_link.observability_label) + " \t " + str(
+            out_file.write(str(transition.source) + "\t   " + str(transition.label) + "\t      " + str(
+                transition.destination) + "\t         " + str(
+                transition.transition_link.observability_label) + "         " + str(
                 transition.transition_link.relevance_label) + "\n")
+
 
 
 def print_transition_pretty_obs(transitions, out_file):
@@ -1017,18 +1019,12 @@ def print_transition_pretty_obs(transitions, out_file):
     out_file.write("* the id here are the id before the renomination *\n")
     out_file.write("source id | label | destination id | o label | observation index | r label \n")
     for transition in transitions:
-        if len(str(transition.observability_label)) == 1:
-            out_file.write("\t" + str(transition.source.id) + "\t -> " + str(transition.label) + "\t -> \t" + str(
-                transition.destination.id) + " \t\t\t\t " + str(
-                transition.observability_label) + " \t\t\t " + str(
-                transition.observation_index) + " \t\t\t\t " + str(
-                transition.relevance_label) + "\n")
-        else:
-            out_file.write("\t" + str(transition.source.id) + "\t -> " + str(transition.label) + "\t -> \t" + str(
-                transition.destination.id) + " \t\t\t\t " + str(
-                transition.observability_label) + " \t\t " + str(
-                transition.observation_index) + " \t\t\t\t " + str(
-                transition.relevance_label) + "\n")
+
+        out_file.write(str(transition.source.id) + "\t   " + str(transition.label) + "\t      " + str(
+            transition.destination.id) + " \t         " + str(
+            transition.observability_label) + " \t              " + str(
+            transition.observation_index) + " \t        " + str(
+            transition.relevance_label) + "\n")
 
 
 def create_diagnosis_for_space_observable_renominated(filename, space, obs):

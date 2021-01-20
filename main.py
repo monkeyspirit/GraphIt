@@ -252,10 +252,7 @@ if __name__ == '__main__':
             # Define the window's contents
             show_fsms = [
                 images,
-                text,
-                [
-                    sg.Button('Esci')
-                ]
+                text
             ]
 
             show_fsms_layout = [
@@ -270,7 +267,7 @@ if __name__ == '__main__':
             while True:
                 event, values = show_fsms_window.read()
                 # See if user wants to quit or window was closed
-                if event == sg.WINDOW_CLOSED or event == 'Esci':
+                if event == sg.WINDOW_CLOSED:
                     break
             # Finish up by removing from the screen
             show_fsms_window.close()
@@ -330,18 +327,20 @@ if __name__ == '__main__':
 
             def calculate_behavioral_space():
                 global full_space, filename_be
-
+                network_window['output_network_op'].update(values['output_network_op']+"--- Calcolo in corso ... ---")
                 filename_be = 'full_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space = behavioral_space(n1, transitions)
 
-                network_window['output_network_op'].update(values['output_network_op'] + '> Fatto! Salvato in '
-                                                                                         'Behavioral_Space/' + filename_be)
+                network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
+                                                                                         'Diagramma salvato in: Behavioral_Space/' + filename_be)
                 network_window['ren_be'].update(disabled=False)
                 network_window['be_diag'].update(disabled=False)
 
             def show_behavioral_space():
-                column1 = [[sg.Text('Spazio con LABEL')], [sg.Image(filename='Behavioral_Space/' + filename_be + '.gv.png')]]
-                column2 =[[sg.Text('Spazio con ID')], [sg.Image(filename='Behavioral_Space/' + filename_be + '_id.gv.png')]]
+                column1 = [[sg.Text('Spazio con LABEL')],
+                           [sg.Image(filename='Behavioral_Space/' + filename_be + '.gv.png')]]
+                column2 = [[sg.Text('Spazio con ID')],
+                           [sg.Image(filename='Behavioral_Space/' + filename_be + '_id.gv.png')]]
                 behavioral_layout = [
                     [
                         sg.Column(column1, size=(600, 800), scrollable=True),
@@ -357,45 +356,104 @@ if __name__ == '__main__':
 
             def calculate_behavioral_space_renominated():
                 global full_space_r, filename_re_be
-
+                network_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
                 filename_re_be = 'renominated_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space_r = behavioral_space_renominated(n1, full_space)
-                network_window['output_network_op'].update(values['output_network_op'] + '> Fatto! Salvato in '
-                                                                                         'Behavioral_Space_Renominated/'
-                                                           + filename_re_be)
+                network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
+                                                                                         'Diagramma salvato in: Behavioral_Space_Renominated/'
+                                                           + filename_re_be  + "\nFile di "
+                                                                                         "ridenominazione spazio comportamentale salvato in:\n"
+                                                                                         "Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
 
-                network_window['calc_obs'].update(disabled=False)
+
                 network_window['be_re_diag'].update(disabled=False)
+                network_window['renomination_file_be'].update(disabled=False)
+                network_window['input_btn'].update(disabled=False)
+                network_window['refresh'].update(disabled=False)
 
             def show_re_be_space():
-                column_re1 = [[sg.Text('Spazio con ID vecchi')], [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
-                column_re2 = [[sg.Text('Spazio con ID rinominati')], [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
+                column_re1 = [[sg.Text('Spazio con ID rinominati')],
+                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
+                column_re2 = [[sg.Text('Spazio con ID vecchi')],
+                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
 
                 re_behavioral_layout = [
-
                     [
-                        sg.Text(
-                            "File di ridenominazione:\nBehavioral_Space_Renominated\n/renomination_list_" + filename_re_be + ".txt")
+                        sg.Button('Vedi file ridenominazione', key='renomination_file_be_in_diag'),
                     ],
                     [
                         sg.Column(column_re1, size=(600, 800), scrollable=True),
                         sg.Column(column_re2, size=(600, 800), scrollable=True)
                     ]
                 ]
-                re_behavioral_window = sg.Window('Diagramma spazio comportamentale rinominato', re_behavioral_layout, resizable=True)
+                re_behavioral_window = sg.Window('Diagramma spazio comportamentale rinominato', re_behavioral_layout,
+                                                 resizable=True)
                 while True:
                     event, values = re_behavioral_window.read()
                     # See if user wants to quit or window was closed
                     if event == sg.WINDOW_CLOSED:
                         break
+                    elif event == 'renomination_file_be_in_diag':
+                        show_renomination_file_be()
+
+            def show_renomination_file_be():
+                file = open(file="Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                renomination_be_layout = [
+                    [
+                        sg.Button('Vedi diagramma', key='be_re_diag')
+                    ],
+                    [sg.Column([[sg.Text(file.read())]], scrollable=True)]
+                ]
+
+                show_re_be_window = sg.Window('File di renominazione dello spazio comportamentale',
+                                              renomination_be_layout)
+                while True:
+                    event, values = show_re_be_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'be_re_diag':
+                        show_re_be_space()
+
+                show_re_be_window.close()
+
+            def check_obs_insert():
+                global obs
+
+                # obs = ["act", "sby", "nop"]
+                try:
+                    string_obs = values['input_obs']
+                    obs = string_obs.split(",")
+                    network_window['calc_obs'].update(disabled=False)
+                    network_window['ren_obs'].update(disabled=True)
+                    network_window['diag'].update(disabled=True)
+                    network_window['obs_diag'].update(disabled=True)
+                    network_window['obs_re_diag'].update(disabled=True)
+                    network_window['diag_diag'].update(disabled=True)
+                    network_window['renomination_file_obs'].update(disabled=True)
+                    network_window['output_network_op'].update(values['output_network_op'] + "> Osservazione inserita:\n"+string_obs)
+                except Exception:
+                    sg.Popup('Attenzione!', 'Controlla di aver inserito l\'osservazione in modo corretto.')
+
+            def refresh_obs():
+                network_window['input_obs'].update("")
+                network_window['calc_obs'].update(disabled=True)
+                network_window['ren_obs'].update(disabled=True)
+                network_window['diag'].update(disabled=True)
+                network_window['obs_diag'].update(disabled=True)
+                network_window['obs_re_diag'].update(disabled=True)
+                network_window['diag_diag'].update(disabled=True)
+                network_window['renomination_file_obs'].update(disabled=True)
 
             def calculate_obs_space():
-                global obs, obs_full_space, filename_obs
-                obs = ["o3", "o2"]
-                # obs = ["act", "sby", "nop"]
+                global obs_full_space, filename_obs
+                network_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
+
                 filename_obs = 'observable_space' + n1.fsms[0].name + n1.fsms[1].name + '_id_' + obs[0]
                 obs_full_space = observation(n1, full_space_r, obs)
-                network_window['output_network_op'].update(values['output_network_op'] + '> Fatto! Salvato in Behavioral_Space_Observable/' + filename_obs)
+                network_window['output_network_op'].update(
+                    values['output_network_op'] + '> Completato\n '
+                                                  'Diagramma salvato in: Behavioral_Space_Observable/' + filename_obs)
 
                 network_window['ren_obs'].update(disabled=False)
                 network_window['obs_diag'].update(disabled=False)
@@ -424,17 +482,23 @@ if __name__ == '__main__':
 
             def calculate_obs_space_renominated():
                 global obs_space_r, filename_re_obs
+                network_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
                 filename_re_obs = 'renominated_space_obs' + n1.fsms[0].name
                 obs_space_r = observation_renominated(n1, obs_full_space, obs)
 
-                network_window['output_network_op'].update(values['output_network_op'] + '> Fatto! Salvato in Behavioral_Space_Observable_Renominated/'+ filename_re_obs)
+                network_window['output_network_op'].update(values[
+                                                               'output_network_op'] + '> Completato\n'
+                                                                                      'Diagramma salvato in: Behavioral_Space_Observable_Renominated/' + filename_re_obs + "\nFile di "
+                                                                                         "ridenominazione dello spazio data l'osservazione salvato in:\n"
+                                                                                         "Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
 
                 network_window['diag'].update(disabled=False)
                 network_window['obs_re_diag'].update(disabled=False)
-
+                network_window['renomination_file_obs'].update(disabled=False)
 
             def show_re_obs_space():
-                column_re_ob1 = [[sg.Image(filename='Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
+                column_re_ob1 = [
+                    [sg.Image(filename='Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
 
                 obs_name = ""
                 for o in obs:
@@ -445,22 +509,49 @@ if __name__ == '__main__':
                         sg.Text("L'osservazione considerata è:\n" + obs_name)
                     ],
                     [
-                        sg.Text("File di ridenominazione:\nBehavioral_Space_Observable_Renominated\n/renomination_list_" + filename_re_obs + ".txt")
+                        sg.Button('Vedi file ridenominazione', key='renomination_file_obs_in_diag'),
                     ],
                     [
                         sg.Column(column_re_ob1, size=(600, 800), scrollable=True)
                     ]
                 ]
-                re_obs_window = sg.Window('Diagramma spazio comportamentale rinominato data l\'osservazione', re_obs_layout)
+                re_obs_window = sg.Window('Diagramma spazio comportamentale rinominato data l\'osservazione',
+                                          re_obs_layout)
                 while True:
                     event, values = re_obs_window.read()
                     # See if user wants to quit or window was closed
                     if event == sg.WINDOW_CLOSED:
                         break
+                    elif event == 'renomination_file_obs_in_diag':
+                        show_renomination_file_obs()
+
+            def show_renomination_file_obs():
+                file = open(
+                    file="Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
+                renomination_obs_layout = [
+                    [
+                        sg.Button('Vedi diagramma', key='obs_re_diag')
+                    ],
+                    [sg.Column([[sg.Text(file.read())]], scrollable=True)]
+                ]
+
+                show_re_obs_window = sg.Window('File di renominazione dello spazio comportamentale data osservazione',
+                                               renomination_obs_layout)
+                while True:
+                    event, values = show_re_obs_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'obs_re_diag':
+                        show_re_obs_space()
+
+                show_re_obs_window.close()
 
             def calculate_diagnosi_space():
+                network_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
                 global n_img, exp
-                network_window['output_network_op'].update(values['output_network_op'] + '> Fatto! Salvato in '
+                network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n'
+                                                                                         'Diagramma salvato in: '
                                                                                          'Diagnosi_steps/')
 
                 n_img, exp = diagnosis(n1, obs_space_r, obs)
@@ -489,49 +580,45 @@ if __name__ == '__main__':
 
             network_buttons = [
                 [
-                    sg.Button('Calcola lo spazio comportamentale', key='calc_be')
+                    sg.Button('Calcola lo spazio comportamentale', key='calc_be'),
+                    sg.Button('Vedi diagramma', key='be_diag', disabled=True)
                 ],
                 [
-                    sg.Button('Rinomina lo spazio comportamentale', key='ren_be', disabled=True)
+                    sg.Button('Rinomina lo spazio comportamentale', key='ren_be', disabled=True),
+                    sg.Button('Vedi diagramma', key='be_re_diag', disabled=True),
+                    sg.Button('Vedi file ridenominazione', key='renomination_file_be', disabled=True),
                 ],
                 [
-                    sg.Button('Calcola lo spazio comportamentale data un\'osservazione', key='calc_obs', disabled=True)
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Text('Inserire un\'osservazione valida:\n(separare gli elementi con una ","\n e senza spazi)'),
+                    sg.InputText(key='input_obs'),
+                    sg.Button('Inserisci', key='input_btn', disabled=True),
+                    sg.Button('⟲', key='refresh', disabled=True)
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Button('Calcola lo spazio comportamentale data un\'osservazione', key='calc_obs', disabled=True),
+                    sg.Button('Vedi diagramma', key='obs_diag', disabled=True)
                 ],
                 [
                     sg.Button('Rinomina lo spazio comportamentale con l\'osservazione data', key='ren_obs',
-                              disabled=True)
+                              disabled=True),
+                    sg.Button('Vedi diagramma', key='obs_re_diag', disabled=True),
+                    sg.Button('Vedi file ridenominazione', key='renomination_file_obs', disabled=True),
                 ],
                 [
-                    sg.Button('Calcola la diagnosi con l\'osservazione data', key='diag', disabled=True)
-                ],
-                [
-                    sg.HSeparator()
-                ],
-                [
-                    sg.Button('Esci')
-                ]
-            ]
-            see_buttons = [
-                [
-                    sg.Button('Vedi', key='be_diag', disabled=True)
-                ],
-                [
-                    sg.Button('Vedi', key='be_re_diag', disabled=True)
-                ],
-                [
-                    sg.Button('Vedi', key='obs_diag', disabled=True)
-                ],
-                [
-                    sg.Button('Vedi', key='obs_re_diag', disabled=True)
-                ],
-                [
-                    sg.Button('Vedi', key='diag_diag', disabled=True)
+                    sg.Button('Calcola la diagnosi con l\'osservazione data', key='diag', disabled=True),
+                    sg.Button('Vedi diagrammi', key='diag_diag', disabled=True)
                 ],
                 [
                     sg.HSeparator()
                 ],
                 [
-
+                    sg.Button('Indietro')
                 ]
             ]
 
@@ -546,7 +633,7 @@ if __name__ == '__main__':
 
             network_plot = [
                 [
-                    sg.Multiline("", size=(30, 30), disabled=True, key="output_network_op")
+                    sg.Multiline("", size=(40, 30), disabled=True, key="output_network_op")
                 ]
             ]
 
@@ -554,7 +641,6 @@ if __name__ == '__main__':
                 [
                     sg.Column(network_diagram_plot),
                     sg.Column(network_buttons),
-                    sg.Column(see_buttons),
                     sg.VSeparator(),
                     sg.Column(network_plot)
                 ]
@@ -565,7 +651,7 @@ if __name__ == '__main__':
             while True:
                 event, values = network_window.read()
                 # See if user wants to quit or window was closed
-                if event == sg.WINDOW_CLOSED or event == 'Esci':
+                if event == sg.WINDOW_CLOSED or event == 'Indietro':
                     break
                 elif event == 'be_diag':
                     show_behavioral_space()
@@ -587,6 +673,14 @@ if __name__ == '__main__':
                     calculate_obs_space_renominated()
                 elif event == 'diag':
                     calculate_diagnosi_space()
+                elif event == 'renomination_file_be':
+                    show_renomination_file_be()
+                elif event == 'renomination_file_obs':
+                    show_renomination_file_obs()
+                elif event == 'input_btn':
+                    check_obs_insert()
+                elif event == 'refresh':
+                    refresh_obs()
 
             # Finish up by removing from the screen
             network_window.close()
@@ -618,7 +712,7 @@ if __name__ == '__main__':
                 sg.HSeparator()
             ],
             [
-                sg.Button('Esci')
+                sg.Button('Indietro')
             ]
         ]
 
@@ -659,7 +753,7 @@ if __name__ == '__main__':
         while True:
             event, values = create_window.read()
             # See if user wants to quit or window was closed
-            if event == sg.WINDOW_CLOSED or event == 'Esci':
+            if event == sg.WINDOW_CLOSED or event == 'Indietro':
                 break
             elif event == 'Carica automi':
                 load_fsm()
@@ -677,341 +771,464 @@ if __name__ == '__main__':
         # Finish up by removing from the screen
         create_window.close()
 
-        # show_net_btn = tk.Button(create, text="Mostra il diagramma della rete", state=tk.DISABLED,
-        #                          command=show_net_graph)
-        # show_net_btn.grid(row=7, pady=10, padx=10, column=3, columnspan=2)
-
-
-    # behavioral_space_btn = tk.Button(create, text="Calcola lo spazio comportamentale",
-    #                                  command=calculate_behavioral_space, state=tk.DISABLED)
-    # behavioral_space_btn.grid(row=8, pady=10, padx=10, column=1, columnspan=len(name_fsm_images))
-    # behavioral_space_ren_btn = tk.Button(create, text="Rinomina lo spazio comportamentale", state=tk.DISABLED,
-    #                                      command=calculate_behavioral_space_renominated)
-    # behavioral_space_ren_btn.grid(row=9, pady=10, padx=10, column=1, columnspan=len(name_fsm_images))
-    # behavioral_space_obs_btn = tk.Button(create, text="Calcola lo spazio comportamentale data un'osservazione",
-    #                                      state=tk.DISABLED, command=calculate_obs_space)
-    # behavioral_space_obs_btn.grid(row=10, pady=10, padx=10, column=1, columnspan=len(name_fsm_images))
-    # behavioral_space_obs_ren_btn = tk.Button(create, text="Rinomina lo spazio comportamentale data un'osservazione",
-    #                                          state=tk.DISABLED, command=calculate_obs_space_renominated)
-    # behavioral_space_obs_ren_btn.grid(row=11, pady=10, padx=10, column=1, columnspan=len(name_fsm_images))
-    # diagnosi_btn = tk.Button(create, text="Diagnosi data un'osservazione", command=calculate_diagnosi_space,
-    #                          state=tk.DISABLED)
-    # diagnosi_btn.grid(row=12, pady=10, padx=10, column=1, columnspan=len(name_fsm_images))
-    #
-    # create.mainloop()
 
     def load_network_window():
-        load_n = tk.Toplevel(root)
-        load_n.title("Caricamento ...")
-        load_n.geometry("1100x700")
-
+        global load_window
         try:
             n1 = network_draw()
             for fsm in n1.fsms:
                 graphic.draw_FSM_graphic(fsm)
             filename = 'full_space' + n1.fsms[0].name + n1.fsms[1].name
-            load_n.title(filename)
+            names = ""
+            for fsm in n1.fsms:
+                names = names + str(fsm.name)
 
             def show_fsm_graph():
                 global name_fsm_images
-                figure_fsm = tk.Toplevel(load_n)
-                figure_fsm.geometry("720x720")
-                figure_fsm.title("Diagrammi degli automi")
 
                 name_fsm_images = []
 
                 for fsm in n1.fsms:
                     name_fsm_images.append(fsm.name)
 
-                frame = tk.Frame(figure_fsm, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
-
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
-
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
-
-                photo_fsm = [0] * len(name_fsm_images)
-
+                images = []
+                text = []
                 for i in range(len(name_fsm_images)):
-                    photo_fsm[i] = tk.PhotoImage(file='FSM_graph/fsm' + name_fsm_images[i] + '.png')
-                    canvas.create_text(200 * i, 10, font="bold", text=name_fsm_images[i])
-                    canvas.create_image(0 + 200 * i, 50, image=photo_fsm[i], anchor="nw")
+                    images.append(sg.Image(filename='FSM_graph/fsm' + name_fsm_images[i] + '.png'))
+                    text.append(sg.Text(name_fsm_images[i]), )
 
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
+                # Define the window's contents
+                show_fsms = [
+                    images,
+                    text
+                ]
 
-                frame.pack()
-                figure_fsm.mainloop()
+                show_fsms_layout = [
+                    [
+                        sg.Column(show_fsms)
+                    ]
+                ]
+                # Create the window
+                show_fsms_window = sg.Window('Diagrammi automi a stati finiti', show_fsms_layout)
 
-            names = ""
-            for fsm in n1.fsms:
-                names = names + str(fsm.name)
-
-            show_fsm_graph_btn = tk.Button(load_n, text="Mostra i grafi degli automi",
-                                           command=show_fsm_graph)
-            show_fsm_graph_btn.grid(row=3, column=1, columnspan=2)
-            tk.Label(load_n, text='Diagramma della rete').grid(row=4, column=1, columnspan=2)
-            image_net = tk.PhotoImage(file="Network_graph/network" + names + ".png")
-            tk.Label(load_n, image=image_net).grid(row=5, column=1, columnspan=2)
+                # Display and interact with the Window using an Event Loop
+                while True:
+                    event, values = show_fsms_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                # Finish up by removing from the screen
+                show_fsms_window.close()
 
             def load_transitions():
+                global transitions
                 try:
-                    global transitions
                     transitions = comportamentalSpace.read_transitions_from_txt()
-                    print_T = "Label - input - output - o label - r label \n"
-                    print_T = print_T + "------------------------------------- \n"
+                    print_T = ""
                     for transition in transitions:
-                        print_T = print_T + str(transition.label) + " " + str(transition.input) + " " + str(
-                            transition.output) + "  " + str(
-                            transition.observability_label) + " " + str(
+                        print_T = print_T + str(transition.label) + ", " + str(transition.input) + ", " + str(
+                            transition.output) + ",  " + str(
+                            transition.observability_label) + ", " + str(
                             transition.relevance_label) + "\n"
 
-                    tk.Label(load_n, text=print_T).grid(row=5, column=3)
-
-                    behavioral_space_btn['state'] = tk.NORMAL
+                    load_window['output_transitions'].update(print_T)
+                    load_window['calc_be'].update(disabled=False)
                 except IndexError:
                     sg.Popup('Attenzione!',
                              'Il file potrebbe non essere quello corretto o avere degli errori di sintassi!')
                 except FileNotFoundError:
                     pass
 
-            load_transitions_btn = tk.Button(load_n, text="Carica le transizioni",
-                                             command=load_transitions)
-            load_transitions_btn.grid(row=4, column=3, columnspan=3)
-
             def calculate_behavioral_space():
-                global full_space
-
-                filename = 'full_space' + n1.fsms[0].name + n1.fsms[1].name
+                global full_space, filename_be
+                load_window['output_network_op'].update(values['output_network_op']+"--- Calcolo in corso ... ---")
+                filename_be = 'full_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space = behavioral_space(n1, transitions)
-                tk.Label(load_n, text="Fatto! Salvato in Behavioral_Space/" + filename, fg='green').grid(row=6,
-                                                                                                         column=3)
-                behavioral_space_ren_btn['state'] = tk.NORMAL
 
-                figure1 = tk.Toplevel(load_n)
-                figure1.geometry("720x720")
-                figure1.title("Spazio comportamentale")
-                frame = tk.Frame(figure1, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
+                load_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
+                                                                                         'Diagramma salvato in: Behavioral_Space/' + filename_be)
+                load_window['ren_be'].update(disabled=False)
+                load_window['be_diag'].update(disabled=False)
 
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
-
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
-
-                photo1 = tk.PhotoImage(file='Behavioral_Space/' + filename + '.gv.png')
-                photo2 = tk.PhotoImage(file='Behavioral_Space/' + filename + '_id.gv.png')
-                photo1_small = photo1.subsample(2, 2)
-                canvas.create_text(100, 10, font="bold",
-                                   text="Spazio con LABEL")
-                canvas.create_image(0, 50, image=photo1_small, anchor="nw")
-                canvas.create_text(500, 10, font="bold",
-                                   text="Spazio con ID")
-                canvas.create_image(400, 50, image=photo2, anchor="nw")
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
-
-                frame.pack()
-
-                figure1.mainloop()
+            def show_behavioral_space():
+                column1 = [[sg.Text('Spazio con LABEL')],
+                           [sg.Image(filename='Behavioral_Space/' + filename_be + '.gv.png')]]
+                column2 = [[sg.Text('Spazio con ID')],
+                           [sg.Image(filename='Behavioral_Space/' + filename_be + '_id.gv.png')]]
+                behavioral_layout = [
+                    [
+                        sg.Column(column1, size=(600, 800), scrollable=True),
+                        sg.Column(column2, size=(600, 800), scrollable=True)
+                    ]
+                ]
+                behavioral_window = sg.Window('Diagramma spazio comportamentale', behavioral_layout, resizable=True)
+                while True:
+                    event, values = behavioral_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
 
             def calculate_behavioral_space_renominated():
-                global full_space_r
-                filename = 'renominated_space' + n1.fsms[0].name + n1.fsms[1].name
+                global full_space_r, filename_re_be
+                load_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
+                filename_re_be = 'renominated_space' + n1.fsms[0].name + n1.fsms[1].name
                 full_space_r = behavioral_space_renominated(n1, full_space)
-                tk.Label(load_n, text="Fatto! Salvato in Behavioral_Space_Renominated/" + filename, fg='green').grid(
-                    row=7,
-                    column=3)
-                behavioral_space_obs_btn['state'] = tk.NORMAL
+                load_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
+                                                                                         'Diagramma salvato in: Behavioral_Space_Renominated/'
+                                                           + filename_re_be  + "\nFile di "
+                                                                                         "ridenominazione spazio comportamentale salvato in:\n"
+                                                                                         "Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
 
-                figure2 = tk.Toplevel(load_n)
-                figure2.geometry("720x720")
-                figure2.title("Spazio comportamentale rinominato")
-                frame = tk.Frame(figure2, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
 
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
+                load_window['be_re_diag'].update(disabled=False)
+                load_window['renomination_file_be'].update(disabled=False)
+                load_window['input_btn'].update(disabled=False)
+                load_window['refresh'].update(disabled=False)
 
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
+            def show_re_be_space():
+                column_re1 = [[sg.Text('Spazio con ID rinominati')],
+                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
+                column_re2 = [[sg.Text('Spazio con ID vecchi')],
+                              [sg.Image(filename='Behavioral_Space_Renominated/' + filename_re_be + '_id.gv.png')]]
 
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
+                re_behavioral_layout = [
+                    [
+                        sg.Button('Vedi file ridenominazione', key='renomination_file_be_in_diag'),
+                    ],
+                    [
+                        sg.Column(column_re1, size=(600, 800), scrollable=True),
+                        sg.Column(column_re2, size=(600, 800), scrollable=True)
+                    ]
+                ]
+                re_behavioral_window = sg.Window('Diagramma spazio comportamentale rinominato', re_behavioral_layout,
+                                                 resizable=True)
+                while True:
+                    event, values = re_behavioral_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'renomination_file_be_in_diag':
+                        show_renomination_file_be()
 
-                photo1 = tk.PhotoImage(file='Behavioral_Space_Renominated/' + filename + '.gv.png')
-                photo2 = tk.PhotoImage(file='Behavioral_Space_Renominated/' + filename + '_id.gv.png')
+            def show_renomination_file_be():
+                file = open(file="Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                renomination_be_layout = [
+                    [
+                        sg.Button('Vedi diagramma', key='be_re_diag')
+                    ],
+                    [sg.Column([[sg.Text(file.read())]], scrollable=True)]
+                ]
 
-                canvas.create_text(100, 10, font="bold",
-                                   text="Spazio con ID vecchi")
-                canvas.create_image(0, 100, image=photo2, anchor="nw")
-                canvas.create_text(500, 10, font="bold",
-                                   text="Spazio con ID rinominati")
-                canvas.create_image(400, 100, image=photo1, anchor="nw")
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
-                canvas.create_text(350, 50, font="bold",
-                                   text="File di ridenominazione:\nBehavioral_Space_Renominated\n/renomination_list_" + filename + ".txt")
+                show_re_be_window = sg.Window('File di renominazione dello spazio comportamentale',
+                                              renomination_be_layout)
+                while True:
+                    event, values = show_re_be_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'be_re_diag':
+                        show_re_be_space()
 
-                frame.pack()
+                show_re_be_window.close()
 
-                figure2.mainloop()
+            def check_obs_insert():
+                global obs
+
+                # obs = ["act", "sby", "nop"]
+                try:
+                    string_obs = values['input_obs']
+                    obs = string_obs.split(",")
+                    load_window['calc_obs'].update(disabled=False)
+                    load_window['ren_obs'].update(disabled=True)
+                    load_window['diag'].update(disabled=True)
+                    load_window['obs_diag'].update(disabled=True)
+                    load_window['obs_re_diag'].update(disabled=True)
+                    load_window['diag_diag'].update(disabled=True)
+                    load_window['renomination_file_obs'].update(disabled=True)
+                    load_window['output_network_op'].update(values['output_network_op'] + "> Osservazione inserita:\n"+string_obs)
+                except Exception:
+                    sg.Popup('Attenzione!', 'Controlla di aver inserito l\'osservazione in modo corretto.')
+
+            def refresh_obs():
+                load_window['input_obs'].update("")
+                load_window['calc_obs'].update(disabled=True)
+                load_window['ren_obs'].update(disabled=True)
+                load_window['diag'].update(disabled=True)
+                load_window['obs_diag'].update(disabled=True)
+                load_window['obs_re_diag'].update(disabled=True)
+                load_window['diag_diag'].update(disabled=True)
+                load_window['renomination_file_obs'].update(disabled=True)
 
             def calculate_obs_space():
-                global obs
-                global obs_full_space
-                obs = ["o3", "o2"]
-                filename = 'observable_space' + n1.fsms[0].name + n1.fsms[1].name + '_id_' + obs[0]
+                global obs_full_space, filename_obs
+                load_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
+
+                filename_obs = 'observable_space' + n1.fsms[0].name + n1.fsms[1].name + '_id_' + obs[0]
                 obs_full_space = observation(n1, full_space_r, obs)
-                tk.Label(load_n, text="Fatto!  Salvato in Behavioral_Space_Observable/" + filename, fg='green').grid(
-                    row=8,
-                    column=3)
-                behavioral_space_obs_ren_btn['state'] = tk.NORMAL
+                load_window['output_network_op'].update(
+                    values['output_network_op'] + '> Completato\n '
+                                                  'Diagramma salvato in: Behavioral_Space_Observable/' + filename_obs)
 
-                figure3 = tk.Toplevel(load_n)
-                figure3.geometry("720x720")
-                figure3.title("Spazio comportamentale data l'osservazione")
-                frame = tk.Frame(figure3, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
+                load_window['ren_obs'].update(disabled=False)
+                load_window['obs_diag'].update(disabled=False)
 
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
-
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
-
-                photo1 = tk.PhotoImage(file='Behavioral_Space_Observable/' + filename + '.gv.png')
-                canvas.create_image(0, 50, image=photo1, anchor="nw")
+            def show_obs_space():
                 obs_name = ""
                 for o in obs:
                     obs_name = obs_name + o + " "
-                canvas.create_text(500, 300, font="bold",
-                                   text="L'osservazione considerata è:\n" + obs_name)
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
 
-                frame.pack()
+                column_ob1 = [[sg.Image(filename='Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
+                obs_layout = [
 
-                figure3.mainloop()
+                    [
+                        sg.Text("L'osservazione considerata è:\n" + obs_name)
+                    ],
+                    [
+                        sg.Column(column_ob1, size=(600, 800), scrollable=True)
+                    ]
+                ]
+                obs_window = sg.Window('Diagramma spazio comportamentale data un\'osservazione', obs_layout)
+                while True:
+                    event, values = obs_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
 
             def calculate_obs_space_renominated():
-                global obs_space_r
-                filename = 'renominated_space_obs' + n1.fsms[0].name
+                global obs_space_r, filename_re_obs
+                load_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
+                filename_re_obs = 'renominated_space_obs' + n1.fsms[0].name
                 obs_space_r = observation_renominated(n1, obs_full_space, obs)
-                tk.Label(load_n, text="Fatto! Salvato in Behavioral_Space_Observable_Renominated/" + filename,
-                         fg='green').grid(row=9, column=3)
-                diagnosi_btn['state'] = tk.NORMAL
 
-                figure4 = tk.Toplevel(load_n)
-                figure4.geometry("720x720")
-                figure4.title("Spazio comportamentale data l'osservazione")
-                frame = tk.Frame(figure4, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
+                load_window['output_network_op'].update(values[
+                                                               'output_network_op'] + '> Completato\n'
+                                                                                      'Diagramma salvato in: Behavioral_Space_Observable_Renominated/' + filename_re_obs + "\nFile di "
+                                                                                         "ridenominazione dello spazio data l'osservazione salvato in:\n"
+                                                                                         "Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
 
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
+                load_window['diag'].update(disabled=False)
+                load_window['obs_re_diag'].update(disabled=False)
+                load_window['renomination_file_obs'].update(disabled=False)
 
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
+            def show_re_obs_space():
+                column_re_ob1 = [
+                    [sg.Image(filename='Behavioral_Space_Observable_Renominated/' + filename_re_obs + '.gv.png')]]
 
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
-
-                photo1 = tk.PhotoImage(file='Behavioral_Space_Observable_Renominated/' + filename + '.gv.png')
-                canvas.create_image(0, 50, image=photo1, anchor="nw")
                 obs_name = ""
                 for o in obs:
                     obs_name = obs_name + o + " "
-                canvas.create_text(500, 300, font="bold",
-                                   text="L'osservazione considerata è:\n" + obs_name)
-                canvas.create_text(500, 400, font="bold",
-                                   text="File di ridenominazione:\nBehavioral_Space_Observable_Renominated\n/renomination_list_" + filename + ".txt")
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
 
-                frame.pack()
+                re_obs_layout = [
+                    [
+                        sg.Text("L'osservazione considerata è:\n" + obs_name)
+                    ],
+                    [
+                        sg.Button('Vedi file ridenominazione', key='renomination_file_obs_in_diag'),
+                    ],
+                    [
+                        sg.Column(column_re_ob1, size=(600, 800), scrollable=True)
+                    ]
+                ]
+                re_obs_window = sg.Window('Diagramma spazio comportamentale rinominato data l\'osservazione',
+                                          re_obs_layout)
+                while True:
+                    event, values = re_obs_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'renomination_file_obs_in_diag':
+                        show_renomination_file_obs()
 
-                figure4.mainloop()
+            def show_renomination_file_obs():
+                file = open(
+                    file="Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
+                renomination_obs_layout = [
+                    [
+                        sg.Button('Vedi diagramma', key='obs_re_diag')
+                    ],
+                    [sg.Column([[sg.Text(file.read())]], scrollable=True)]
+                ]
+
+                show_re_obs_window = sg.Window('File di renominazione dello spazio comportamentale data osservazione',
+                                               renomination_obs_layout)
+                while True:
+                    event, values = show_re_obs_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
+                    elif event == 'obs_re_diag':
+                        show_re_obs_space()
+
+                show_re_obs_window.close()
 
             def calculate_diagnosi_space():
-                tk.Label(load_n, text="Fatto! Salvati i passaggi in Diagnosi_steps/", fg='green').grid(row=10, column=3)
+                load_window['output_network_op'].update(values['output_network_op'] + "--- Calcolo in corso ... ---")
+                global n_img, exp
+                load_window['output_network_op'].update(values['output_network_op'] + '> Completato\n'
+                                                                                         'Diagramma salvato in: '
+                                                                                         'Diagnosi_steps/')
+
                 n_img, exp = diagnosis(n1, obs_space_r, obs)
+                load_window['diag_diag'].update(disabled=False)
 
-                figure5 = tk.Toplevel(load_n)
-                figure5.geometry("1420x720")
-                figure5.title("Passaggi individuazione espressione regolare")
-                frame = tk.Frame(figure5, bd=2, relief=tk.SUNKEN)
-                frame.pack(fill=tk.BOTH, expand=True)
-
-                xscrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
-                xscrollbar.pack(side=tk.BOTTOM, fill=tk.BOTH)
-
-                yscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
-                yscrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-
-                canvas = tk.Canvas(frame, bd=0, width=700, height=700, xscrollcommand=xscrollbar.set,
-                                   yscrollcommand=yscrollbar.set)
-                canvas.pack(fill="both", expand=True)
-                photo_step = [0] * (n_img + 2)
+            def show_diagnosi():
+                images_diagnosis = []
                 for i in range(int(n_img) + 1):
-                    photo_step[i] = tk.PhotoImage(file='Diagnosi_steps/' + str(i + 1) + '.gv.png')
-                    canvas.create_image((i) * 300, 0, image=photo_step[i], anchor="nw")
+                    images_diagnosis.append(sg.Image(filename='Diagnosi_steps/' + str(i + 1) + '.gv.png'))
 
-                canvas.create_text(300 * (n_img) + 50, 300, font="bold",
-                                   text="Espressione regolare:\n" + exp)
-                canvas.config(scrollregion=canvas.bbox(tk.ALL))
-                xscrollbar.config(command=canvas.xview)
-                yscrollbar.config(command=canvas.yview)
+                diagnosi_layout = [
+                    [
+                        sg.Column([images_diagnosis], scrollable=True)
+                    ],
+                    [
+                        sg.Text("Espressione regolare:\n" + exp)
+                    ]
 
-                frame.pack()
+                ]
+                diagnosi_window = sg.Window('Passaggi individuazione espressione regolare', diagnosi_layout)
+                while True:
+                    event, values = diagnosi_window.read()
+                    # See if user wants to quit or window was closed
+                    if event == sg.WINDOW_CLOSED:
+                        break
 
-                figure5.mainloop()
 
-            behavioral_space_btn = tk.Button(load_n, text="Calcola lo spazio comportamentale",
-                                             command=calculate_behavioral_space, state=tk.DISABLED)
-            behavioral_space_btn.grid(row=6, pady=10, padx=10, column=1, columnspan=len(n1.fsms))
-            behavioral_space_ren_btn = tk.Button(load_n, text="Rinomina lo spazio comportamentale", state=tk.DISABLED,
-                                                 command=calculate_behavioral_space_renominated)
-            behavioral_space_ren_btn.grid(row=7, pady=10, padx=10, column=1, columnspan=len(n1.fsms))
-            behavioral_space_obs_btn = tk.Button(load_n, text="Calcola lo spazio comportamentale data un'osservazione",
-                                                 state=tk.DISABLED, command=calculate_obs_space)
-            behavioral_space_obs_btn.grid(row=8, pady=10, padx=10, column=1, columnspan=len(n1.fsms))
-            behavioral_space_obs_ren_btn = tk.Button(load_n,
-                                                     text="Rinomina lo spazio comportamentale data un'osservazione",
-                                                     state=tk.DISABLED, command=calculate_obs_space_renominated)
-            behavioral_space_obs_ren_btn.grid(row=9, pady=10, padx=10, column=1, columnspan=len(n1.fsms))
-            diagnosi_btn = tk.Button(load_n, text="Diagnosi data un'osservazione", command=calculate_diagnosi_space,
-                                     state=tk.DISABLED)
-            diagnosi_btn.grid(row=10, pady=10, padx=10, column=1, columnspan=len(n1.fsms))
 
-            load_n.mainloop()
+            load_net_buttons = [
+                [
+                    sg.Text('Diagramma della rete'),
+                    sg.Image(filename="Network_graph/network" + names + ".png")
+                ],
+                [
+                    sg.Button('Mostra i diagrammi degli automi', key='show_fsms'),
+
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Button('Carica transizioni', key='load_transitions')
+                ],
+
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Button('Calcola lo spazio comportamentale', disabled=True, key='calc_be'),
+                    sg.Button('Vedi diagramma', key='be_diag', disabled=True)
+                ],
+                [
+                    sg.Button('Rinomina lo spazio comportamentale', key='ren_be', disabled=True),
+                    sg.Button('Vedi diagramma', key='be_re_diag', disabled=True),
+                    sg.Button('Vedi file ridenominazione', key='renomination_file_be', disabled=True),
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Text('Inserire un\'osservazione valida:\n(separare gli elementi con una ","\n e senza spazi)'),
+                    sg.InputText(key='input_obs'),
+                    sg.Button('Inserisci', key='input_btn', disabled=True),
+                    sg.Button('⟲', key='refresh', disabled=True)
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Button('Calcola lo spazio comportamentale data un\'osservazione', key='calc_obs', disabled=True),
+                    sg.Button('Vedi diagramma', key='obs_diag', disabled=True)
+                ],
+                [
+                    sg.Button('Rinomina lo spazio comportamentale con l\'osservazione data', key='ren_obs',
+                              disabled=True),
+                    sg.Button('Vedi diagramma', key='obs_re_diag', disabled=True),
+                    sg.Button('Vedi file ridenominazione', key='renomination_file_obs', disabled=True),
+                ],
+                [
+                    sg.Button('Calcola la diagnosi con l\'osservazione data', key='diag', disabled=True),
+                    sg.Button('Vedi diagrammi', key='diag_diag', disabled=True)
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Button('Indietro')
+                ]
+            ]
+
+            load_net_plot = [
+                [
+                    sg.Text("Transizioni inserite")
+                ],
+                [
+                    sg.HSeparator()
+                ],
+                [
+                    sg.Multiline("", size=(30, 10), disabled=True, key="output_transitions")
+                ],
+                [
+                    sg.Multiline("", size=(40, 30), disabled=True, key="output_network_op")
+                ]
+            ]
+
+            load_layout = [
+                [
+                    sg.Column(load_net_buttons),
+                    sg.VSeparator(),
+                    sg.Column(load_net_plot)
+                ]
+            ]
+
+            # Create the window
+            load_window = sg.Window('Carica rete', load_layout)
+
+            # Display and interact with the Window using an Event Loop
+            while True:
+                event, values = load_window.read()
+                # See if user wants to quit or window was closed
+                if event == sg.WINDOW_CLOSED or event == 'Indietro':
+                    break
+                elif event == 'load_transitions':
+                    load_transitions()
+                elif event == 'show_fsms':
+                    show_fsm_graph()
+                elif event == 'be_diag':
+                    show_behavioral_space()
+                elif event == 'be_re_diag':
+                    show_re_be_space()
+                elif event == 'obs_diag':
+                    show_obs_space()
+                elif event == 'obs_re_diag':
+                    show_re_obs_space()
+                elif event == 'diag_diag':
+                    show_diagnosi()
+                elif event == 'calc_be':
+                    calculate_behavioral_space()
+                elif event == 'ren_be':
+                    calculate_behavioral_space_renominated()
+                elif event == 'calc_obs':
+                    calculate_obs_space()
+                elif event == 'ren_obs':
+                    calculate_obs_space_renominated()
+                elif event == 'diag':
+                    calculate_diagnosi_space()
+                elif event == 'renomination_file_be':
+                    show_renomination_file_be()
+                elif event == 'renomination_file_obs':
+                    show_renomination_file_obs()
+                elif event == 'input_btn':
+                    check_obs_insert()
+                elif event == 'refresh':
+                    refresh_obs()
+
+            # Finish up by removing from the screen
+            load_window.close()
+
         except FileNotFoundError:
-            load_n.destroy()
+            load_window.close()
         except Exception:
             sg.Popup('Attenzione!', 'Il file potrebbe non essere quello corretto o avere degli errori di sintassi!')
-            load_n.destroy()
+            load_window.close()
 
 
     def help():
