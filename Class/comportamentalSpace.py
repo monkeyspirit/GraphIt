@@ -78,20 +78,24 @@ class SpaceEncoder(JSONEncoder):
         return o.__dict__
 
 
-def save_space_as_json(space):
-    with open("JSON/full_space" + str(space.id) + ".json", "w") as write_file:
+def save_space_as_json(space, filename):
+    with open("JSON/" + filename + ".json", "w") as write_file:
         json.dump(space, write_file, indent=4, cls=SpaceEncoder)
 
 
 # In this function the fsm is read from a JSON file
 def read_space_from_json():
     filename = filedialog.askopenfilename()
+    list_filename = filename.split("/")
+    name_ext = list_filename[len(list_filename)-1]
+    name_list = name_ext.split(".")
+    name = name_list[0]
     with open(filename, "r+") as json_file:
         data = json.load(json_file)
         data_str = json.dumps(data)
 
         space = json.loads(data_str, object_hook=lambda d: SimpleNamespace(**d))
-        return space
+        return space, name
 
 
 def read_transitions_from_txt():
