@@ -519,10 +519,12 @@ def create_behavioral_space_renominated(filename, space):
             f.node(str(node.renomination_label), shape="circle")
 
     # Remove duplicated transitions from the space
-    transitions = remove_duplicate(space.transitions)
+    space.transitions = remove_duplicate(space.transitions)
+    space.nodes = remove_duplicate(space.nodes)
+    space.nodes_after_cutting = remove_duplicate(space.nodes_after_cutting)
 
     # For each transition in the space
-    for transition in transitions:
+    for transition in space.transitions:
         # cutted_transitions is the list of the cutted transitions
         if (transition.source in cutted_id) or (transition.destination in cutted_id):
             # If the source of the transition or the destination is in the list of cutted ids nodes, add the transition of the list of the cutted transitions
@@ -531,6 +533,7 @@ def create_behavioral_space_renominated(filename, space):
             # Else keep the transition and add that to the list of transitions that are keeped
             space.transitions_after_cutting.append(transition)
 
+    space.transitions_after_cutting = remove_duplicate(space.transitions_after_cutting)
     # This part is for graphviz, to print the graph well
     # For each transition that was keeped
     for transition_after in space.transitions_after_cutting:
@@ -563,7 +566,7 @@ def create_behavioral_space_renominated(filename, space):
     f.render(directory="Output/Behavioral_Space_Renominated")
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
 
-    save_renomination_file(space, "Output/Behavioral_Space_Renominated/renomination_list_" + filename + ".txt")
+    save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
 
     # The same space is printend also with the ID, not with LABEL
     # g is another graphviz component
@@ -598,6 +601,7 @@ def create_behavioral_space_renominated(filename, space):
             g.node(str(node.id), shape="circle")
 
     g.render(directory="Output/Behavioral_Space_Renominated")
+    return space
 
 
 # ------------ INTRO FUNCTION ------------
@@ -886,8 +890,8 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
                    transition.relevance_label) + '</FONT>>')
 
     f.render(directory="Output/Behavioral_Space_Observable_Renominated")
-    save_renomination_file_obs(space, "Output/Behavioral_Space_Observable_Renominated/renomination_list_" + filename + ".txt")
-
+    save_renomination_file_obs(space, "Output/Behavioral_Space_Observable_Renominated/RL_" + filename + ".txt")
+    return space
 
 # ------------ INTRO FUNCTION ------------
 # This function removes the duplicate from a list in input
@@ -1279,4 +1283,19 @@ def count_edges_in_node(node, e_transition_list):
             min_i += 1
 
     return min_i
+
+
+def draw_comportamental_space(name, space):
+    g = Digraph(name, format='png')
+
+    for transition in space.transitions:
+        g.edge(str(transition.source), str(transition.destination), transition.label)
+
+    for node in space.nodes:
+        if node.isFinal:
+            g.node(str(node.id), shape="doublecircle")
+        else:
+            g.node(str(node.id), shape="circle")
+
+    g.render(directory="Output/Behavioral_Space")
 
