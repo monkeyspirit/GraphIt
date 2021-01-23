@@ -66,7 +66,7 @@ def draw_network_graphic(n1):
 
 
 def draw_network_graphic_from_load_network(n1, filename):
-    f = Digraph('network', filename='network'+filename, format='png')
+    f = Digraph('network', filename='network' + filename, format='png')
 
     for fsm in n1.fsms:
         f.node(fsm.name, shape='box')
@@ -579,7 +579,6 @@ def create_behavioral_space_renominated(filename, space):
 
     save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
 
-
     return space
 
 
@@ -593,7 +592,8 @@ def create_behavioral_space_from_obs(filename, obs, space):
         new_edges = []
         for transition in space.transitions_after_cutting:
             if node.id == find_node_by_id(transition.source, space.nodes).id:
-                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label, find_node_by_id(transition.destination, space.nodes).renomination_label)
+                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label,
+                            find_node_by_id(transition.destination, space.nodes).renomination_label)
                 edge.transition_link = transition.transition_link
                 new_edges.append(edge)
         node.edges = new_edges
@@ -617,6 +617,7 @@ def create_behavioral_space_from_obs(filename, obs, space):
 
     obs_space_nodes, obs_space_transitions = cut_not_complete(obs, obs_space_nodes, obs_space_transitions)
 
+    remove_duplicated_transition_obs(obs_space_transitions)
     for transition in obs_space_transitions:
         source = str(transition.source.id) + ", " + str(transition.source.observation_index)
         destination = str(transition.destination.id) + ", " + str(transition.destination.observation_index)
@@ -697,7 +698,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
             if edge.transition_link.observability_label == obs[i]:
                 if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                     next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
-                                           edge.destination, observation_index + 1)
+                                               edge.destination, observation_index + 1)
 
                     obs_space_nodes.append(next_node)
                     reached = str(next_node.id) + ", " + str(observation_index + 1)
@@ -716,7 +717,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
                 if edge.transition_link.observability_label == obs[i]:
                     if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                         next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
-                                               edge.destination, observation_index + 1)
+                                                   edge.destination, observation_index + 1)
 
                         obs_space_nodes.append(next_node)
 
@@ -732,7 +733,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
                 elif edge.transition_link.observability_label == "ϵ":
                     # if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                     next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
-                                           edge.destination, observation_index)
+                                               edge.destination, observation_index)
 
                     reached = str(next_node.id) + ", " + str(observation_index)
                     node.reachable_nodes.append(reached)
@@ -757,7 +758,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
                 if edge.transition_link.observability_label == "ϵ":
                     if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                         next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
-                                               edge.destination, observation_index)
+                                                   edge.destination, observation_index)
 
                         reached = str(next_node.id) + ", " + str(observation_index)
                         node.reachable_nodes.append(reached)
@@ -827,12 +828,12 @@ def append_reachable_node_obs(reachable_list, node, space_nodes):
 
             array_reached = reach.split(",")
             if find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
-                                                                    space_nodes) is not None:
+                                         space_nodes) is not None:
                 # Add the child
                 reachable_list.append(reach)
                 # Call the recursive
                 append_reachable_node_obs(reachable_list,
-                                        find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
+                                          find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
                                                                     space_nodes), space_nodes)
 
 
@@ -849,34 +850,46 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
     count = 0
     # Create the list of the cutted nodes, add the nodes that were cutted
     cutted_id = []
-    node_printed = []
+    space.nodes_after_cutting = []
+    space.cutted_nodes = []
+    space.cutted_transitions = []
+    space.transitions_after_cutting = []
+    final_node_after_ren = []
+
     # For each node in the space
     for node in space.nodes:
-
-        if node.link_node.isFinal or link_to_a_final_obs(node, space.nodes):
+        # if node.link_node.isFinal or link_to_a_final_obs(node, space.nodes):
+        if node.link_node.isFinal and node.observation_index >= len(obs):
+            final_node_after_ren.append(node)
             space.nodes_after_cutting.append(node)
-            node_printed.append(node)
         else:
+            node.link_node.isFinal = False
+
+    for node in space.nodes:
+        if node not in final_node_after_ren and link_to_a_final_obs(node, final_node_after_ren):
+            space.nodes_after_cutting.append(node)
+        elif node not in final_node_after_ren:
             space.cutted_nodes.append(node)
-            cutted_id.append(node)
+            cutted_id.append((node.id, node.observation_index))
 
     for node in space.nodes_after_cutting:
-
         label = str(node.id) + ", " + str(node.observation_index)
-        if node.link_node.isFinal and node.observation_index >= len(obs):
+        if node in final_node_after_ren:
             f.node(label, shape="doublecircle")
         else:
             f.node(label, shape="circle")
 
-    transitions = remove_duplicate(space.transitions)
-
-    for transition in transitions:
-        if (transition.source in cutted_id) or (transition.destination in cutted_id):
+    for transition in space.transitions:
+        if (transition.source.id, transition.source.observation_index) in cutted_id:
+            space.cutted_transitions.append(transition)
+        elif (transition.destination.id, transition.destination.observation_index) in cutted_id:
             space.cutted_transitions.append(transition)
         else:
             space.transitions_after_cutting.append(transition)
 
-        # This part is for graphviz, to print in a good style the graph
+    remove_duplicated_transition_obs(space.transitions_after_cutting)
+
+    # This part is for graphviz, to print in a good style the graph
     for transition in space.transitions_after_cutting:
         source = str(transition.source.id) + ", " + str(transition.source.observation_index)
         destination = str(transition.destination.id) + ", " + str(transition.destination.observation_index)
@@ -907,6 +920,20 @@ def link_to_a_final(node, space_nodes):
     for child in node.reachable_nodes:
         if find_node_by_id(child, space_nodes) is not None and find_node_by_id(child, space_nodes).isFinal:
             return 1
+
+
+def remove_duplicated_transition_obs(transitions):
+    for t1 in transitions:
+        for t2 in transitions:
+            if t1 is not t2:
+                if t1.label == t2.label:
+                    source_t1 = str(t1.source.id) + ", " + str(t1.source.observation_index)
+                    source_t2 = str(t2.source.id) + ", " + str(t2.source.observation_index)
+                    if source_t1 == source_t2:
+                        destination_t1 = str(t1.destination.id) + ", " + str(t1.destination.observation_index)
+                        destination_t2 = str(t2.destination.id) + ", " + str(t2.destination.observation_index)
+                        if destination_t1 == destination_t2:
+                            transitions.remove(t2)
 
 
 # ------------ INTRO FUNCTION ------------
@@ -1028,8 +1055,6 @@ def print_transition_pretty_obs(transitions, out_file):
 
 
 def create_diagnosis_for_space_observable_renominated(filename, space, obs):
-    f = Digraph(filename, format='png')
-
     transitions = copy.deepcopy(space.transitions_after_cutting)
     e_transition_list = []
 
@@ -1087,9 +1112,11 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
     # Eliminate all the intermediates states
     img = 0
     count = 1
+
+    # Print the first
+
     while len(nodes) > 0:
 
-        # Print
         d = Digraph(str(count), format='png')
 
         for n, k in nodes:
@@ -1106,12 +1133,15 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
         label = str(first_node[0]) + " " + str(first_node[1])
         d.node(label, shape="circle")
 
+        remove_duplicated_transition(e_transition_list)
+
         for t in e_transition_list:
             source = str(t.source[0]) + " " + str(t.source[1])
             destination = str(t.destination[0]) + " " + str(t.destination[1])
             d.edge(source, destination, t.label)
 
         d.render(directory="Output/Diagnosi_steps")
+
         img += 1
         count += 1
         semplify_paralle_path(e_transition_list)
@@ -1214,7 +1244,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
 def remove_duplicated_transition(e_transition_list):
     for t1 in e_transition_list:
         for t2 in e_transition_list:
-            if t1 != t2:
+            if t1 is not t2:
                 if t1.label == t2.label:
                     if t1.source == t2.source:
                         if t1.destination == t2.destination:
