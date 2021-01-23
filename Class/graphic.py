@@ -579,14 +579,7 @@ def create_behavioral_space_renominated(filename, space):
 
     save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
 
-    for node in space.nodes_after_cutting:
-        new_edges = []
-        for transition in space.transitions_after_cutting:
-            if node.id == find_node_by_id(transition.source, space.nodes).renomination_label:
-                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label, find_node_by_id(transition.destination, space.nodes).renomination_label)
-                edge.transition_link = transition.transition_link
-                new_edges.append(edge)
-        node.edges = new_edges
+
     return space
 
 
@@ -596,6 +589,17 @@ def create_behavioral_space_renominated(filename, space):
 # - obs: is the list of the observations
 # - space: is the behavioral renominated space
 def create_behavioral_space_from_obs(filename, obs, space):
+    for node in space.nodes_after_cutting:
+        new_edges = []
+        for transition in space.transitions_after_cutting:
+            if node.id == find_node_by_id(transition.source, space.nodes).id:
+                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label, find_node_by_id(transition.destination, space.nodes).renomination_label)
+                edge.transition_link = transition.transition_link
+                new_edges.append(edge)
+        node.edges = new_edges
+
+    for node in space.nodes_after_cutting:
+        node.id = node.renomination_label
     # Create the list of the nodes that are reached from the observations
     obs_space_nodes = []
     # Create the list of the transitions that are reached from the observations
@@ -605,7 +609,7 @@ def create_behavioral_space_from_obs(filename, obs, space):
 
     observation_index = 0
     first_node = space.nodes_after_cutting[0]
-    new_node = ObservableNode(first_node, first_node.renomination_label, observation_index)
+    new_node = ObservableNode(first_node, first_node.id, observation_index)
 
     find_obs_nodes(new_node, obs_space_nodes, obs_space_transitions, obs, space, 0)
 
@@ -1244,8 +1248,10 @@ def semplify_paralle_path(e_transition_list):
                                 label = t1.label + "|" + t2.label
 
                         e_transition_list.append(E_transition(label, t1.source, t1.destination))
-                        e_transition_list.remove(t2)
-                        e_transition_list.remove(t1)
+                        if t2 in e_transition_list:
+                            e_transition_list.remove(t2)
+                        if t1 in e_transition_list:
+                            e_transition_list.remove(t1)
 
 
 def getNode_with_minimum_edges(nodes, e_transition_list):
