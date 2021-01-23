@@ -96,8 +96,8 @@ def load_transitions(pass_window):
         for transition in transitions:
             print_T = print_T + str(transition.label) + ", " + str(transition.input) + ", " + str(
                 transition.output) + ",  " + str(
-                transition.observability_label) + ", " + str(
-                transition.relevance_label) + "\n"
+                transition.relevance_label) + ", " + str(
+                transition.observability_label) + "\n"
 
         pass_window['output_transitions'].update(print_T)
         pass_window['save_filename'].update(disabled=False)

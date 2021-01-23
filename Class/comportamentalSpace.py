@@ -127,8 +127,13 @@ def read_transitions_from_txt():
 
         fsm = list[0]
         label = list[1]
+        obs_label = list[4]
+        rel_label = list[5]
+
         input_list = list[2][1:-1]
-        input_list = input_list.split(",")
+
+
+        input_list = input_list.split("/")
         input_dic = {}
         if input_list != []:
             for input in input_list:
@@ -137,15 +142,16 @@ def read_transitions_from_txt():
                     input_dic.update({split_input[0]: split_input[1]})
 
         output_list = list[3][1:-1]
-        output_list = output_list.split(",")
+
+
+        output_list = output_list.split("/")
         output_dic = {}
         if output_list != []:
             for output in output_list:
                 if output != "":
                     split_output = output.split(":")
                     output_dic.update({split_output[0]: split_output[1]})
-        obs_label = list[4]
-        rel_label = list[5]
+
 
         # you can access the line
         # print(list)

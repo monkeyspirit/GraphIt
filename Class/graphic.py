@@ -43,7 +43,6 @@ def draw_FSM_graphic(fsm):
     for state in fsm.states:
         f.node(state, shape='circle')
 
-
     for state in fsm.final_states:
         if state != "":
             f.node(state, shape='doublecircle')
@@ -56,6 +55,18 @@ def draw_FSM_graphic(fsm):
 
 def draw_network_graphic(n1):
     f = Digraph('network', filename='network' + n1.fsms[0].name + n1.fsms[1].name, format='png')
+
+    for fsm in n1.fsms:
+        f.node(fsm.name, shape='box')
+
+    for link in n1.links:
+        f.edge(link.source, link.destination, link.name)
+
+    f.render(directory="Output/Network_graph")
+
+
+def draw_network_graphic_from_load_network(n1, filename):
+    f = Digraph('network', filename='network'+filename, format='png')
 
     for fsm in n1.fsms:
         f.node(fsm.name, shape='box')
@@ -567,7 +578,6 @@ def create_behavioral_space_renominated(filename, space):
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
 
     save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
-
     # The same space is printend also with the ID, not with LABEL
     # g is another graphviz component
     g = Digraph(filename + "_id", format='png')
@@ -601,6 +611,7 @@ def create_behavioral_space_renominated(filename, space):
             g.node(str(node.id), shape="circle")
 
     g.render(directory="Output/Behavioral_Space_Renominated")
+
     return space
 
 
@@ -619,7 +630,7 @@ def create_behavioral_space_from_obs(filename, obs, space):
 
     observation_index = 0
     first_node = space.nodes_after_cutting[0]
-    new_node = ObservableNode(first_node, first_node.id, observation_index)
+    new_node = ObservableNode(first_node, first_node.renomination_label, observation_index)
 
     find_obs_nodes(new_node, obs_space_nodes, obs_space_transitions, obs, space, 0)
 
@@ -705,41 +716,44 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
     for edge in node.link_node.edges:
         if i == 0:
             if edge.transition_link.observability_label == obs[i]:
-                next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
+                if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
+                    next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
                                            edge.destination, observation_index + 1)
-                obs_space_nodes.append(next_node)
-                reached = str(next_node.id) + ", " + str(observation_index + 1)
-                node.reachable_nodes.append(reached)
 
-                node.direct_reachable.append(reached)
-                new_transition = ObservableTransition(edge.transition_link.label, observation_index + 1, node,
-                                                      next_node, edge.transition_link.observability_label,
-                                                      edge.transition_link.relevance_label)
-                obs_space_transitions.append(new_transition)
-                find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i + 1)
+                    obs_space_nodes.append(next_node)
+                    reached = str(next_node.id) + ", " + str(observation_index + 1)
+                    node.reachable_nodes.append(reached)
+
+                    node.direct_reachable.append(reached)
+                    new_transition = ObservableTransition(edge.transition_link.label, observation_index + 1, node,
+                                                          next_node, edge.transition_link.observability_label,
+                                                          edge.transition_link.relevance_label)
+                    obs_space_transitions.append(new_transition)
+                    find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i + 1)
         else:
 
             if i < len(obs):
 
                 if edge.transition_link.observability_label == obs[i]:
-
-                    next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
+                    if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
+                        next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
                                                edge.destination, observation_index + 1)
-                    obs_space_nodes.append(next_node)
 
-                    new_transition = ObservableTransition(edge.transition_link.label, observation_index + 1, node,
-                                                          next_node, edge.transition_link.observability_label,
-                                                          edge.transition_link.relevance_label)
-                    obs_space_transitions.append(new_transition)
-                    reached = str(next_node.id) + ", " + str(observation_index + 1)
-                    node.reachable_nodes.append(reached)
-                    node.direct_reachable.append(reached)
-                    find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i + 1)
+                        obs_space_nodes.append(next_node)
+
+                        new_transition = ObservableTransition(edge.transition_link.label, observation_index + 1, node,
+                                                              next_node, edge.transition_link.observability_label,
+                                                              edge.transition_link.relevance_label)
+                        obs_space_transitions.append(new_transition)
+                        reached = str(next_node.id) + ", " + str(observation_index + 1)
+                        node.reachable_nodes.append(reached)
+                        node.direct_reachable.append(reached)
+                        find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i + 1)
 
                 elif edge.transition_link.observability_label == "ϵ":
-
+                    # if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                     next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
-                                               edge.destination, observation_index)
+                                           edge.destination, observation_index)
 
                     reached = str(next_node.id) + ", " + str(observation_index)
                     node.reachable_nodes.append(reached)
@@ -762,28 +776,29 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
 
             else:
                 if edge.transition_link.observability_label == "ϵ":
-
-                    next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
+                    if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
+                        next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
                                                edge.destination, observation_index)
 
-                    reached = str(next_node.id) + ", " + str(observation_index)
-                    node.reachable_nodes.append(reached)
-                    node.direct_reachable.append(reached)
-                    new_transition = ObservableTransition(edge.transition_link.label, observation_index, node,
-                                                          next_node, edge.transition_link.observability_label,
-                                                          edge.transition_link.relevance_label)
-                    obs_space_transitions.append(new_transition)
+                        reached = str(next_node.id) + ", " + str(observation_index)
+                        node.reachable_nodes.append(reached)
+                        node.direct_reachable.append(reached)
+                        new_transition = ObservableTransition(edge.transition_link.label, observation_index, node,
+                                                              next_node, edge.transition_link.observability_label,
+                                                              edge.transition_link.relevance_label)
+                        obs_space_transitions.append(new_transition)
 
-                    present = 0
-                    for double in obs_space_nodes:
-                        if double.id == edge.destination:
-                            if observation_index == find_node_by_id(edge.destination,
-                                                                    obs_space_nodes).observation_index:
-                                present = 1
+                        present = 0
+                        for double in obs_space_nodes:
+                            if double.id == edge.destination:
+                                if observation_index == find_node_by_id(edge.destination,
+                                                                        obs_space_nodes).observation_index:
+                                    present = 1
 
-                    if present != 1:
-                        obs_space_nodes.append(next_node)
-                        find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i)
+                        if present != 1:
+                            obs_space_nodes.append(next_node)
+
+                            find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i)
 
 
 def organize_reachable_nodes_obs(obs_space_nodes):
@@ -830,13 +845,16 @@ def append_reachable_node_obs(reachable_list, node, space_nodes):
 
 
         else:
+
             array_reached = reach.split(",")
-            # Add the child
-            reachable_list.append(reach)
-            # Call the recursive
-            append_reachable_node_obs(reachable_list,
-                                      find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
-                                                                space_nodes), space_nodes)
+            if find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
+                                                                    space_nodes) is not None:
+                # Add the child
+                reachable_list.append(reach)
+                # Call the recursive
+                append_reachable_node_obs(reachable_list,
+                                        find_node_by_id_and_index(int(array_reached[0]), int(array_reached[1]),
+                                                                    space_nodes), space_nodes)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -892,6 +910,7 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
     f.render(directory="Output/Behavioral_Space_Observable_Renominated")
     save_renomination_file_obs(space, "Output/Behavioral_Space_Observable_Renominated/RL_" + filename + ".txt")
     return space
+
 
 # ------------ INTRO FUNCTION ------------
 # This function removes the duplicate from a list in input
@@ -1017,13 +1036,11 @@ def print_transition_pretty(transitions, out_file):
                 transition.transition_link.relevance_label) + "\n")
 
 
-
 def print_transition_pretty_obs(transitions, out_file):
     out_file.write("\n---Edge---\n")
     out_file.write("* the id here are the id before the renomination *\n")
     out_file.write("source id | label | destination id | o label | observation index | r label \n")
     for transition in transitions:
-
         out_file.write(str(transition.source.id) + "\t   " + str(transition.label) + "\t      " + str(
             transition.destination.id) + " \t         " + str(
             transition.observability_label) + " \t              " + str(
@@ -1137,8 +1154,6 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
                 else:
                     ouput_t.append(t)
 
-
-
         for t_i in input_t:
             for t_o in ouput_t:
 
@@ -1183,7 +1198,6 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
 
                         e_transition_list.append(E_transition(label, t_i.source, t_o.destination))
 
-
                 remove_transition(e_transition_list, t_o)
 
         nodes.remove(node)
@@ -1194,7 +1208,6 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
             remove_transition(e_transition_list, t_o)
         for a_t in auto_t:
             remove_transition(e_transition_list, a_t)
-
 
     remove_duplicated_transition(e_transition_list)
 
@@ -1298,4 +1311,3 @@ def draw_comportamental_space(name, space):
             g.node(str(node.id), shape="circle")
 
     g.render(directory="Output/Behavioral_Space")
-

@@ -121,6 +121,14 @@ def check_obs_insert(string_obs, pass_window):
     except IndexError:
         sg.Popup('Attenzione!', 'Controlla di aver inserito l\'osservazione in modo corretto.')
 
+def check_obs_insert_dia(string_obs, pass_window):
+    try:
+        obs = string_obs.split(",")
+        pass_window['diag'].update(disabled=False)
+        return obs
+    except IndexError:
+        sg.Popup('Attenzione!', 'Controlla di aver inserito l\'osservazione in modo corretto.')
+
 
 def refresh_obs(pass_window):
     pass_window['calc_obs'].update(disabled=True)
@@ -132,6 +140,11 @@ def refresh_obs(pass_window):
     pass_window['renomination_file_obs'].update(disabled=True)
     pass_window['save_obs_space'].update(disabled=True)
     pass_window['save_obs_re_space'].update(disabled=True)
+
+def refresh_obs_diagnosi(pass_window):
+    pass_window['diag'].update(disabled=True)
+    pass_window['diag_diag'].update(disabled=True)
+
 
 
 def calculate_obs_space(pass_window, filename, full_space_r, obs):
@@ -274,3 +287,23 @@ def save_obs_space_as_JSON(obs_full_space, filename):
 
 def save_obs_re_space_as_JSON(obs_space_r, filename):
     comportamentalSpace.save_space_as_json(obs_space_r, filename)
+
+def load_comportamental_space(pass_window):
+    full_space, filename_be = comportamentalSpace.read_space_from_json()
+    graphic.draw_comportamental_space(filename_be, full_space)
+    pass_window['input_btn'].update(disabled=False)
+    pass_window['refresh'].update(disabled=False)
+    return full_space, filename_be
+
+def calculate_all(pass_window, full_space, filename, obs):
+    filename_re_be = filename + '_RS'
+    full_space_r = graphic.create_behavioral_space_renominated(filename_re_be, full_space)
+    filename_obs = filename + '_OS'
+    obs_full_space = graphic.create_behavioral_space_from_obs(filename_obs, obs, full_space_r)
+    filename_re_obs = filename + '_ROS'
+    obs_space_r = graphic.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, obs)
+    filename_dia = filename + '_DS'
+    n_img, exp = graphic.create_diagnosis_for_space_observable_renominated(filename_dia, obs_space_r, obs)
+    pass_window['diag_diag'].update(disabled=False)
+    # pass_window['save_diagnosi_space'].update(disabled=False)
+    return n_img, exp
