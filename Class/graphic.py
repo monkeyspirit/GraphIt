@@ -578,40 +578,15 @@ def create_behavioral_space_renominated(filename, space):
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
 
     save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
-    # The same space is printend also with the ID, not with LABEL
-    # g is another graphviz component
-    g = Digraph(filename + "_id", format='png')
-
-    # In this part the code is only for the printing on the graph of the observability and relevance label
-    for transition in space.transitions_after_cutting:
-
-        if transition.transition_link.observability_label == "ϵ" and transition.transition_link.relevance_label == "ϵ":
-            g.edge(str(transition.source), str(transition.destination), label=str(transition.label))
-
-        elif transition.transition_link.observability_label != "ϵ" and transition.transition_link.relevance_label == "ϵ":
-            g.edge(str(transition.source), str(transition.destination), label='<' + str(
-                transition.label) + " " + '<FONT COLOR="green">' + str(
-                transition.transition_link.observability_label) + '</FONT>>')
-
-        elif transition.transition_link.observability_label == "ϵ" and transition.transition_link.relevance_label != "ϵ":
-            g.edge(str(transition.source), str(transition.destination), label='<' + str(
-                transition.label) + " " + '<FONT COLOR="red">' + str(
-                transition.transition_link.relevance_label) + '</FONT>>')
-
-        else:
-            g.edge(str(transition.source), str(transition.destination), label='<' + str(
-                transition.label) + " " + '<FONT COLOR="red">' + str(
-                transition.transition_link.relevance_label) + '</FONT>' + '<FONT COLOR="green">' + str(
-                transition.transition_link.observability_label) + '</FONT>>')
 
     for node in space.nodes_after_cutting:
-        if node.isFinal:
-            g.node(str(node.id), shape="doublecircle")
-        else:
-            g.node(str(node.id), shape="circle")
-
-    g.render(directory="Output/Behavioral_Space_Renominated")
-
+        new_edges = []
+        for transition in space.transitions_after_cutting:
+            if node.id == find_node_by_id(transition.source, space.nodes).renomination_label:
+                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label, find_node_by_id(transition.destination, space.nodes).renomination_label)
+                edge.transition_link = transition.transition_link
+                new_edges.append(edge)
+        node.edges = new_edges
     return space
 
 
