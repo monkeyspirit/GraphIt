@@ -521,14 +521,6 @@ def create_behavioral_space_renominated(filename, space):
             # Add the id of the node that is cutted to the list of the ids of the nodes that are cutted
             cutted_id.append(node.id)
 
-    # This part is for graphviz, to print the graph well
-    # For each node that was keeped
-    for node in space.nodes_after_cutting:
-        if node.isFinal:
-            f.node(str(node.renomination_label), shape="doublecircle")
-        else:
-            f.node(str(node.renomination_label), shape="circle")
-
     # Remove duplicated transitions from the space
     space.transitions = remove_duplicate(space.transitions)
     space.nodes = remove_duplicate(space.nodes)
@@ -542,36 +534,47 @@ def create_behavioral_space_renominated(filename, space):
             space.cutted_transitions.append(transition)
         else:
             # Else keep the transition and add that to the list of transitions that are keeped
+            transition.source = find_node_by_id(transition.source, space.nodes_after_cutting).renomination_label
+            transition.destination = find_node_by_id(transition.destination, space.nodes_after_cutting).renomination_label
             space.transitions_after_cutting.append(transition)
 
     space.transitions_after_cutting = remove_duplicate(space.transitions_after_cutting)
+
+    for node in space.nodes_after_cutting:
+        node.old_id = node.id
+        node.id = node.renomination_label
+
     # This part is for graphviz, to print the graph well
     # For each transition that was keeped
     for transition_after in space.transitions_after_cutting:
-        # Find the node with the id, that is saved in the source of the transition and take the renomination label
-        source = find_node_by_id(transition_after.source, space.nodes).renomination_label
-        # Find the node with the id, that is saved in the destination of the transition and take the renomination label
-        destination = find_node_by_id(transition_after.destination, space.nodes).renomination_label
 
         # In this part the code is only for the printing on the graph of the observability and relevance label
         if transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
-            f.edge(str(source), str(destination), label=str(transition_after.label))
+            f.edge(str(transition_after.source), str(transition_after.destination), label=str(transition_after.label))
 
         elif transition_after.transition_link.observability_label != "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
-            f.edge(str(source), str(destination), label='<' + str(
+            f.edge(str(transition_after.source), str(transition_after.destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="green">' + str(
                 transition_after.transition_link.observability_label) + '</FONT>>')
 
         elif transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label != "ϵ":
-            f.edge(str(source), str(destination), label='<' + str(
+            f.edge(str(transition_after.source), str(transition_after.destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="red">' + str(
                 transition_after.transition_link.relevance_label) + '</FONT>>')
 
         else:
-            f.edge(str(source), str(destination), label='<' + str(
+            f.edge(str(transition_after.source), str(transition_after.destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="red">' + str(
                 transition_after.transition_link.relevance_label) + '</FONT>' + '<FONT COLOR="green">' + str(
                 transition_after.transition_link.observability_label) + '</FONT>>')
+
+    # This part is for graphviz, to print the graph well
+    # For each node that was keeped
+    for node in space.nodes_after_cutting:
+        if node.isFinal:
+            f.node(str(node.id), shape="doublecircle")
+        else:
+            f.node(str(node.id), shape="circle")
 
     # Print the graph
     f.render(directory="Output/Behavioral_Space_Renominated")
@@ -579,6 +582,36 @@ def create_behavioral_space_renominated(filename, space):
 
     save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
 
+    g = Digraph(filename+'_old_id', format='png')
+    for node in space.nodes_after_cutting:
+        if node.isFinal:
+            g.node(str(node.old_id), shape="doublecircle")
+        else:
+            g.node(str(node.old_id), shape="circle")
+
+    for transition_after in space.transitions_after_cutting:
+        source = find_node_by_id(transition_after.source, space.nodes_after_cutting).old_id
+        destination = find_node_by_id(transition_after.destination, space.nodes_after_cutting).old_id
+        # In this part the code is only for the printing on the graph of the observability and relevance label
+        if transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+            g.edge(str(source), str(destination), label=str(transition_after.label))
+
+        elif transition_after.transition_link.observability_label != "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+            g.edge(str(source), str(destination), label='<' + str(
+                transition_after.label) + " " + '<FONT COLOR="green">' + str(
+                transition_after.transition_link.observability_label) + '</FONT>>')
+
+        elif transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label != "ϵ":
+            g.edge(str(source), str(destination), label='<' + str(
+                transition_after.label) + " " + '<FONT COLOR="red">' + str(
+                transition_after.transition_link.relevance_label) + '</FONT>>')
+
+        else:
+            g.edge(str(source), str(destination), label='<' + str(
+                transition_after.label) + " " + '<FONT COLOR="red">' + str(
+                transition_after.transition_link.relevance_label) + '</FONT>' + '<FONT COLOR="green">' + str(
+                transition_after.transition_link.observability_label) + '</FONT>>')
+    g.render(directory="Output/Behavioral_Space_Renominated")
     return space
 
 
@@ -588,18 +621,7 @@ def create_behavioral_space_renominated(filename, space):
 # - obs: is the list of the observations
 # - space: is the behavioral renominated space
 def create_behavioral_space_from_obs(filename, obs, space):
-    for node in space.nodes_after_cutting:
-        new_edges = []
-        for transition in space.transitions_after_cutting:
-            if node.id == find_node_by_id(transition.source, space.nodes).id:
-                edge = Edge(find_node_by_id(transition.source, space.nodes).renomination_label, transition.label,
-                            find_node_by_id(transition.destination, space.nodes).renomination_label)
-                edge.transition_link = transition.transition_link
-                new_edges.append(edge)
-        node.edges = new_edges
 
-    for node in space.nodes_after_cutting:
-        node.id = node.renomination_label
     # Create the list of the nodes that are reached from the observations
     obs_space_nodes = []
     # Create the list of the transitions that are reached from the observations
@@ -627,14 +649,36 @@ def create_behavioral_space_from_obs(filename, obs, space):
                    transition.observability_label) + '</FONT>>')
 
     for node in obs_space_nodes:
+        if node.observation_index >= len(obs) and node.link_node.isFinal:
+            node.isFinal = True
+
+    for node in obs_space_nodes:
         label = str(node.id) + ", " + str(node.observation_index)
-        if node.link_node.isFinal:
+        if node.isFinal:
             f.node(label, shape="doublecircle")
         else:
             f.node(label, shape="circle")
 
     # Print the graph
     f.render(directory="Output/Behavioral_Space_Observable")
+
+    g = Digraph(filename+'_state', format='png')
+    for node in obs_space_nodes:
+        if node.isFinal:
+            g.node(node.link_node.label+", " + str(node.observation_index), shape="doublecircle")
+        else:
+            g.node(node.link_node.label+", " + str(node.observation_index), shape="circle")
+
+    for transition in obs_space_transitions:
+
+        source = str(transition.source.link_node.label)+ ", " + str(transition.source.observation_index)
+        destination = str(transition.destination.link_node.label)+ ", " + str(transition.destination.observation_index)
+        g.edge(source, destination,
+               label='<' + transition.label + " " + '<FONT COLOR="grey">' + str(
+                   transition.observation_index) + '</FONT>' + " " + '<FONT COLOR="blue">' + str(
+                   transition.observability_label) + '</FONT>>')
+
+    g.render(directory="Output/Behavioral_Space_Observable")
 
     obs_space = Space(obs_space_nodes, obs_space_transitions)
 
@@ -854,27 +898,17 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
     space.cutted_nodes = []
     space.cutted_transitions = []
     space.transitions_after_cutting = []
-    final_node_after_ren = []
 
-    # For each node in the space
     for node in space.nodes:
-        # if node.link_node.isFinal or link_to_a_final_obs(node, space.nodes):
-        if node.link_node.isFinal and node.observation_index >= len(obs):
-            final_node_after_ren.append(node)
+        if node.isFinal or link_to_a_final_obs_re(node, space.nodes):
             space.nodes_after_cutting.append(node)
         else:
-            node.link_node.isFinal = False
-
-    for node in space.nodes:
-        if node not in final_node_after_ren and link_to_a_final_obs(node, final_node_after_ren):
-            space.nodes_after_cutting.append(node)
-        elif node not in final_node_after_ren:
             space.cutted_nodes.append(node)
             cutted_id.append((node.id, node.observation_index))
 
     for node in space.nodes_after_cutting:
         label = str(node.id) + ", " + str(node.observation_index)
-        if node in final_node_after_ren:
+        if node.isFinal:
             f.node(label, shape="doublecircle")
         else:
             f.node(label, shape="circle")
@@ -946,6 +980,14 @@ def link_to_a_final_obs(node, space_nodes):
             return 1
 
 
+def link_to_a_final_obs_re(node, space_nodes):
+    for child in node.reachable_nodes:
+        child_array = child.split(", ")
+        if find_node_by_id(int(child_array[0]), space_nodes) is not None and (
+                find_node_by_id(int(child_array[0]), space_nodes)).isFinal:
+            return 1
+
+
 # ------------ INTRO FUNCTION ------------
 # This function returns the node with the corresponding id
 def find_node_by_id(id, space_nodes):
@@ -976,23 +1018,23 @@ def find_node_id_by_label(node_label, space_nodes):
 def save_renomination_file(space, filename):
     out_file = open(filename, "w")
     out_file.write("-------------------------------------------\n")
-    out_file.write("Saved and renominated nodes and transitions\n")
+    out_file.write("Nodi e transizioni mantenuti\n")
     out_file.write("-------------------------------------------\n")
-    out_file.write("Node state     |      id   |  renomination label\n")
+    out_file.write("Stato del nodo   |      id (rinominato)    |     vecchio id  \n")
 
     for node in space.nodes_after_cutting:
-        out_file.write(node.label + " \t" + str(node.id) + " \t" + str(node.renomination_label) + "\n")
-
+        out_file.write(node.label + " \t" + str(node.id) + " \t" + str(node.old_id) + "\n")
+    out_file.write("* gli id delle transizioni sono quelli della ridenominazione *\n")
     print_transition_pretty(space.transitions_after_cutting, out_file)
 
     out_file.write("\n----------------------------\n")
-    out_file.write("Cutted nodes and transitions\n")
+    out_file.write("Nodi e transizioni tagliate\n")
     out_file.write("----------------------------\n")
 
-    out_file.write("Node state      |     id  \n")
+    out_file.write("Stato del nodo      |     id (vecchio)  \n")
     for node in space.cutted_nodes:
         out_file.write(node.label + " \t" + str(node.id) + "\n")
-
+    out_file.write("* gli id delle transizioni NON sono quelli della ridenominazione\n sono quelli dello spazio originale *\n")
     print_transition_pretty(space.cutted_transitions, out_file)
 
     out_file.close()
@@ -1001,9 +1043,9 @@ def save_renomination_file(space, filename):
 def save_renomination_file_obs(space, filename):
     out_file = open(filename, "w")
     out_file.write("-------------------------------------------\n")
-    out_file.write("Saved nodes and transitions\n")
+    out_file.write("Nodi e transizioni mantenuti\n")
     out_file.write("-------------------------------------------\n")
-    out_file.write("id | observation index \n")
+    out_file.write("id | indice di osservazione \n")
 
     for node in space.nodes_after_cutting:
         out_file.write(str(node.id) + " \t" + str(node.observation_index) + "\n")
@@ -1011,10 +1053,10 @@ def save_renomination_file_obs(space, filename):
     print_transition_pretty_obs(space.transitions_after_cutting, out_file)
 
     out_file.write("\n----------------------------\n")
-    out_file.write("Cutted nodes and transitions\n")
+    out_file.write("Nodi e transizioni tagliate\n")
     out_file.write("----------------------------\n")
 
-    out_file.write("id | observation index \n")
+    out_file.write("id | indice di osservazione \n")
     for node in space.cutted_nodes:
         out_file.write(str(node.id) + " \t" + str(node.observation_index) + "\n")
 
@@ -1026,9 +1068,8 @@ def save_renomination_file_obs(space, filename):
 # ------------ INTRO FUNCTION ------------
 # This is function is used to print with a better style the transition in the file of the renomination
 def print_transition_pretty(transitions, out_file):
-    out_file.write("\n---Edge---\n")
-    out_file.write("* the id here are the id before the renomination *\n")
-    out_file.write("source id | label | destination id | o label | r label\n")
+    out_file.write("\n--- Transizioni ---\n")
+    out_file.write(" id sorgente | etichetta | id destinazione | et. oss. | et. ril.\n")
     for transition in transitions:
         if len(str(transition.transition_link.observability_label)) > 2:
             out_file.write(str(transition.source) + "\t   " + str(transition.label) + "\t      " + str(
@@ -1043,9 +1084,8 @@ def print_transition_pretty(transitions, out_file):
 
 
 def print_transition_pretty_obs(transitions, out_file):
-    out_file.write("\n---Edge---\n")
-    out_file.write("* the id here are the id before the renomination *\n")
-    out_file.write("source id | label | destination id | o label | observation index | r label \n")
+    out_file.write("\n--- Transizioni ---\n")
+    out_file.write(" id sorgente | etichetta | id destinazione | et. oss. | indice oss. | et. ril.\n")
     for transition in transitions:
         out_file.write(str(transition.source.id) + "\t   " + str(transition.label) + "\t      " + str(
             transition.destination.id) + " \t         " + str(

@@ -55,15 +55,11 @@ def calculate_behavioral_space_renominated(pass_window, filename, full_space):
 
 def show_re_be_space(filename_re_be,filename_be, type=0):
     filename = ""
-    if type == 0:
-        filename='Output/Behavioral_Space/'+ filename_be +'_id.gv.png'
-    elif type ==1:
-        filename = 'Output/Behavioral_Space/' + filename_be + '.gv.png'
 
     column_re1 = [[sg.Text('Spazio con ID rinominati')],
                   [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '.gv.png')]]
     column_re2 = [[sg.Text('Spazio con ID vecchi')],
-                  [sg.Image(filename)]]
+                  [sg.Image(filename='Output/Behavioral_Space_Renominated/' + filename_re_be + '_old_id.gv.png')]]
 
     re_behavioral_layout = [
         [
@@ -161,14 +157,17 @@ def show_obs_space(obs, filename_obs):
     for o in obs:
         obs_name = obs_name + o + " "
 
-    column_ob1 = [[sg.Image(filename='Output/Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
+    column_ob1 = [[sg.Text('Diagramma con id')],[sg.Image(filename='Output/Behavioral_Space_Observable/' + filename_obs + '.gv.png')]]
+    column_ob2 = [[sg.Text('Diagramma con stati')],[sg.Image(filename='Output/Behavioral_Space_Observable/' + filename_obs + '_state.gv.png')]]
+
     obs_layout = [
 
         [
             sg.Text("L'osservazione considerata è:\n" + obs_name)
         ],
         [
-            sg.Column(column_ob1, size=(600, 800), scrollable=True)
+            sg.Column(column_ob1, size=(600, 800), scrollable=True),
+            sg.Column(column_ob2, size=(600, 800), scrollable=True)
         ]
     ]
     obs_window = sg.Window('Diagramma spazio comportamentale data un\'osservazione', obs_layout)

@@ -38,6 +38,7 @@ class ObservableNode:
         self.direct_reachable = []
         self.reachable_nodes = []
         self.observation_index = observation_index
+        self.isFinal = False
 
 
 class ObservableTransition:
@@ -71,6 +72,7 @@ class Node:
         self.isReachingFinal = 0
         self.edges = []
         self.renomination_label = ""
+        self.old_id = ""
 
 
 class SpaceEncoder(JSONEncoder):
