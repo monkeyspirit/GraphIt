@@ -51,9 +51,8 @@
                            <nav class="main-menu">
                               <ul class="menu-area-main">
                                  <li class="active"><a href="index_home.html">Home</a></li>
-                                 <li><a href="#start">Rete</a></li>
-                                 <li><a href="#transition">Transizioni</a></li>
-								 <li><a href="#use">Programma</a></li>
+                                 <li><a href="#start">Spazio</a></li>
+                                 <li><a href="#use">Programma</a></li>
                               </ul>
                            </nav>
                         </div>
@@ -66,9 +65,9 @@
 	<!-- banner start-->
 	<div class="layout_padding banner_section">
 		<div class="container">
-			<h1 class="about_text"><strong>Caricamento di una rete di automi</strong></h1>
-			<p class="about_taital">In questa pagina viene presentata la sintassi del file .txt delle transizioni e del file.JSON della rete. <br>
-				<span style="color: #c91728">NB: I file che viene chiesto di caricare devono essere un file .TXT per le transizioni e un file .JSON per la rete.</span>
+			<h1 class="about_text"><strong>Caricamento di uno spazio comportamentale</strong></h1>
+			<p class="about_taital">In questa pagina viene presentat il file.JSON dello spazio comportamentale. <br>
+				<span style="color: #c91728">NB: Il file .JSON che viene richiesto è SEMPRE quello dello spazio comportamentale completo (non ancora rinominato o dato da osservazioni).</span>
 			</p>
 
 
@@ -83,9 +82,10 @@
 
 		        <div class="col-sm-12">
 					<h1 class="about_text" style="font-size: 45px"><strong>Rete</strong></h1>
-		        	<p class="about_taital"> Il file della rete può essere visionato al seguente link, è sconsigliato creare un file da zero, il mio suggerimento
-						è di provare prima il programma in modalità creazione e di usare poi come file JSON il file generato partendo dalla rete che è salvato nella cartella JSON.
-										<br><br> → <a href="file/networkC2C3.json" target="_blank" rel="noopener noreferrer"><span style="color: #1C92ED">ReteC2C3 (json)</span></a>
+		        	<p class="about_taital"> Il file dello spazio può essere visionato al seguente link, è sconsigliato creare un file da zero, il mio suggerimento
+						è di provare prima il programma in modalità creazione e di usare poi come file JSON il file che potrete salvare durante l'esecuzione del programma.
+
+					<br><br> → <a href="file/spazio2.json" target="_blank" rel="noopener noreferrer"><span style="color: #1C92ED">Spazio_rete2 (json)</span></a>
 
 					</p>
 		        	<button class="read_more"><a href="#">↑</a></button>
@@ -93,43 +93,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- Gallery start-->
-	<div id="transition" class="layout_padding2 gallery_section">
-		<div class="container">
-			<div class="row">
-		        <div class="col-md-6">
-					<div><img src="images/example_transition1.png" style="max-width: 100%;"></div>
-		        	<div><img src="images/example_transition2.png" style="max-width: 100%;"></div>
-					<div><img src="images/example_transitions.png" style="max-width: 100%;"></div>
-
-		        </div>
-		        <div class="col-md-6">
-					<h1 class="about_text" style="font-size: 45px"><strong>Transizioni</strong></h1>
-		        	<p class="about_taital">Il file delle transizioni è il file più complesso
-						perché contiene tutte le transizioni nella rete e i dati ad esse relativi.
-						Il file delle transizioni prevede di riservare <span style="color: #ed1c24">
-							per ogni transizione una riga</span>. Ogni riga deve contenere:
-
-						<br><br> → <span style="color: #1C92ED">Nome automa</span> : è il nome dell'automa.
-						<br><br>→ <span style="color: #1C92ED">Etichetta</span>: è l'etichetta che identifica la transizione.
-						<br><br>→ <span style="color: #1C92ED">Eventi in ingresso</span>: sono gli eventi che servono alla transizione per scattare, ovvero per essere abilitata. Devono essere contenuti all'interno di "{" e "}" e per ogni evento deve essere identificato il link su cui l'evento
-						deve trovarsi, per separare il link e il suo evento si usa ":" (nell'esempio sulla riga 1 si ha per gli eventi in ingresso come link L2 su cui si trova e2). Nel caso in cui ci siano più eventi in ingresso si separano tra loro con la ",". Se non ci sono eventi in ingresso si lasciano "{}" vuote. L'evento identifica lo<span style="color: red"> stato attuale </span>del link.
-						<br><br>→ <span style="color: #1C92ED">Eventi in uscita</span>: sono gli eventi che si troveranno sul link a transizione scattata. Devono essere contenuti all'interno di "{" e "}" e per ogni evento deve essere identificato il link su cui l'evento
-						si troverà, per separare il link e il suo evento si usa ":" (nell'esempio sulla riga 1 si ha per gli eventi in uscita come link L3 su cui si trova e3). Nel caso in cui ci siano più eventi in uscita si separano tra loro con la ",". Se non ci sono eventi in uscita si lasciano "{}" vuote. L'evento identifica lo<span style="color: #fd7e14"> stato prossimo </span>del link.
-						<br><br>→ <span style="color: #1C92ED">Etichetta di rilevanza</span>: è l'etichetta di rilevanza associata alla transizione, se non è presente un'etichetta deve essere inserito il simbolo <span style="color: #ed1c24">ϵ</span>.
-						<br><br>→ <span style="color: #1C92ED">Etichetta di osservabilità</span>:è l'etichetta di
-						osservabilità associata alla transizione, se non è presente un'etichetta deve essere inserito
-						il simbolo <span style="color: #ed1c24">ϵ</span>.
-						<br><br>
-						<span style="color: #1C92ED">NB: Tutti i parametri sono tra loro separati da ",".</span>
-
-					</p>
-		        	<button class="read_more"><a href="#">↑</a></button>
-		        </div>
-			</div>
-		</div>
-	</div>
-	<!-- end Gallery-->
 
 	<!-- Start Program-->
 	<div id="use" class="copyright_section">
@@ -137,41 +100,36 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<h1 class="about_text" style="font-size: 45px"><strong>Programma</strong></h1>
-
-					</div>
+						</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<div><img src="images/rete1.png" style="max-width: 100%;"></div>
+						<div><img src="images/spazio1.png" style="max-width: 100%;"></div>
 					</div>
 					<div class="col-md-6">
 						<p>1.</p>
-						<p>Per prima cosa è necessario caricare il file json della rete.
+						<p>Per prima cosa è necessario caricare il file json dello spazio. Una volta caricato in figura viene mostrato quello che appare.
 						</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<p>2.</p>
-						<p>Dopo aver caricato il file .JSON della rete la schermata che verrà presentata
-							sarà quella visibile a lato. I pulsanti che possono essere premuti sono quelli
-						relativi alla visione dei diagrammi degli autoni della rete e al caricamento del file delle transizioni.</p>
+						<p>Caricato il file è possibile iniziare a rinominare lo spazio con l'apposito pulsante.</p>
 					</div>
 					<div class="col-md-6">
-						<div><img src="images/rete2.png" style="max-width: 100%;"></div>
+						<div><img src="images/spazio2.png" style="max-width: 100%;"></div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<div><img src="images/rete3.png" style="max-width: 100%;"></div>
-						<div><img src="images/rete4.png" style="max-width: 100%;"></div>
+						<div><img src="images/spazio3.png" style="max-width: 100%;"></div>
 					</div>
 					<div class="col-md-6">
 						<p>3.</p>
-						<p>Premendo sul pulsante "Visualizza i diagrammi degli automi" è possibile vedere i diagrammi relativi agli automi, come mostrato nella prima figura.<br>Una volta che il file delle transizioni viene caricato viene mostrato nel box in alto a destra
-						il suo contenuto, ovvero le transizioni inserite. A questo punto è possibile proseguire con la creazione
-						dello spazio comportamentale tramite il relativo pulsante.
-						</p>
+						<p>Per abilitare i pulsanti relativi all'osservazione è necessario inserirne una nel riquadro indicato, per concludere l'inserimento è necessario premere su "Inserisci".
+						<br>Il pulsante a destra serve per pulire la finestra e inserire una nuova osservazione, oppure basta modificare quella già presente e nuovamente premere su "Inserisci".</p>
+
 					</div>
 				</div>
 
@@ -179,22 +137,11 @@
 
 					<div class="col-md-6">
 						<p>4.</p>
-						<p>Per abilitare i pulsanti relativi all'osservazione è necessario inserirne una nel riquadro indicato, per concludere l'inserimento è necessario premere su "Inserisci".
-						<br>Il pulsante a destra serve per pulire la finestra e inserire una nuova osservazione, oppure basta modificare quella già presente e nuovamente premere su "Inserisci".</p>
-
-					</div>
-					<div class="col-md-6">
-						<div><img src="images/rete7.png" style="max-width: 100%;"></div>
-					</div>
-				</div>
-				<div class="row">
-
-					<div class="col-md-6">
-						<div><img src="images/rete10.png" style="max-width: 100%;"></div>
-					</div>
-					<div class="col-md-6">
-						<p>5.</p>
 						<p>Al termine dell'esecuzione di tutti i compiti viene stampata nel box a destra l'espressione regolare risultate dall'ultimo calcolo.</p>
+
+					</div>
+					<div class="col-md-6">
+						<div><img src="images/spazio5.png" style="max-width: 100%;"></div>
 					</div>
 				</div>
 
