@@ -56,6 +56,7 @@ class E_transition:
         self.label = label
         self.source = source
         self.destination = destination
+        self.list_label = []
 
 
 class Node:

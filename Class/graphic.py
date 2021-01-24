@@ -495,7 +495,7 @@ def append_reachable_node(reachable_list, node, space_nodes):
 # This function draws the graphic of the behavioral space renominated and creates the renominated space
 # - filename: this is the name to save the graph image
 # - space: is the behavioral space
-def create_behavioral_space_renominated(filename, space):
+def create_behavioral_space_renominated(filename, space, loaded):
     # f is the graphviz component to plot the graph
     f = Digraph(filename, format='png')
 
@@ -544,6 +544,19 @@ def create_behavioral_space_renominated(filename, space):
         node.old_id = node.id
         node.id = node.renomination_label
 
+    if loaded:
+        for node in space.nodes_after_cutting:
+            edges = node.edges
+            new_edges = []
+            for edge in edges:
+                if edge.source not in cutted_id and edge.destination not in cutted_id:
+                    edge.source = get_new_id_by_old_id(edge.source, space.nodes)
+                    edge.destination = get_new_id_by_old_id(edge.destination, space.nodes)
+                    new_edges.append(edge)
+            node.edges = new_edges
+
+
+
     # This part is for graphviz, to print the graph well
     # For each transition that was keeped
     for transition_after in space.transitions_after_cutting:
@@ -576,6 +589,8 @@ def create_behavioral_space_renominated(filename, space):
         else:
             f.node(str(node.id), shape="circle")
 
+    for node in space.cutted_nodes:
+        f.node(str(node.id), shape="circle")
     # Print the graph
     f.render(directory="Output/Behavioral_Space_Renominated")
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
@@ -588,6 +603,9 @@ def create_behavioral_space_renominated(filename, space):
             g.node(str(node.old_id), shape="doublecircle")
         else:
             g.node(str(node.old_id), shape="circle")
+
+    for node in space.cutted_nodes:
+        g.node(str(node.id), shape="circle")
 
     for transition_after in space.transitions_after_cutting:
         source = find_node_by_id(transition_after.source, space.nodes_after_cutting).old_id
@@ -913,6 +931,10 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
         else:
             f.node(label, shape="circle")
 
+    for node in space.cutted_nodes:
+        label = str(node.id) + ", " + str(node.observation_index)
+        f.node(label, shape="circle")
+
     for transition in space.transitions:
         if (transition.source.id, transition.source.observation_index) in cutted_id:
             space.cutted_transitions.append(transition)
@@ -983,9 +1005,10 @@ def link_to_a_final_obs(node, space_nodes):
 def link_to_a_final_obs_re(node, space_nodes):
     for child in node.reachable_nodes:
         child_array = child.split(", ")
-        if find_node_by_id(int(child_array[0]), space_nodes) is not None and (
-                find_node_by_id(int(child_array[0]), space_nodes)).isFinal:
+        if  find_node_by_id_and_index(int(child_array[0]),int(child_array[1]), space_nodes) is not None and (
+                find_node_by_id_and_index(int(child_array[0]), int(child_array[1]), space_nodes)).isFinal:
             return 1
+
 
 
 # ------------ INTRO FUNCTION ------------
@@ -995,6 +1018,10 @@ def find_node_by_id(id, space_nodes):
         if node.id == id:
             return node
 
+def get_new_id_by_old_id(id, space_nodes):
+    for node in space_nodes:
+        if node.old_id == id:
+            return node.id
 
 # ------------ INTRO FUNCTION ------------
 # This function returns the node with the corresponding id
@@ -1101,6 +1128,8 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
     for t in transitions:
         e_transition_list.append(E_transition(t.relevance_label, (t.source.id, t.source.observation_index),
                                               (t.destination.id, t.destination.observation_index)))
+    for e_t in e_transition_list:
+        e_t.list_label.append(e_t.label)
 
     nodes = []
     final_nodes = []
@@ -1120,7 +1149,9 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
 
     if c == 1:
         new_first_node = ("q0", "-")
-        e_transition_list.append(E_transition("ϵ", new_first_node, first_node))
+        e_t0 = E_transition("ϵ", new_first_node, first_node)
+        e_t0.list_label = ["ϵ"]
+        e_transition_list.append(e_t0)
     else:
         new_first_node = first_node
         nodes.remove(first_node)
@@ -1132,7 +1163,9 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
     if len(final_nodes) > 1:
         final_node = ("qf", "-")
         for f in final_nodes:
-            e_transition_list.append(E_transition("ϵ", f, final_node))
+            e_t1 = E_transition("ϵ", f, final_node)
+            e_t1.list_label = ["ϵ"]
+            e_transition_list.append(e_t1)
     else:
         # Step 2.2
         # Create a new final state if the number of edge with the final states as source is more than 1
@@ -1143,7 +1176,10 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
 
         if c == 1:
             final_node = ("qf", "-")
-            e_transition_list.append(E_transition("ϵ", final_nodes[0], final_node))
+            e_t2 = E_transition("ϵ", final_nodes[0], final_node)
+            e_t2.list_label = ["ϵ"]
+            e_transition_list.append(e_t2)
+
         else:
             final_node = final_nodes[0]
             nodes.remove(final_node)
@@ -1154,6 +1190,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
     count = 1
 
     # Print the first
+    label_out = ""
 
     while len(nodes) > 0:
 
@@ -1173,6 +1210,9 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
         label = str(first_node[0]) + " " + str(first_node[1])
         d.node(label, shape="circle")
 
+        if label_out != "":
+            d.node(label_out, shape="circle")
+
         remove_duplicated_transition(e_transition_list)
 
         for t in e_transition_list:
@@ -1180,81 +1220,105 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
             destination = str(t.destination[0]) + " " + str(t.destination[1])
             d.edge(source, destination, t.label)
 
-        d.render(directory="Output/Diagnosi_steps")
+        d.render(directory="Output/Diagnosi_steps/"+filename)
 
         img += 1
         count += 1
         semplify_paralle_path(e_transition_list)
         node = getNode_with_minimum_edges(nodes, e_transition_list)
 
-        input_t = []
+        t_in_output = []
         auto_t = []
-        ouput_t = []
+        t_in_input = []
 
         for t in e_transition_list:
             if t.destination == node:
                 if t.source == node:
                     auto_t.append(t)
                 else:
-                    input_t.append(t)
+                    t_in_output.append(t)
             elif t.source == node:
                 if t.destination == node:
                     auto_t.append(t)
                 else:
-                    ouput_t.append(t)
+                    t_in_input.append(t)
 
-        for t_i in input_t:
-            for t_o in ouput_t:
-
+        for t_out in t_in_output:
+            for t_in in t_in_input:
+                new_list = []
                 if not auto_t:
-                    if t_i.label != "ϵ":
-                        if t_o.label != "ϵ":
-                            label = t_i.label + "" + t_o.label
+                    if t_out.label != "ϵ":
+                        if t_in.label != "ϵ":
+                            # label = t_out.label + "" + t_in.label
+                            for o in t_out.list_label:
+                                for i in t_in.list_label:
+                                    if o != "ϵ":
+                                        new_list.append(str(o)+""+str(i))
+                                    else:
+                                        new_list.append(i)
+                            label = ""
+                            for n in new_list:
+                                label = label +"|"+n
+                            label = label[1:]
                         else:
-                            label = t_i.label
+                            label = t_out.label
+                            if t_out.list_label != []:
+                                new_list = t_out.list_label
+                            else:
+                                new_list.append(label)
                     else:
-                        if t_o.label == "ϵ":
+                        if t_in.label == "ϵ":
                             label = "ϵ"
+                            new_list.append("ϵ")
                         else:
-                            label = t_o.label
+                            label = t_in.label
+                            if t_in.list_label != []:
+                                new_list = t_in.list_label
+                            else:
+                                new_list.append(label)
 
-                    e_transition_list.append(E_transition(label, t_i.source, t_o.destination))
+                    new_t = E_transition(label, t_out.source, t_in.destination)
+                    new_t.list_label = new_list
+                    e_transition_list.append(new_t)
                 else:
                     for a_t in auto_t:
 
                         if a_t.label != "ϵ":
-                            if t_i.label != "ϵ":
-                                if t_o.label != "ϵ":
-                                    label = t_i.label + t_o.label + "(" + a_t.label + ")*"
+                            if t_out.label != "ϵ":
+                                if t_in.label != "ϵ":
+                                    label = t_out.label + t_in.label + "(" + a_t.label + ")*"
                                 else:
-                                    label = t_i.label + "(" + a_t.label + ")*"
+                                    label = t_out.label + "(" + a_t.label + ")*"
                             else:
-                                if t_o.label == "ϵ":
+                                if t_in.label == "ϵ":
                                     label = "(" + a_t.label + ")*"
                                 else:
-                                    label = t_o.label + "(" + a_t.label + ")*"
+                                    label = t_in.label + "(" + a_t.label + ")*"
                         else:
-                            if t_i.label != "ϵ":
-                                if t_o.label != "ϵ":
-                                    label = t_i.label + t_o.label
+                            if t_out.label != "ϵ":
+                                if t_in.label != "ϵ":
+                                    label = t_out.label + t_in.label
                                 else:
-                                    label = t_i.label
+                                    label = t_out.label
                             else:
-                                if t_o.label == "ϵ":
+                                if t_in.label == "ϵ":
                                     label = "ϵ"
                                 else:
-                                    label = t_o.label
+                                    label = t_in.label
 
-                        e_transition_list.append(E_transition(label, t_i.source, t_o.destination))
+                        new_t2 = E_transition(label, t_out.source, t_in.destination)
+                        new_t2.list_label.append(label)
+                        e_transition_list.append(new_t2)
 
-                remove_transition(e_transition_list, t_o)
+                remove_transition(e_transition_list, t_in)
 
+        label_out = str(node[0])+" "+str(node[1])
         nodes.remove(node)
 
-        for t_i in input_t:
-            remove_transition(e_transition_list, t_i)
-        for t_o in ouput_t:
-            remove_transition(e_transition_list, t_o)
+        for t_out in t_in_output:
+            remove_transition(e_transition_list, t_out)
+        for t_in in t_in_input:
+            remove_transition(e_transition_list, t_in)
         for a_t in auto_t:
             remove_transition(e_transition_list, a_t)
 
@@ -1262,22 +1326,19 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
 
     exp = ""
     for t in e_transition_list:
-        if exp == "":
-            exp = t.label
-
-        else:
-            if t.label != "ϵ":
-                exp = exp + "|" + t.label
-            else:
-                exp = exp
-
+         for l in t.list_label:
+                exp = exp +"|"+l
+    exp = exp [1:]
     d = Digraph(str(count), format='png')
+
     semplify_paralle_path(e_transition_list)
+    d.node(label_out, shape="circle")
+
     for t in e_transition_list:
         source = str(t.source[0]) + " " + str(t.source[1])
         destination = str(t.destination[0]) + " " + str(t.destination[1])
         d.edge(source, destination, t.label)
-    d.render(directory="Output/Diagnosi_steps")
+    d.render(directory="Output/Diagnosi_steps/"+filename)
     return img, exp
 
 
@@ -1305,19 +1366,27 @@ def semplify_paralle_path(e_transition_list):
             if t1 != t2:
                 if t1.source == t2.source:
                     if t1.destination == t2.destination:
-                        label = ""
-                        if t1.label == "ϵ":
-                            if t2.label == "ϵ":
-                                label = "ϵ"
-                            else:
-                                label = t2.label + "|ϵ"
-                        else:
-                            if t2.label == "ϵ":
-                                label = t1.label + "|ϵ"
-                            else:
-                                label = t1.label + "|" + t2.label
 
-                        e_transition_list.append(E_transition(label, t1.source, t1.destination))
+                        new_list_label = []
+                        t1_list_label = t1.list_label
+                        t2_list_label = t2.list_label
+
+                        for l1 in t1_list_label:
+                            if l1 not in new_list_label:
+                                new_list_label.append(l1)
+
+                        for l2 in t2_list_label:
+                            if l2 not in new_list_label:
+                                new_list_label.append(l2)
+
+
+                        new_label =""
+                        for l in new_list_label:
+                            new_label = str(new_label) + "|"+str(l)
+                        new_label = new_label[1:]
+                        new_e_t = E_transition(new_label, t1.source, t1.destination)
+                        new_e_t.list_label = new_list_label
+                        e_transition_list.append(new_e_t)
                         if t2 in e_transition_list:
                             e_transition_list.remove(t2)
                         if t1 in e_transition_list:
