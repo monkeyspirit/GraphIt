@@ -37,7 +37,7 @@ def draw_graphic_from_txt_file(event=None):
     return name, states, final_states, edges
 
 
-def draw_FSM_graphic(fsm):
+def draw_FSM_graphic(fsm, filename):
     f = Digraph('finite_state_machine', filename='fsm' + fsm.name, format='png')
 
     for state in fsm.states:
@@ -50,11 +50,24 @@ def draw_FSM_graphic(fsm):
     for edge_fsm in fsm.edges:
         f.edge(edge_fsm.source, edge_fsm.destination, edge_fsm.label)
 
-    f.render(directory="Output/FSM_graph")
+    f.render(directory="Output/"+filename+"/FSM_graph")
+
+    summary = open("Output/"+filename+"/FSM_graph/"+fsm.name+"_summary.txt", "w")
+    summary.write("Numero di stati:"+str(len(fsm.states))+"\n")
+    i = 1
+    for state in fsm.states:
+        summary.write(str(i)+") " + str(state) + "\n")
+        i=i+1
+    summary.write("Numero di transizioni:" + str(len(fsm.edges))+ "\n")
+    i=1
+    for e in fsm.edges:
+        summary.write(str(i)+") " + str(e.source)+" -> "  +e.label+" -> "  +e.destination+ "\n")
+        i=i+1
+    summary.close()
 
 
-def draw_network_graphic(n1):
-    f = Digraph('network', filename='network' + n1.fsms[0].name + n1.fsms[1].name, format='png')
+def draw_network_graphic(n1, filename):
+    f = Digraph('network', filename='network_' + filename, format='png')
 
     for fsm in n1.fsms:
         f.node(fsm.name, shape='box')
@@ -62,11 +75,24 @@ def draw_network_graphic(n1):
     for link in n1.links:
         f.edge(link.source, link.destination, link.name)
 
-    f.render(directory="Output/Network_graph")
+    f.render(directory="Output/"+filename+"/Network_graph")
+
+    summary = open("Output/"+filename+"/Network_graph/network_summary.txt", "w")
+    summary.write("Numero di automi:" + str(len(n1.fsms)) + "\n")
+    i = 1
+    for fsm in n1.fsms:
+        summary.write(str(i) + ") " + str(fsm.name) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(n1.links)) + "\n")
+    i = 1
+    for l in n1.links:
+        summary.write(str(i) + ") " + str(l.source) + " -> " + str(l.name) + " -> " + str(l.destination) + "\n")
+        i = i + 1
+    summary.close()
 
 
 def draw_network_graphic_from_load_network(n1, filename):
-    f = Digraph('network', filename='network' + filename, format='png')
+    f = Digraph('network', filename='network_' + filename, format='png')
 
     for fsm in n1.fsms:
         f.node(fsm.name, shape='box')
@@ -74,7 +100,23 @@ def draw_network_graphic_from_load_network(n1, filename):
     for link in n1.links:
         f.edge(link.source, link.destination, link.name)
 
-    f.render(directory="Output/Network_graph")
+    f.render(directory="Output/"+filename+"/Network_graph")
+
+    summary = open("Output/"+filename+"/Network_graph/network_summary.txt", "w")
+    summary.write("Numero di automi:" + str(len(n1.fsms)) + "\n")
+    i = 1
+    for fsm in n1.fsms:
+        summary.write(str(i) + ") " + str(fsm.name) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(n1.links)) + "\n")
+    i = 1
+    for l in n1.links:
+        summary.write(str(i) + ") " + str(l.source) + " -> " + str(l.name) + " -> " + str(l.destination) + "\n")
+        i = i + 1
+    summary.close()
+
+
+
 
 
 # ------------ INTRO FUNCTION ------------
@@ -82,7 +124,7 @@ def draw_network_graphic_from_load_network(n1, filename):
 # - filename: this is the name to save the graph image
 # - n1: is the network
 # - transitions: is the list of the transitions in the network
-def create_behavioral_space(filename, n1, transitions):
+def create_behavioral_space(filename, n1, transitions, original_filename):
     Node.count = -1
     # f is the graphviz component to plot the graph
     f = Digraph(filename, format='png')
@@ -136,7 +178,7 @@ def create_behavioral_space(filename, n1, transitions):
     find_nodes(node, f, n1, transitions, space_nodes, space_transitions)
 
     # "render" is the function to plot the graph, "directory" is the directory of the save
-    f.render(directory="Output/Behavioral_Space")
+    f.render(directory="Output/"+original_filename+"/Behavioral_Space")
 
     # The same space is printend also with the ID, not with LABEL
     # # g is another graphviz component
@@ -151,7 +193,7 @@ def create_behavioral_space(filename, n1, transitions):
         else:
             g.node(str(node.id), shape="circle")
 
-    g.render(directory="Output/Behavioral_Space")
+    g.render(directory="Output/"+original_filename+"/Behavioral_Space")
 
     # Call the function to add to each node the list of the reachable nodes
     organize_reachable_nodes(space_nodes)
@@ -160,6 +202,19 @@ def create_behavioral_space(filename, n1, transitions):
     # - space_nodes: is the list of nodes in the space
     # - space_transitions: is the list of links between nodes in the space
     space = Space(space_nodes, space_transitions)
+
+    summary = open("Output/"+original_filename+"/Behavioral_Space/space_summary.txt", "w")
+    summary.write("Numero di nodi:" + str(len(space_nodes)) + "\n")
+    i = 1
+    for node in space_nodes:
+        summary.write(str(i) + ") " + str(node.id) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(space_transitions)) + "\n")
+    i = 1
+    for t in space_transitions:
+        summary.write(str(i) + ") " + str(t.source) + " -> " + str(t.label) +"-> " + str(t.destination) + "\n")
+        i = i + 1
+    summary.close()
 
     return space
 
@@ -495,7 +550,7 @@ def append_reachable_node(reachable_list, node, space_nodes):
 # This function draws the graphic of the behavioral space renominated and creates the renominated space
 # - filename: this is the name to save the graph image
 # - space: is the behavioral space
-def create_behavioral_space_renominated(filename, space, loaded):
+def create_behavioral_space_renominated(filename, space, loaded, original_filename):
     # f is the graphviz component to plot the graph
     f = Digraph(filename, format='png')
 
@@ -592,10 +647,10 @@ def create_behavioral_space_renominated(filename, space, loaded):
     for node in space.cutted_nodes:
         f.node(str(node.id), shape="circle")
     # Print the graph
-    f.render(directory="Output/Behavioral_Space_Renominated")
+    f.render(directory="Output/"+original_filename+"/Behavioral_Space_Renominated")
     # Save the file with the list of the renomination label, the old id, the nodes that are keeped and not
 
-    save_renomination_file(space, "Output/Behavioral_Space_Renominated/RL_" + filename + ".txt")
+    save_renomination_file(space, "Output/"+original_filename+"/Behavioral_Space_Renominated/RL_" + filename + ".txt")
 
     g = Digraph(filename+'_old_id', format='png')
     for node in space.nodes_after_cutting:
@@ -629,7 +684,20 @@ def create_behavioral_space_renominated(filename, space, loaded):
                 transition_after.label) + " " + '<FONT COLOR="red">' + str(
                 transition_after.transition_link.relevance_label) + '</FONT>' + '<FONT COLOR="green">' + str(
                 transition_after.transition_link.observability_label) + '</FONT>>')
-    g.render(directory="Output/Behavioral_Space_Renominated")
+    g.render(directory="Output/"+original_filename+"/Behavioral_Space_Renominated")
+
+    summary = open("Output/"+original_filename+"/Behavioral_Space_Renominated/space_summary.txt", "w")
+    summary.write("Numero di nodi:" + str(len(space.nodes_after_cutting)) + "\n")
+    i = 1
+    for node in space.nodes_after_cutting:
+        summary.write(str(i) + ") " + str(node.id) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(space.transitions_after_cutting)) + "\n")
+    i = 1
+    for t in space.transitions_after_cutting:
+        summary.write(str(i) + ") " + str(t.source) + " -> " + str(t.label) +"-> " + str(t.destination) + "\n")
+        i = i + 1
+    summary.close()
     return space
 
 
@@ -638,7 +706,7 @@ def create_behavioral_space_renominated(filename, space, loaded):
 # - filename: this is the name to save the graph image
 # - obs: is the list of the observations
 # - space: is the behavioral renominated space
-def create_behavioral_space_from_obs(filename, obs, space):
+def create_behavioral_space_from_obs(filename, obs, space, original_filename):
 
     # Create the list of the nodes that are reached from the observations
     obs_space_nodes = []
@@ -678,7 +746,7 @@ def create_behavioral_space_from_obs(filename, obs, space):
             f.node(label, shape="circle")
 
     # Print the graph
-    f.render(directory="Output/Behavioral_Space_Observable")
+    f.render(directory="Output/"+original_filename+"/Behavioral_Space_Observable")
 
     g = Digraph(filename+'_state', format='png')
     for node in obs_space_nodes:
@@ -696,9 +764,22 @@ def create_behavioral_space_from_obs(filename, obs, space):
                    transition.observation_index) + '</FONT>' + " " + '<FONT COLOR="blue">' + str(
                    transition.observability_label) + '</FONT>>')
 
-    g.render(directory="Output/Behavioral_Space_Observable")
+    g.render(directory="Output/"+original_filename+"/Behavioral_Space_Observable")
 
     obs_space = Space(obs_space_nodes, obs_space_transitions)
+
+    summary = open("Output/"+original_filename+"/Behavioral_Space_Observable/space_summary.txt", "w")
+    summary.write("Numero di nodi:" + str(len(obs_space_nodes)) + "\n")
+    i = 1
+    for node in obs_space_nodes:
+        summary.write(str(i) + ") " + str(node.id) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(obs_space_transitions)) + "\n")
+    i = 1
+    for t in obs_space_transitions:
+        summary.write(str(i) + ") " + str(t.source.id) + " -> " + str(t.label) + "-> " + str(t.destination.id) + "\n")
+        i = i + 1
+    summary.close()
 
     return obs_space
 
@@ -905,7 +986,7 @@ def append_reachable_node_obs(reachable_list, node, space_nodes):
 # This function draws the graphic of the behavioral space from an observation list and creates the renominated space
 # - filename: this is the name to save the graph image
 # - space: is the behavioral observable renominated space
-def create_behavioral_space_observable_renominated(filename, space, obs):
+def create_behavioral_space_observable_renominated(filename, space, obs, original_filename):
     f = Digraph(filename, format='png')
 
     # count is the new "id" after the cut and the renomination, this is not an id, but a label
@@ -955,8 +1036,21 @@ def create_behavioral_space_observable_renominated(filename, space, obs):
                    transition.observability_label) + '</FONT>' + " " + '<FONT COLOR="red">' + str(
                    transition.relevance_label) + '</FONT>>')
 
-    f.render(directory="Output/Behavioral_Space_Observable_Renominated")
-    save_renomination_file_obs(space, "Output/Behavioral_Space_Observable_Renominated/RL_" + filename + ".txt")
+    f.render(directory="Output/"+original_filename+"/Behavioral_Space_Observable_Renominated")
+    save_renomination_file_obs(space, "Output/"+original_filename+"/Behavioral_Space_Observable_Renominated/RL_" + filename + ".txt")
+
+    summary = open("Output/"+original_filename+"/Behavioral_Space_Observable_Renominated/space_summary.txt", "w")
+    summary.write("Numero di nodi:" + str(len(space.nodes_after_cutting)) + "\n")
+    i = 1
+    for node in space.nodes_after_cutting:
+        summary.write(str(i) + ") " + str(node.id) + "\n")
+        i = i + 1
+    summary.write("Numero di transizioni:" + str(len(space.transitions_after_cutting)) + "\n")
+    i = 1
+    for t in space.transitions_after_cutting:
+        summary.write(str(i) + ") " + str(t.source.id) + " -> " + str(t.label) + "-> " + str(t.destination.id) + "\n")
+        i = i + 1
+    summary.close()
     return space
 
 
@@ -1220,7 +1314,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
             destination = str(t.destination[0]) + " " + str(t.destination[1])
             d.edge(source, destination, t.label)
 
-        d.render(directory="Output/Diagnosi_steps/"+filename)
+        d.render(directory="Output/"+filename+"/Diagnosi_steps/")
 
         img += 1
         count += 1
@@ -1338,7 +1432,7 @@ def create_diagnosis_for_space_observable_renominated(filename, space, obs):
         source = str(t.source[0]) + " " + str(t.source[1])
         destination = str(t.destination[0]) + " " + str(t.destination[1])
         d.edge(source, destination, t.label)
-    d.render(directory="Output/Diagnosi_steps/"+filename)
+    d.render(directory="Output/"+filename+"/Diagnosi_steps/")
     return img, exp
 
 

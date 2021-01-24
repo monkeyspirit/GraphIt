@@ -32,14 +32,14 @@ if __name__ == '__main__':
 
         def save_filename():
             global filename
-            filename = values['input_filename'] + "_"
-            create_window['create_network'].update(disabled=False)
+            filename = values['input_filename']
+            create_window['load_fsm'].update(disabled=False)
 
         def create_net():
             global n1
             try:
                 n1 = Network(fsms, links, transitions)
-                graphic.draw_network_graphic(n1)
+                graphic.draw_network_graphic(n1, filename)
                 network.save_network_as_json(n1, filename)
 
                 operations_on_network()
@@ -105,7 +105,7 @@ if __name__ == '__main__':
                     sg.Text('Diagramma della rete')
                 ],
                 [
-                    sg.Image(filename='Output/Network_graph/network' + n1.fsms[0].name + n1.fsms[1].name + '.png')
+                    sg.Image(filename='Output/'+filename+'/Network_graph/network_' + filename+'.png')
                 ]
             ]
 
@@ -133,13 +133,13 @@ if __name__ == '__main__':
                 if event == sg.WINDOW_CLOSED or event == 'Indietro':
                     break
                 elif event == 'be_diag':
-                    UI_operations_on_network.show_behavioral_space(filename_be)
+                    UI_operations_on_network.show_behavioral_space(filename_be, filename)
                 elif event == 'be_re_diag':
-                    UI_operations_on_network.show_re_be_space(filename_re_be, filename_be)
+                    UI_operations_on_network.show_re_be_space(filename_re_be, filename_be, filename)
                 elif event == 'obs_diag':
-                    UI_operations_on_network.show_obs_space(obs, filename_obs)
+                    UI_operations_on_network.show_obs_space(obs, filename_obs, filename)
                 elif event == 'obs_re_diag':
-                    UI_operations_on_network.show_re_obs_space(obs, filename_re_obs)
+                    UI_operations_on_network.show_re_obs_space(obs, filename_re_obs, filename)
                 elif event == 'calc_be':
                     network_window['output_network_op'].update(
                         values['output_network_op'] + "--- Calcolo in corso ... ---")
@@ -147,16 +147,16 @@ if __name__ == '__main__':
                                                                                                   filename, transitions,
                                                                                                   n1)
                     network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n '
-                                                                                             'Diagramma salvato in: Output/Behavioral_Space/' + filename_be)
+                                                                                             'Diagramma salvato in: Output/'+filename+'/Behavioral_Space/' + filename_be)
                 elif event == 'ren_be':
                     network_window['output_network_op'].update(
                         values['output_network_op'] + "--- Calcolo in corso ... ---")
                     filename_re_be, full_space_r = UI_operations_on_network.calculate_behavioral_space_renominated(
                         network_window, filename, full_space, False)
                     network_window['output_network_op'].update(values[
-                                                                   'output_network_op'] + '> Completato\n Diagramma salvato in: Output/Behavioral_Space_Renominated/'
+                                                                   'output_network_op'] + '> Completato\n Diagramma salvato in: Output/'+filename+'/Behavioral_Space_Renominated/'
                                                                + filename_re_be + "\nFile di ridenominazione spazio comportamentale salvato in:\n"
-                                                                                  "Output/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
+                                                                                  "Output/'+filename+'/Behavioral_Space_Renominated/renomination_list_" + filename_re_be + ".txt")
                 elif event == 'calc_obs':
                     network_window['output_network_op'].update(
                         values['output_network_op'] + "--- Calcolo in corso ... ---")
@@ -165,7 +165,7 @@ if __name__ == '__main__':
                                                                                                 obs)
                     network_window['output_network_op'].update(
                         values['output_network_op'] + '> Completato\n '
-                                                      'Diagramma salvato in: Output/Behavioral_Space_Observable/' + filename_obs)
+                                                      'Diagramma salvato in: Output/'+filename+'/Behavioral_Space_Observable/' + filename_obs)
                 elif event == 'ren_obs':
                     network_window['output_network_op'].update(
                         values['output_network_op'] + "--- Calcolo in corso ... ---")
@@ -173,9 +173,9 @@ if __name__ == '__main__':
                         network_window, filename, obs_full_space, obs)
                     network_window['output_network_op'].update(values[
                                                                    'output_network_op'] + '> Completato\n'
-                                                                                          'Diagramma salvato in: Output/Behavioral_Space_Observable_Renominated/' + filename_re_obs + "\nFile di "
+                                                                                          'Diagramma salvato in: Output/'+filename+'/Behavioral_Space_Observable_Renominated/' + filename_re_obs + "\nFile di "
                                                                                                                                                                                       "ridenominazione dello spazio data l'osservazione salvato in:\n"
-                                                                                                                                                                                      "Output/Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
+                                                                                                                                                                                      "Output/"+filename+"/Behavioral_Space_Observable_Renominated/renomination_list_" + filename_re_obs + ".txt")
                 elif event == 'diag':
                     try:
                         network_window['output_network_op'].update(
@@ -184,7 +184,7 @@ if __name__ == '__main__':
                                                                                        obs_space_r, obs)
                         network_window['output_network_op'].update(values['output_network_op'] + '> Completato\n'
                                                                                                  'Diagrammi salvati in: '
-                                                                                              'Output/Diagnosi_steps/'+filename+'\n' +
+                                                                                              'Output/'+filename+'/Diagnosi_steps/'+filename+'\n' +
                                                                    '> Espressione regolare: ' + exp)
                     except IndexError:
                         sg.Popup(
@@ -192,9 +192,9 @@ if __name__ == '__main__':
                         network_window['output_network_op'].update(
                             values['output_network_op'] + "--- Calcolo annullato ---")
                 elif event == 'renomination_file_be':
-                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be)
+                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be, filename)
                 elif event == 'renomination_file_obs':
-                    UI_operations_on_network.show_renomination_file_obs(obs, filename_re_obs)
+                    UI_operations_on_network.show_renomination_file_obs(obs, filename_re_obs, filename)
                 elif event == 'input_btn':
                     string_obs = values['input_obs']
                     obs = UI_operations_on_network.check_obs_insert(string_obs, network_window)
@@ -205,35 +205,35 @@ if __name__ == '__main__':
                 elif event == 'save_be_space':
                     now = datetime.now()
                     dt_string = str(now.date()) + "_" + filename_be
-                    UI_operations_on_network.save_be_space_as_JSON(dt_string)
+                    UI_operations_on_network.save_be_space_as_JSON(dt_string, filename)
                     network_window['output_network_op'].update(
                         values['output_network_op'] + '> Salvataggio effettuato!\n'
-                                                      'Il percorso del file è\n: '
-                                                      'JSON/' + dt_string + '.json')
+                                                      'Il percorso del file è\n: Output/'
+                                                      + filename+'/' + dt_string + '.json')
                 elif event == 'save_be_re_space':
                     now = datetime.now()
                     dt_string = str(now.date()) + "_" + filename_re_be
-                    UI_operations_on_network.save_be_re_space_as_JSON(dt_string)
+                    UI_operations_on_network.save_be_re_space_as_JSON(dt_string, filename)
                     network_window['output_network_op'].update(
                         values['output_network_op'] + '> Salvataggio effettuato!\n'
-                                                      'Il percorso del file è\n: '
-                                                      'JSON/' + dt_string + '.json')
+                                                      'Il percorso del file è\n: Output/'
+                                                      + filename+'/' + dt_string + '.json')
                 elif event == 'save_obs_space':
                     now = datetime.now()
                     dt_string = str(now.date()) + "_" + filename_obs
-                    UI_operations_on_network.save_obs_space_as_JSON(dt_string)
+                    UI_operations_on_network.save_obs_space_as_JSON(dt_string, filename)
                     network_window['output_network_op'].update(
                         values['output_network_op'] + '> Salvataggio effettuato!\n'
-                                                      'Il percorso del file è\n: '
-                                                      'JSON/' + dt_string + '.json')
+                                                      'Il percorso del file è\n: Output/'
+                                                      + filename+'/' + dt_string + '.json')
                 elif event == 'save_obs_re_space':
                     now = datetime.now()
                     dt_string = str(now.date()) + "_" + filename_re_obs
-                    UI_operations_on_network.save_obs_re_space_as_JSON(dt_string)
+                    UI_operations_on_network.save_obs_re_space_as_JSON(dt_string, filename)
                     network_window['output_network_op'].update(
                         values['output_network_op'] + '> Salvataggio effettuato!\n'
-                                                      'Il percorso del file è\n: '
-                                                      'JSON/' + dt_string + '.json')
+                                                      'Il percorso del file è\n: Output/'
+                                                       + filename+'/' + dt_string + '.json')
 
             # Finish up by removing from the screen
             network_window.close()
@@ -242,7 +242,15 @@ if __name__ == '__main__':
 
         buttons = [
             [
-                sg.Button('Carica automi'),
+                sg.Text('Nome identificativo\ndel file:'),
+                sg.Input(key='input_filename', size=(20, 1)),
+                sg.Button('Salva', key='save_filename')
+            ],
+            [
+                sg.HSeparator()
+            ],
+            [
+                sg.Button('Carica automi', key='load_fsm', disabled=True),
                 sg.Button('Carica link', key='load_link', disabled=True),
                 sg.Button('Carica transizioni', key='load_transitions', disabled=True)
             ],
@@ -257,11 +265,6 @@ if __name__ == '__main__':
             ],
             [
                 sg.HSeparator()
-            ],
-            [
-                sg.Text('Nome identificativo\ndel file:'),
-                sg.Input(key='input_filename', size=(20, 1)),
-                sg.Button('Salva', key='save_filename', disabled=True, )
             ],
             [
                 sg.Button('Crea la rete', disabled=True, key='create_network')
@@ -313,14 +316,14 @@ if __name__ == '__main__':
             # See if user wants to quit or window was closed
             if event == sg.WINDOW_CLOSED or event == 'Indietro':
                 break
-            elif event == 'Carica automi':
-                UI_create_network.load_fsm(create_window, fsms)
+            elif event == 'load_fsm':
+                UI_create_network.load_fsm(create_window, fsms, filename)
             elif event == 'load_link':
                 links = UI_create_network.load_links(create_window)
             elif event == 'load_transitions':
                 transitions = UI_create_network.load_transitions(create_window)
             elif event == 'show_fsms':
-                UI_create_network.show_fsm_graph(fsms)
+                UI_create_network.show_fsm_graph(fsms, filename)
             elif event == 'delete_fsms':
                 UI_create_network.remove_fsm(create_window, fsms)
             elif event == 'save_filename':

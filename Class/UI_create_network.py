@@ -3,11 +3,11 @@ import PySimpleGUI as sg
 from Class import FSM, graphic, network, comportamentalSpace
 
 
-def load_fsm(pass_window, fsms):
+def load_fsm(pass_window, fsms, filename):
     try:
         f1 = FSM.read_fsm_from_txt()
         fsms.append(f1)
-        graphic.draw_FSM_graphic(f1)
+        graphic.draw_FSM_graphic(f1, filename)
         names = ""
         for fsm in fsms:
             names = names + fsm.name + ", "
@@ -39,11 +39,11 @@ def remove_fsm(pass_window, fsms):
     pass_window['create_network'].update(disabled=True)
 
 
-def show_fsm_graph(fsms):
+def show_fsm_graph(fsms, filename):
     images = []
     text = []
     for i in range(int(len(fsms))):
-        images.append(sg.Image(filename='Output/FSM_graph/fsm' + fsms[i].name + '.png'))
+        images.append(sg.Image(filename='Output/'+filename+'/FSM_graph/fsm' + fsms[i].name + '.png'))
         text.append(sg.Text(fsms[i].name), )
 
     # Define the window's contents
@@ -100,7 +100,7 @@ def load_transitions(pass_window):
                 transition.observability_label) + "\n"
 
         pass_window['output_transitions'].update(print_T)
-        pass_window['save_filename'].update(disabled=False)
+        pass_window['create_network'].update(disabled=False)
         return transitions
     except IndexError:
         sg.Popup('Attenzione!', 'Il file potrebbe non essere quello corretto o avere degli errori di sintassi!')

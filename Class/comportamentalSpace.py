@@ -1,4 +1,5 @@
 import json
+import os
 from collections import namedtuple
 from json import JSONEncoder
 from tkinter import filedialog
@@ -81,8 +82,9 @@ class SpaceEncoder(JSONEncoder):
         return o.__dict__
 
 
-def save_space_as_json(space, filename):
-    with open("JSON/" + filename + ".json", "w") as write_file:
+def save_space_as_json(space, filename, original_filename):
+
+    with open("Output/"+original_filename+"/space_" + filename + ".json", "w") as write_file:
         json.dump(space, write_file, indent=4, cls=SpaceEncoder)
 
 

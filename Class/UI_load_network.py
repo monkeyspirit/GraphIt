@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 
 from Class import FSM, graphic, network, comportamentalSpace
 
-def show_fsm_graph(n1):
+def show_fsm_graph(n1, filename):
     global name_fsm_images
 
     name_fsm_images = []
@@ -13,7 +13,7 @@ def show_fsm_graph(n1):
     images = []
     text = []
     for i in range(len(name_fsm_images)):
-        images.append(sg.Image(filename='Output/FSM_graph/fsm' + name_fsm_images[i] + '.png'))
+        images.append(sg.Image(filename='Output'+filename+'FSM_graph/fsm' + name_fsm_images[i] + '.png'))
         text.append(sg.Text(name_fsm_images[i]), )
 
     # Define the window's contents
