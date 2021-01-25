@@ -2,9 +2,6 @@ import copy
 import json
 import os
 from datetime import datetime
-from doctest import master
-from tkinter import ttk
-from tkinter.tix import ScrolledWindow
 
 from graphviz import Digraph
 from reportlab.lib.colors import white
