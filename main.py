@@ -32,8 +32,12 @@ if __name__ == '__main__':
 
         def save_filename():
             global filename
-            filename = values['input_filename']
-            create_window['load_fsm'].update(disabled=False)
+            if values['input_filename'] != "":
+                filename = values['input_filename']
+                create_window['load_fsm'].update(disabled=False)
+            else:
+                sg.Popup('Attenzione!',
+                         'Inserire un nome valido!')
 
         def create_net():
             global n1
@@ -369,8 +373,12 @@ if __name__ == '__main__':
 
             def save_filename():
                 global filename
-                filename = values['input_filename']
-                load_window['calc_be'].update(disabled=False)
+                if values['input_filename'] != "":
+                    filename = values['input_filename']
+                    create_window['load_fsm'].update(disabled=False)
+                else:
+                    sg.Popup('Attenzione!',
+                             'Inserire un nome valido!')
 
 
             load_net_buttons = [
