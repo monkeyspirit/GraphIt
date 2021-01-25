@@ -100,7 +100,7 @@ def load_transitions(pass_window):
                 transition.observability_label) + "\n"
 
         pass_window['output_transitions'].update(print_T)
-        pass_window['create_network'].update(disabled=False)
+        pass_window['save_filename'].update(disabled=False)
         return transitions
     except IndexError:
         sg.Popup('Attenzione!', 'Il file potrebbe non essere quello corretto o avere degli errori di sintassi!')

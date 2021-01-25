@@ -33,6 +33,7 @@ def save_network_as_json(n1, filename):
 # In this function the fsm is read from a JSON file
 def read_network_from_json():
     filename = filedialog.askopenfilename()
+
     with open(filename, "r+") as json_file:
         data = json.load(json_file)
         data_str = json.dumps(data)

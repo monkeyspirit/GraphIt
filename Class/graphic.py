@@ -91,8 +91,8 @@ def draw_network_graphic(n1, filename):
     summary.close()
 
 
-def draw_network_graphic_from_load_network(n1, filename):
-    f = Digraph('network', filename='network_' + filename, format='png')
+def draw_network_graphic_from_load_network(n1, names, filename):
+    f = Digraph('network', filename='network' + names, format='png')
 
     for fsm in n1.fsms:
         f.node(fsm.name, shape='box')
@@ -207,7 +207,7 @@ def create_behavioral_space(filename, n1, transitions, original_filename):
     summary.write("Numero di nodi:" + str(len(space_nodes)) + "\n")
     i = 1
     for node in space_nodes:
-        summary.write(str(i) + ") " + str(node.id) + "\n")
+        summary.write(str(i) + ") id:" + str(node.id) + ", stato:"+str(node.label)+"\n")
         i = i + 1
     summary.write("Numero di transizioni:" + str(len(space_transitions)) + "\n")
     i = 1
@@ -690,7 +690,7 @@ def create_behavioral_space_renominated(filename, space, loaded, original_filena
     summary.write("Numero di nodi:" + str(len(space.nodes_after_cutting)) + "\n")
     i = 1
     for node in space.nodes_after_cutting:
-        summary.write(str(i) + ") " + str(node.id) + "\n")
+        summary.write(str(i) + ") id:" + str(node.id) + ", stato:"+str(node.label)+ "\n")
         i = i + 1
     summary.write("Numero di transizioni:" + str(len(space.transitions_after_cutting)) + "\n")
     i = 1
@@ -772,12 +772,12 @@ def create_behavioral_space_from_obs(filename, obs, space, original_filename):
     summary.write("Numero di nodi:" + str(len(obs_space_nodes)) + "\n")
     i = 1
     for node in obs_space_nodes:
-        summary.write(str(i) + ") " + str(node.id) + "\n")
+        summary.write(str(i) + ") " + str(node.id)+", "+str(node.observation_index)+ "\n")
         i = i + 1
     summary.write("Numero di transizioni:" + str(len(obs_space_transitions)) + "\n")
     i = 1
     for t in obs_space_transitions:
-        summary.write(str(i) + ") " + str(t.source.id) + " -> " + str(t.label) + "-> " + str(t.destination.id) + "\n")
+        summary.write(str(i) + ") " + str(t.source.link_node.id)+ ", " + str(t.source.observation_index) + " -> " + str(t.label) + "-> " + str(t.destination.link_node.id)+ ", " + str(t.destination.observation_index) + "\n")
         i = i + 1
     summary.close()
 
@@ -1043,12 +1043,15 @@ def create_behavioral_space_observable_renominated(filename, space, obs, origina
     summary.write("Numero di nodi:" + str(len(space.nodes_after_cutting)) + "\n")
     i = 1
     for node in space.nodes_after_cutting:
-        summary.write(str(i) + ") " + str(node.id) + "\n")
+        summary.write(str(i) + ") " + str(node.id)+", "+str(node.observation_index)+ "\n")
         i = i + 1
     summary.write("Numero di transizioni:" + str(len(space.transitions_after_cutting)) + "\n")
     i = 1
     for t in space.transitions_after_cutting:
-        summary.write(str(i) + ") " + str(t.source.id) + " -> " + str(t.label) + "-> " + str(t.destination.id) + "\n")
+        summary.write(
+            str(i) + ") " + str(t.source.link_node.id) + ", " + str(t.source.observation_index) + " -> " + str(
+                t.label) + "-> " + str(t.destination.link_node.id) + ", " + str(
+                t.destination.observation_index) + "\n")
         i = i + 1
     summary.close()
     return space
@@ -1524,4 +1527,4 @@ def draw_comportamental_space(name, space):
         else:
             g.node(str(node.id), shape="circle")
 
-    g.render(directory="Output/Behavioral_Space")
+    g.render(directory="Output/"+name+"/Behavioral_Space")

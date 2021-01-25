@@ -284,12 +284,12 @@ def load_comportamental_space(pass_window):
 
 def calculate_all(pass_window, full_space, filename, obs):
     filename_re_be = filename + '_RS'
-    full_space_r = graphic.create_behavioral_space_renominated(filename_re_be, full_space, True)
+    full_space_r = graphic.create_behavioral_space_renominated(filename_re_be, full_space, True, filename)
     filename_obs = filename + '_OS'
-    obs_full_space = graphic.create_behavioral_space_from_obs(filename_obs, obs, full_space_r)
+    obs_full_space = graphic.create_behavioral_space_from_obs(filename_obs, obs, full_space_r,filename)
     filename_re_obs = filename + '_ROS'
-    obs_space_r = graphic.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, obs)
+    obs_space_r = graphic.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, obs,filename)
     filename_dia = filename + '_DS'
-    n_img, exp = graphic.create_diagnosis_for_space_observable_renominated(filename_dia, obs_space_r, obs)
+    n_img, exp = graphic.create_diagnosis_for_space_observable_renominated(filename, obs_space_r, obs)
     # pass_window['save_diagnosi_space'].update(disabled=False)
     return n_img, exp
