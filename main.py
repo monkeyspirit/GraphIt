@@ -1,17 +1,10 @@
-import copy
 import json
-import os
 from datetime import datetime
 
-from graphviz import Digraph
-from reportlab.lib.colors import white
-
-from Class import network, comportamentalSpace, graphic, FSM, UI_create_network, UI_operations_on_network, \
-    UI_load_network
-from Class.comportamentalSpace import Transition, Space
-from Class.FSM import FiniteStateMachine
-from Class.network import Network
-from Class.FSM import Edge
+import Class.UI.UI_operations_on_network
+from Class.Base import space, graphic, network
+from Class.UI import UI_create_network, UI_operations_on_network
+from Class.Base.network import Network
 import PySimpleGUI as sg
 import webbrowser
 
@@ -372,7 +365,7 @@ if __name__ == '__main__':
                 global filename
                 if values['input_filename'] != "":
                     filename = values['input_filename']
-                    create_window['load_fsm'].update(disabled=False)
+                    load_window['load_fsm'].update(disabled=False)
                 else:
                     sg.Popup('Attenzione!',
                              'Inserire un nome valido!')
@@ -487,13 +480,13 @@ if __name__ == '__main__':
                 elif event == 'load_transitions':
                     transitions = UI_create_network.load_transitions(load_window)
                 elif event == 'show_fsms':
-                    UI_load_network.show_fsm_graph(n1, "loaded_network")
+                    Class.UI.UI_operations_on_network.show_fsm_graph(n1, "loaded_network")
                 elif event == 'be_diag':
                     UI_operations_on_network.show_behavioral_space(filename_be, filename)
                 elif event == 'be_re_diag':
                     UI_operations_on_network.show_re_be_space(filename_re_be, filename_be, filename)
                 elif event == 'obs_diag':
-                    UI_operations_on_network.show_obs_space(obs, filename_obs,filename)
+                    UI_operations_on_network.show_obs_space(obs, filename_obs, filename)
                 elif event == 'obs_re_diag':
                     UI_operations_on_network.show_re_obs_space(obs, filename_re_obs, filename)
                 elif event == 'calc_be':
@@ -564,7 +557,7 @@ if __name__ == '__main__':
                         load_window['output_network_op'].update(
                             values['output_network_op'] + "--- Calcolo annullato ---")
                 elif event == 'renomination_file_be':
-                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be,filename)
+                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be, filename)
                 elif event == 'renomination_file_obs':
                     UI_operations_on_network.show_renomination_file_obs(obs, filename_re_obs, filename)
                 elif event == 'input_btn':
@@ -630,7 +623,7 @@ if __name__ == '__main__':
         global obs, n_img, exp
 
         try:
-            full_space, filename_be = comportamentalSpace.read_space_from_json()
+            full_space, filename_be = space.read_space_from_json()
             graphic.draw_comportamental_space(filename_be, full_space)
 
             comportamentalSpace_buttons = [
@@ -769,7 +762,7 @@ if __name__ == '__main__':
                             'Attenzione, l\'osservazione produce uno spazio comportamentale vuoto. Quindi non ha senso fare un diagnosi.')
                         comportamentalspace_window['output_op'].update(values['output_op'] + "--- Calcolo annullato ---")
                 elif event == 'renomination_file_be':
-                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be, filename_be,type=1)
+                    UI_operations_on_network.show_renomination_file_be(filename_re_be, filename_be, filename_be, type=1)
                 elif event == 'renomination_file_obs':
                     UI_operations_on_network.show_renomination_file_obs(obs, filename_re_obs, filename_be)
                 elif event == 'input_btn':

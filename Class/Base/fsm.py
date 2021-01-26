@@ -43,13 +43,6 @@ def read_fsm_from_json():
         return fsm
 
 
-# In this function the fsm is saved as a JSON file whose name is made with
-# the current time and date.
-def save_fsm_as_json(fsm):
-    with open("JSON/" + fsm.name + ".json", "w") as write_file:
-        json.dump(fsm, write_file, indent=4, cls=FSMEncoder)
-
-# In this function the fsm is read from a JSON file
 
 def read_fsm_from_txt():
     # get file object

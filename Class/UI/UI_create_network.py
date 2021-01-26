@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
 
-from Class import FSM, graphic, network, comportamentalSpace
+from Class.Base import space, graphic, network
 
 
 def load_fsm(pass_window, fsms, filename):
     try:
-        f1 = FSM.read_fsm_from_txt()
+        f1 = fsm.read_fsm_from_txt()
         fsms.append(f1)
         graphic.draw_FSM_graphic(f1, filename)
         names = ""
@@ -91,7 +91,7 @@ def load_links(pass_window):
 
 def load_transitions(pass_window):
     try:
-        transitions = comportamentalSpace.read_transitions_from_txt()
+        transitions = space.read_transitions_from_txt()
         print_T = ""
         for transition in transitions:
             print_T = print_T + str(transition.label) + ", " + str(transition.input) + ", " + str(

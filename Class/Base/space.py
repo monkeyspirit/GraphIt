@@ -22,8 +22,6 @@ class Transition:
 class Space:
 
     def __init__(self, nodes, transitions):
-        seed(1)
-        self.id = randint(0, 100)
         self.nodes = nodes
         self.nodes_after_cutting = []
         self.cutted_nodes = []
@@ -52,7 +50,7 @@ class ObservableTransition:
         self.relevance_label = relevance_label
 
 
-class E_transition:
+class DiagnosiTransition:
     def __init__(self, label, source, destination):
         self.label = label
         self.source = source
@@ -82,9 +80,9 @@ class SpaceEncoder(JSONEncoder):
         return o.__dict__
 
 
-def save_space_as_json(space, filename, original_filename):
+def save_space_as_json(space, filename, dir_filename):
 
-    with open("Output/"+original_filename+"/space_" + filename + ".json", "w") as write_file:
+    with open("Output/"+dir_filename+"/space_" + filename + ".json", "w") as write_file:
         json.dump(space, write_file, indent=4, cls=SpaceEncoder)
 
 
