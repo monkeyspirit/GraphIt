@@ -1,5 +1,5 @@
-def save_renomination_file(space, filename):
-    out_file = open(filename, "w")
+def save_renomination_file(space, path):
+    out_file = open(path, "w")
     out_file.write("-------------------------------------------\n")
     out_file.write("Nodi e transizioni mantenuti\n")
     out_file.write("-------------------------------------------\n")
@@ -23,8 +23,8 @@ def save_renomination_file(space, filename):
     out_file.close()
 
 
-def save_renomination_file_obs(space, filename):
-    out_file = open(filename, "w")
+def save_renomination_file_obs(space, path):
+    out_file = open(path, "w")
     out_file.write("-------------------------------------------\n")
     out_file.write("Nodi e transizioni mantenuti\n")
     out_file.write("-------------------------------------------\n")

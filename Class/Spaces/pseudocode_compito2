@@ -1,0 +1,38 @@
+TROVA_NODI_OSS(NODO, TRANSIZIONI_SPAZIO_OSS, NODI_SPAZIO_OSS, INDICE_OSS, OSS):
+IF nodo non è presente in nodi_spazio THEN
+    Aggiungo nodo a nodi_spazio
+END IF
+
+FOR ogni transizione associata al nodo
+    IF indice_oss è uguale a 0 THEN
+        IF l'etichetta di osservabilità della transizione considerata coincide con il primo elemento dell'array oss THEN
+            Aggiungo il nodo di destinazione (con indice_oss associato) della transizione a nodi_spazio_oss (nuovo_nodo_obs)
+            Aggiungo la transizione a transizioni_spazio_oss
+            Incremento di 1 indice_oss
+            Chiamo TROVA_NODI_OSS(NUOVO_NODO_OSS,TRANSIZIONI_SPAZIO_OSS, NODI_SPAZIO_OSS, INDICE_OSS, OSS)
+        END IF
+    ELSE
+        IF indice_oss è < della lunghezza di OSS THEN
+            IF l'etichetta di osservabilità della transizione considerata coincide con oss[indice_oss] THEN
+                Aggiungo il nodo di destinazione (con indice_oss associato) della transizione a nodi_spazio_oss (nuovo_nodo_obs)
+                Aggiungo la transizione a transizioni_spazio_oss
+                Incremento di 1 indice_oss
+                Chiamo TROVA_NODI_OSS(NUOVO_NODO_OSS,TRANSIZIONI_SPAZIO_OSS, NODI_SPAZIO_OSS, INDICE_OSS, OSS)
+            ELSE IF l'etichetta di osservabilità della transizione considerata è vuota THEN
+                Aggiungo la transizione a transizioni_spazio_oss
+                IF il nodo di destinazione (con indice_oss associato) della transizione non è già presente in nodi_spazio_obs THEN
+                    Aggiungo il nodo di destinazione (con indice_oss associato) della transizione a nodi_spazio_oss (nuovo_nodo_obs)
+                    Chiamo TROVA_NODI_OSS(NUOVO_NODO_OSS,TRANSIZIONI_SPAZIO_OSS, NODI_SPAZIO_OSS, INDICE_OSS, OSS)
+                END IF
+            END IF
+        ELSE
+            IF l'etichetta di osservabilità della transizione considerata è vuota THEN
+                Aggiungo la transizione a transizioni_spazio_oss
+                IF il nodo di destinazione (con indice_oss associato) della transizione non è già presente in nodi_spazio_obs THEN
+                    Aggiungo il nodo di destinazione (con indice_oss associato) della transizione a nodi_spazio_oss (nuovo_nodo_obs)
+                    Chiamo TROVA_NODI_OSS(NUOVO_NODO_OSS,TRANSIZIONI_SPAZIO_OSS, NODI_SPAZIO_OSS, INDICE_OSS, OSS)
+                END IF
+            END IF
+        END IF
+    END IF
+END FOR

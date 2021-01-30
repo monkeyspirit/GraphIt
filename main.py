@@ -10,7 +10,6 @@ import webbrowser
 
 
 
-
 if __name__ == '__main__':
 
     def create_network_window():
@@ -365,7 +364,7 @@ if __name__ == '__main__':
                 global filename
                 if values['input_filename'] != "":
                     filename = values['input_filename']
-                    load_window['load_fsm'].update(disabled=False)
+                    load_window['calc_be'].update(disabled=False)
                 else:
                     sg.Popup('Attenzione!',
                              'Inserire un nome valido!')
@@ -374,7 +373,7 @@ if __name__ == '__main__':
             load_net_buttons = [
                 [
                     sg.Text('Diagramma della rete'),
-                    sg.Image(filename="Output/loaded_network/Network_graph/network" + names + ".png")
+                    sg.Image(filename="Output/loaded_network/Network_graph/network_" + names + ".png")
                 ],
                 [
                     sg.Button('Mostra i diagrammi degli automi', key='show_fsms'),

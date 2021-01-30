@@ -8,7 +8,7 @@ from Class.Utils.utils import link_to_a_final_obs_re, remove_duplicated_transiti
 # This function draws the graphic of the behavioral space from an observation list and creates the renominated space
 # - filename: this is the name to save the graph image
 # - space: is the behavioral observable renominated space
-def create_behavioral_space_observable_renominated(filename, space, obs, original_filename):
+def create_behavioral_space_observable_renominated(filename, space, original_filename):
     f = Digraph(filename, format='png')
 
     # count is the new "id" after the cut and the renomination, this is not an id, but a label

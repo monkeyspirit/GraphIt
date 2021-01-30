@@ -25,7 +25,6 @@ def create_behavioral_space_from_obs(filename, obs, space, original_filename):
 
     organize_reachable_nodes_obs(obs_space_nodes)
 
-    obs_space_nodes, obs_space_transitions = cut_not_complete(obs, obs_space_nodes, obs_space_transitions)
 
     remove_duplicated_transition_obs(obs_space_transitions)
     for transition in obs_space_transitions:
@@ -85,51 +84,6 @@ def create_behavioral_space_from_obs(filename, obs, space, original_filename):
 
     return obs_space
 
-
-def cut_not_complete(obs, nodes, transitions):
-    l = len(obs)
-    nodes_to_remove = []
-    transitions_to_remove = []
-    for node in nodes:
-        if node.reachable_nodes != []:
-            c = 0
-            for reachable in node.reachable_nodes:
-                reach_split = reachable.split(", ")
-                if int(reach_split[1]) == l:
-                    c = 1
-
-            if c == 0:
-                nodes_to_remove.append(node)
-
-    nodes_to_remove = remove_duplicate(nodes_to_remove)
-
-    new_list_node = []
-    new_list_transitions = []
-
-    for node in nodes:
-        if node not in nodes_to_remove:
-            new_list_node.append(node)
-
-    for t in transitions:
-        if t.source not in nodes_to_remove and t.destination not in nodes_to_remove:
-            new_list_transitions.append(t)
-
-    for new_node in new_list_node:
-        new_reach = []
-        if nodes_to_remove:
-            for remove in nodes_to_remove:
-                for child in new_node.reachable_nodes:
-                    split = child.split(", ")
-                    if remove.id != int(split[0]) and remove.observation_index != int(split[1]):
-                        print(child)
-                    new_reach.append(child)
-        else:
-            new_reach = new_node.reachable_nodes
-
-        new_reach = remove_duplicate(new_reach)
-        new_node.reachable_nodes = new_reach
-
-    return [new_list_node, new_list_transitions]
 
 
 def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):

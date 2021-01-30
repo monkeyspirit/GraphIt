@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
 
-from Class.Base import space, graphic, network
+from Class.Base import space, graphic, network, FSM
 
 
 def load_fsm(pass_window, fsms, filename):
     try:
-        f1 = fsm.read_fsm_from_txt()
+        f1 = FSM.read_fsm_from_txt()
         fsms.append(f1)
         graphic.draw_FSM_graphic(f1, filename)
         names = ""

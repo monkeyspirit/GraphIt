@@ -1,0 +1,89 @@
+Trova_nodi(nodo, rete, transizioni_rete, transizioni_spazio, nodi_spazio)
+#Prima parte: cerco tutte le possibili transizioni che possono scattare dal nodo in input
+Creo l'array in cui andranno aggiunte le transizioni che potrebbero scattare dal nodo in input (transizioni_scattabili)
+/for/ ogni fsm associato al nodo prendo il nome dell'fsm (fsm_nome) e lo stato dell'fsm (fsm_stato)
+    /for/ ogni fsm presente nella rete (fsm_rete)
+        /if/ il nome di fsm_rete coincide con fsm_nome posso usare le informazioni sull'fsm per vedere
+             se ci sono delle transizioni utili /then/
+            /for/ ogni transizione (t_rete) di fsm_rete
+                /if/ fsm_stato coincide con la sorgente di t_rete potrebbe esserci una transizione che
+                     potrebbe scattare/then/
+                    /for/ ogni transizione (t) delle transizioni passate in input
+                        /if/ il nome di t coincide con il nome di t_rete è presente effettivamente qualche
+                             transizione da considerare /then/
+                            /for/ ogni link associato al nodo in input alla funzione prendo il nome del link
+                                  (nome_link) e il suo stato (stato_link)
+                                /if/ stato_link è vuoto /then/
+                                    /if/ t non chiede eventi in input /then/
+                                        /if/ t non produce eventi in output /then/
+                                            t può essere aggiunta alla lista delle transizioni che possono scattare
+                                        /else/ nel caso in cui ci si siano eventi prodotti in output devo controllare
+                                               che siano sul link che è considerato in questo momento, se è così t può
+                                               essere aggiunta alla lista delle transizioni che possono scattare perché
+                                               in questo caso stato_link è vuoto
+                                        /end if/
+                                    /else/ nel caso in cui vengano richiesti eventi in input la transizione non viene
+                                           aggiunta perché stiamo considerando un link vuoto
+                                    /end if/
+                                /else/ stato_link è pieno
+                                    /if/ t non richiede eventi input /then/
+                                        /if/ t non produce eventi in output /then/
+                                             t può essere aggiunta alla lista delle transizioni che possono scattare
+                                             perché non influisce sullo stato del link
+                                        /end if/
+                                    /else/ t richiede eventi in input /then/
+                                        devo controllare che l'evento richiesto sia richiesto sul link attuale e che
+                                        coincida con lo stato attuale del link
+                                        /if/ t non produce eventi in output /then/
+                                            t può essere aggiunta alla lista delle transizioni che possono scattare
+                                            perché non influisce sullo stato del link
+                                        /else/ controllo se l'evento che viene prodotto ha come destinazione un altro
+                                               link, nel caso in cui il link sia vuoto t può essere aggiunta alla lista
+                                               delle transizioni che possono scattare
+                                    /end if/
+
+                                /end if/
+                            /end for/
+                        /end if/
+                    /end for/
+                /end if/
+            /end for/
+        /end if/
+    /end for/
+/end for/
+Rimuovo i duplicati da transizioni_scattabili
+
+#Seconda parte: Aggiorno lo stato del nodo e dei link
+/for/ ogni transizione in transizioni_scattabili
+    Creo un array in cui salvare gli stati dei link aggiornati
+    Creo un array in cui salvare lo stato degli fsm del nodo aggiornati
+
+    Aggiorno lo stato dei link in base agli eventi in input e in output alla transizione considerata
+    Aggiorno lo stato degli fsm del nodo in base alla destinazione della transizione considerata
+
+    Creo il nuovo nodo con gli stati degli fsm e gli stati dei link aggiornati
+    Creo la nuova transizione dal nodo di partenza al nuovo nodo
+    Aggiungo la nuova transizione a transizioni_spazio
+    /if/ il nodo creato non è già presente nello spazio /then/
+        Aggiungo il nodo creato a nodi_spazio e chiamo la funzione Trova_nodi sul nuovo nodo
+    /end if/
+/end for/
+
+
+Crea_spazio_comportamentale(rete, transizioni_rete):
+Creo l'array dei nodi dello spazio (nodi_spazio)
+Creo l'array delle transizioni dello spazio (transizioni_spazio)
+Creo il primo nodo (primo_nodo) dello spazio partendo dagli stati iniziali degli automi della rete
+Aggiungo il primo nodo a nodi_spazio
+Chiamo la funzione ricorsiva Trova_nodi(primo_nodo, rete, transizioni_rete, transizioni_spazio, nodi_spazio)
+
+RIDENOMINAZIONE(spazio)
+FOR ogni nodo dello spazio
+    IF il nodo è un nodo finale o da esso è raggiungibile un nodo finale THEN
+        il nodo viene conservato
+    ELSE il nodo viene tagliato
+
+FOR ogni transizione dello spazio
+    IF la sorgente della transizione o la destinazione della transizione non si trovano nello spazio dei nodi THEN
+        la transizione viene rimossa
+    ELSE la transizione viene conservata

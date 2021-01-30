@@ -1,0 +1,214 @@
+PRODUCI_DIAGNOSI(SPAZIO_OSS):
+    Creo un array in cui salvare i nodi dello spazio mantenuti durante la diagnosi (nodi)
+    Creo un array in cui salvare i nodi finali (nodi_finali)
+    Creo un array in cui salvare le transizioni mantenute durante la diagnosi(transizioni)
+
+    Salvo in nodi tutti i nodi di spazio_oss
+    Salvo in nodi_finali tutti i nodi finali di spazio_oss
+    Salvo in transizioni le transizioni di spazio_oss
+
+    #Passo 1: Creo uno nuovo stato iniziale in caso quello attuale abbia più di una transizione in input
+    Salvo in primo_nodo il nodo iniziale dello stato
+    Definisco count = 0
+    FOR ogni transizione in transizioni
+        IF la destinazione di transizione corrisponde a primo_nodo THEN
+            Assegno count = 1
+        END IF
+    END FOR
+
+    Creo la variabile nuovo_nodo_iniziale
+
+    IF count è uguale a 1 THEN
+        Creo un nuovo nodo inziale (nuovo_nodo)
+        Creo una nuova transizione da primo_nodo a nuovo_nodo_iniziale (nuova_transizione) con etichetta di rilevabilità vuota
+        Assegno a nuovo_nodo_iniziale nuovo_nodo
+        Aggiungo a transizioni nuova_transizione
+    ELSE
+        Assegno a nuovo_nodo_iniziale primo_nodo
+        Rimuovo da nodi nuovo_nodo_iniziale
+    END IF
+
+    #Passo 2: Creo uno nuovo stato finale in caso esistano più stati finali
+    Definisco nodo_finale
+    IF nodi_finali contiene più di un nodo THEN
+        Creo un nuovo nodo finale (nuovo_finale)
+        FOR ogni nodo in nodi_finali
+            Creo una nuova transizione dal nodo in considerazione a nuovo_finale con etichetta di rilevabilità vuota
+        END FOR
+        Associo a nodo_finale nuovo_finale
+    ELSE
+        Definisco count = 0
+        FOR ogni transizione in transizioni
+            IF la sorgente di transizione corrisponde a nodo_finale THEN
+                Assegno count = 1
+            END IF
+            IF count è uguale a 1 THEN
+                Creo un nuovo nodo finale (nuovo_finale)
+                Creo una nuova transizione da nodo_finale a nuovo_finale (nuova_transizione) con etichetta di rilevabilità vuota
+                Associo a nodo_finale nuovo_finale
+                Aggiungo a transizioni nuova_transizione
+            ELSE
+                Associo a nodo_finale l'unico elemento di nodi_finali
+                Rimuovo da nodi nodo_finale
+            END IF
+
+    END FOR
+    END IF
+
+    WHILE il numero di elementi in nodi è maggiore di 0 DO
+        Rimuovo le possibili transizioni duplicate dall'array transizioni
+        Chiamo la funzione SEMPLIFICA_TRATTI_PARALLELI(transizioni)
+        Definisco la variabile nodo
+        Associo alla variabile nodo il risultato della chiamata alla funzione TROVA_NODO_NUMERO_MIN_T(nodi, transizioni)
+        Definisco l'array t_in_output
+        Definisco l'array t_in_input
+        Definisco l'array auto_t
+
+        FOR ogni transizione in transizioni
+            IF la destinazione della transizione corrisponde a nodo THEN
+                IF la sorgente della transizione corrisponde a nodo THEN
+                    Aggiungo la transizine a auto_t
+                ELSE
+                    Aggiungo la transizine a t_in_output
+                END IF
+            ELSE IF la sorgente della transizione corrisponde a nodo THEN
+                IF la destinazione della transizione corrisponde a nodo THEN
+                    Aggiungo la transizine a auto_t
+                ELSE
+                    Aggiungo la transizine a t_in_input
+                END IF
+            END IF
+        END FOR
+
+        FOR ogni transizione (t_out) in t_in_output
+            FOR ogni transizione (t_in) in t_in_input
+                Definisco un array (nuova_lista_etichetta)
+                IF auto_t è vuoto
+                    IF l'etichetta di t_out non è vuota THEN
+                        IF l'etichetta di t_in non è vuota THEN
+                             FOR ogni etichetta (o) nella lista di etichette di t_out
+                                 FOR ogni etichetta (i) nella lista di etichette di t_in
+                                    IF l'etichetta o è diverso dall'etichetta vuota THEN
+                                        Aggiungo a nuova_lista_etichetta l'etichetta definita come o + " " + i
+                                    ELSE
+                                        Aggiungo a nuova_lista_etichetta l'etichetta i
+                                    END IF
+                                 END FOR
+                             END FOR
+                             Definisco nuova_etichetta
+                             FOR ogni etichetta (l) in nuova_lista_etichetta
+                                Assegno a nuova_etichetta  nuova_etichetta +"|"+ l
+                             END FOR
+                             Evito di considerare il primo carattere di nuova_etichetta
+
+                        ELSE
+                            Definisco nuova_etichetta come etichetta di t_out
+                            IF la lista di etichette di t_out non è vuota THEN
+                               Associo a nuova_lista_etichetta la lista di etichette di t_out
+                            ELSE
+                               Aggiungo a nuova_lista_etichetta nuova_etichetta
+                            END IF
+                        END IF
+                    ELSE
+                        IF l'etichetta di t_in non è vuota THEN
+                             Definisco nuova_etichetta come etichetta di t_in
+                             IF la lista di etichette di t_in non è vuota THEN
+                                Associo a nuova_lista_etichetta la lista di etichette di t_in
+                             ELSE
+                                Aggiungo a nuova_lista_etichetta nuova_etichetta
+                             END IF
+                        ELSE
+                            Definisco nuova_etichetta vuota
+                            Aggiungo a nuova_lista_etichetta nuova_etichetta
+                        END IF
+                    END IF
+                    Creo uno nuova transizione nuova_transizione dall'sorgente di t_out alla destinazione di t_in
+                    Assegno a nuova transizione nuova_lista_etichetta
+                    Aggiungo nuova_transizione a transizioni
+                ELSE
+                    FOR ogni transizione (a_t) in auto_t
+                        IF l'etichetta di a_t non è vuota THEN
+                            IF l'etichetta di t_out non è vuota THEN
+                                IF l'etichetta di t_in non è vuota THEN
+                                    Definisco nuova_etichetta come etichetta di t_out + etichetta di t_in + "(" +
+                                    etichetta di a_t + ")*"
+                                ELSE
+                                     Definisco nuova_etichetta come etichetta di t_out + "(" + etichetta di a_t + ")*"
+                                END IF
+                            ELSE
+                                IF l'etichetta di t_in non è vuota THEN
+                                    Definisco nuova_etichetta come etichetta di t_in + "(" + etichetta di a_t + ")*"
+                                ELSE
+                                     Definisco nuova_etichetta come "(" + etichetta di a_t + ")*"
+                                END IF
+                            END IF
+                        ELSE
+                            IF l'etichetta di t_out non è vuota THEN
+                                IF l'etichetta di t_in non è vuota THEN
+                                    Definisco nuova_etichetta come etichetta di t_out + etichetta di t_in
+                                ELSE
+                                     Definisco nuova_etichetta come etichetta di t_out
+                                END IF
+                            ELSE
+                                IF l'etichetta di t_in non è vuota THEN
+                                    Definisco nuova_etichetta come etichetta di t_in
+                                ELSE
+                                     Definisco nuova_etichetta vuota
+                                END IF
+                            END IF
+                        END IF
+                        Creo uno nuova transizione nuova_transizione dall'sorgente di t_out alla destinazione di t_in
+                        Assegno a nuova transizione nuova_etichetta
+                        Aggiungo nuova_transizione a transizioni
+                    END FOR
+                    Rimuovo t_in dall'array transizioni
+                END IF
+            END FOR
+        END FOR
+
+        Rimuovo tutte le transizioni in t_in_output dall'array transizioni
+        Rimuovo tutte le transizioni in t_in_input dall'array transizioni
+        Rimuovo tutte le transizioni in auto_t dall'array transizioni
+
+    END WHILE
+
+    Rimuovo le possibili transizioni duplicate dall'array transizioni
+    Chiamo la funzione SEMPLIFICA_TRATTI_PARALLELI(transizioni)
+
+SEMPLIFICA_TRATTI_PARALLELI(TRANSIZIONI):
+    FOR ogni transizione (t1) in transizioni
+        FOR ogni transizione (t2) in transizioni
+            IF t1 non è t2 THEN
+                IF la sorgente di t1 coincide con la sorgente di t2 THEN
+                    IF la destinazione di t1 coincide con la destinazione di t2 THEN
+                        Creo un nuovo array (nuova_lista_etichette)
+                        FOR ogni etichetta (l1) presente nella lista di etichette di t1
+                            IF l1 non è presente in nuova_lista_etichette THEN
+                                Aggiungo l1 a nuova_lista_etichette
+                            END IF
+                        END FOR
+                        FOR ogni etichetta (l2) presente nella lista di etichette di t2
+                            IF l2 non è presente in nuova_lista_etichette THEN
+                                Aggiungo l2 a nuova_lista_etichette
+                            END IF
+                        END FOR
+                        Definisco nuova_etichetta
+                        FOR ogni etichetta (e) presente in nuova_lista_etichette
+                            Assegno a nuova_etichetta nuova_etichetta+"|"+e
+                        END FOR
+                        Evito di considerare il primo carattere di nuova_etichetta
+                        Creo una nuova transizione (nuova_transizione) con etichetta nuova_etichetta,
+                            con sorgente la sorgente di t1 e destinazione la destinazione di t1
+                        Associo alla lista di etichette di nuova_transizione nuova_lista_etichette
+                        Aggiungo a transizione nuova_transizione
+                        IF t2 è presente in transizioni THEN
+                            Rimuovo t2 da transizioni
+                        END IF
+                        IF t1 è presente in transizioni THEN
+                            Rimuovo t1 da transizioni
+                        END IF
+                    END IF
+                END IF
+            END IF
+        END FOR
+    END FOR

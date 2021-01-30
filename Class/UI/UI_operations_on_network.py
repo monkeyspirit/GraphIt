@@ -8,7 +8,7 @@ import Class.Spaces.create_observable_space
 import Class.Spaces.create_observable_space_Renominated
 import Class.Spaces.execute_diagnosi_observation
 from Class.Base import space, graphic
-
+import timeit
 
 def calculate_behavioral_space(pass_window, filename, transitions, n):
     filename_be = filename + '_BS'
@@ -193,7 +193,7 @@ def show_obs_space(obs, filename_obs, original_filename,):
 
 def calculate_obs_space_renominated(pass_window, filename, obs_full_space, obs):
     filename_re_obs = filename + '_ROS'
-    obs_space_r = Class.Spaces.create_observable_space_Renominated.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, obs, filename)
+    obs_space_r = Class.Spaces.create_observable_space_Renominated.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, filename)
     global old_re_obs_space
     old_re_obs_space = copy.deepcopy(obs_space_r)
     pass_window['diag'].update(disabled=False)
@@ -258,7 +258,7 @@ def show_renomination_file_obs(obs, filename_re_obs,  original_filename):
 
 
 def calculate_diagnosi_space(pass_window, filename, obs_space_r, obs):
-    n_img, exp = Class.Spaces.execute_diagnosi_observation.create_diagnosis_for_space_observable_renominated(filename, obs_space_r, obs)
+    n_img, exp = Class.Spaces.execute_diagnosi_observation.create_diagnosis_for_space_observable_renominated(filename, obs_space_r)
     return n_img, exp
 
 
@@ -292,9 +292,9 @@ def calculate_all(pass_window, full_space, filename, obs):
     filename_obs = filename + '_OS'
     obs_full_space = Class.Spaces.create_observable_space.create_behavioral_space_from_obs(filename_obs, obs, full_space_r, filename)
     filename_re_obs = filename + '_ROS'
-    obs_space_r = Class.Spaces.create_observable_space_Renominated.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, obs, filename)
+    obs_space_r = Class.Spaces.create_observable_space_Renominated.create_behavioral_space_observable_renominated(filename_re_obs, obs_full_space, filename)
     filename_dia = filename + '_DS'
-    n_img, exp = Class.Spaces.execute_diagnosi_observation.create_diagnosis_for_space_observable_renominated(filename, obs_space_r, obs)
+    n_img, exp = Class.Spaces.execute_diagnosi_observation.create_diagnosis_for_space_observable_renominated(filename, obs_space_r)
     # pass_window['save_diagnosi_space'].update(disabled=False)
     return n_img, exp
 

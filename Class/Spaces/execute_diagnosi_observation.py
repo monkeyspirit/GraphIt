@@ -6,7 +6,7 @@ from Class.Base.space import DiagnosiTransition
 from Class.Utils.utils import remove_duplicated_transition, getNode_with_minimum_edges, remove_transition
 
 
-def create_diagnosis_for_space_observable_renominated(filename, space, obs):
+def create_diagnosis_for_space_observable_renominated(filename, space):
     transitions = copy.deepcopy(space.transitions_after_cutting)
     e_transition_list = []
 

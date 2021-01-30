@@ -88,26 +88,26 @@ def draw_network_graphic(network, filename):
     summary.close()
 
 
-def draw_network_graphic_from_load_network(n1, names, filename):
+def draw_network_graphic_from_load_network(network, names, filename):
     f = Digraph('network', filename='network_' + names, format='png')
 
-    for fsm in n1.fsms:
+    for fsm in network.fsms:
         f.node(fsm.name, shape='box')
 
-    for link in n1.links:
+    for link in network.links:
         f.edge(link.source, link.destination, link.name)
 
     f.render(directory="Output/"+filename+"/Network_graph")
 
     summary = open("Output/"+filename+"/Network_graph/network_summary.txt", "w")
-    summary.write("Numero di automi:" + str(len(n1.fsms)) + "\n")
+    summary.write("Numero di automi:" + str(len(network.fsms)) + "\n")
     i = 1
-    for fsm in n1.fsms:
+    for fsm in network.fsms:
         summary.write(str(i) + ") " + str(fsm.name) + "\n")
         i = i + 1
-    summary.write("Numero di transizioni:" + str(len(n1.links)) + "\n")
+    summary.write("Numero di transizioni:" + str(len(network.links)) + "\n")
     i = 1
-    for l in n1.links:
+    for l in network.links:
         summary.write(str(i) + ") " + str(l.source) + " -> " + str(l.name) + " -> " + str(l.destination) + "\n")
         i = i + 1
     summary.close()

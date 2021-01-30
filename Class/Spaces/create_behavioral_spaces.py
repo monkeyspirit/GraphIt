@@ -2,7 +2,7 @@ import copy
 
 from graphviz import Digraph
 
-from Class.Base.fsm import Edge
+from Class.Base.FSM import Edge
 from Class.Base.space import Node, Space
 
 # ------------ INTRO FUNCTION ------------
@@ -14,7 +14,7 @@ from Class.Utils.utils import find_node_by_id, \
     find_node_id_by_label, remove_duplicate
 
 
-def create_behavioral_space(filename, n1, transitions, original_filename):
+def create_behavioral_space(filename, network, transitions, original_filename):
     Node.count = -1
     # f is the graphviz component to plot the graph
     f = Digraph(filename, format='png')
@@ -27,14 +27,14 @@ def create_behavioral_space(filename, n1, transitions, original_filename):
     # Create the list of fsms: name + state's value
     fsms_states = ""
     fsms_states_list = {}
-    for fsm in n1.fsms:
+    for fsm in network.fsms:
         fsms_states = fsms_states + " " + fsm.states[0]
         fsms_states_list[fsm.name] = fsm.states[0]
 
     # Create the list of links: name + state's value
     links_states = ""
     links_states_list = {}
-    for link in n1.links:
+    for link in network.links:
         links_states = links_states + " " + link.state
         links_states_list[link.name] = link.state
 
@@ -65,7 +65,7 @@ def create_behavioral_space(filename, n1, transitions, original_filename):
     space_nodes.append(node)
 
     # ------------ RECURSION ------------
-    find_nodes(node, f, n1, transitions, space_nodes, space_transitions)
+    find_nodes(node, f, network, transitions, space_nodes, space_transitions)
 
     # "render" is the function to plot the graph, "directory" is the directory of the save
     f.render(directory="Output/"+original_filename+"/Behavioral_Space")
@@ -116,7 +116,7 @@ def create_behavioral_space(filename, n1, transitions, original_filename):
 # - transitions: the list of transitions in the network
 # - space_nodes: the nodes in the space at the time of the search
 # - space_transitions: the transitions in the space at the time of the search
-def find_nodes(node, f, n1, transitions, space_nodes, space_transitions):
+def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
     # ----------- FIRST PART -----------
     # Find the possible transitions that can click with the space's nodes' and links' states
 
@@ -129,7 +129,7 @@ def find_nodes(node, f, n1, transitions, space_nodes, space_transitions):
     # - fsm_state: is the value of the state of the fsm
     for fsm_name, fsm_state in node.fsms_states.items():
         # For each fsm in the network
-        for fsm in n1.fsms:
+        for fsm in network.fsms:
             # If the name is the same use the information of fsm to find if there is an edge that corrisponds to a transition
             if fsm.name == fsm_name:
                 # Watch in the edge list
@@ -281,7 +281,7 @@ def find_nodes(node, f, n1, transitions, space_nodes, space_transitions):
         # - state_fsm: state value of the fsm
         for name_fsm, state_fsm in node_fsms.items():
             # For the fsms in the network
-            for fsm in n1.fsms:
+            for fsm in network.fsms:
                 # For the edge in the fsm in the network
                 for edge in fsm.edges:
                     # If the names are equal AND the label of the edge is the label of the transition AND the source of the edge is the actual fsm (not the network one) state
@@ -379,7 +379,7 @@ def find_nodes(node, f, n1, transitions, space_nodes, space_transitions):
             f.edge(node.label, new_node_label, clickable_t.label)
 
             # Call the recursive function
-            find_nodes(new_node, f, n1, transitions, space_nodes, space_transitions)
+            find_nodes(new_node, f, network, transitions, space_nodes, space_transitions)
 
 # ---------------------------------------------------------------------------------------------
 # ------------ INTRO FUNCTION ------------
