@@ -1,0 +1,14 @@
+digraph rete2_OS_state {
+	" 0 0  ϵ, 0" [shape=circle]
+	" 0 1  op, 1" [shape=circle]
+	" 0 1  ϵ, 1" [shape=circle]
+	" 0 0  cl, 2" [shape=circle]
+	" 0 0  ϵ, 3" [shape=doublecircle]
+	" 0 0  cl, 3" [shape=circle]
+	" 0 0  ϵ, 0" -> " 0 1  op, 1" [label=<s1 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">act</FONT>>]
+	" 0 1  op, 1" -> " 0 1  ϵ, 1" [label=<b3 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">ϵ</FONT>>]
+	" 0 1  ϵ, 1" -> " 0 0  cl, 2" [label=<s2 <FONT COLOR="grey">2</FONT> <FONT COLOR="blue">sby</FONT>>]
+	" 0 0  cl, 2" -> " 0 0  ϵ, 3" [label=<b5 <FONT COLOR="grey">3</FONT> <FONT COLOR="blue">nop</FONT>>]
+	" 0 0  ϵ, 3" -> " 0 0  cl, 3" [label=<s3 <FONT COLOR="grey">3</FONT> <FONT COLOR="blue">ϵ</FONT>>]
+	" 0 1  ϵ, 1" -> " 0 1  op, 1" [label=<s4 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">ϵ</FONT>>]
+}

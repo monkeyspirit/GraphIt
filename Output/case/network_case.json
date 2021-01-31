@@ -1,0 +1,127 @@
+{
+    "fsms": [
+        {
+            "name": "L",
+            "states": [
+                "n",
+                "s"
+            ],
+            "final_states": [
+                ""
+            ],
+            "edges": [
+                {
+                    "source": "n",
+                    "label": "l1",
+                    "destination": "s",
+                    "transition_link": []
+                },
+                {
+                    "source": "s",
+                    "label": "l2",
+                    "destination": "n",
+                    "transition_link": []
+                }
+            ]
+        },
+        {
+            "name": "P",
+            "states": [
+                "fg",
+                "fs",
+                "sv",
+                "sp",
+                "gv",
+                "gp",
+                "fmv",
+                "fmp"
+            ],
+            "final_states": [
+                "fmv",
+                "fmp"
+            ],
+            "edges": [
+                {
+                    "source": "fg",
+                    "label": "p1",
+                    "destination": "sv",
+                    "transition_link": []
+                },
+                {
+                    "source": "fg",
+                    "label": "p2",
+                    "destination": "sp",
+                    "transition_link": []
+                },
+                {
+                    "source": "sv",
+                    "label": "p4",
+                    "destination": "fmv",
+                    "transition_link": []
+                },
+                {
+                    "source": "sp",
+                    "label": "p6",
+                    "destination": "fmp",
+                    "transition_link": []
+                },
+                {
+                    "source": "sv",
+                    "label": "p3",
+                    "destination": "fs",
+                    "transition_link": []
+                },
+                {
+                    "source": "sp",
+                    "label": "p5",
+                    "destination": "fs",
+                    "transition_link": []
+                },
+                {
+                    "source": "fs",
+                    "label": "p7",
+                    "destination": "gp",
+                    "transition_link": []
+                },
+                {
+                    "source": "fs",
+                    "label": "p8",
+                    "destination": "gv",
+                    "transition_link": []
+                },
+                {
+                    "source": "gp",
+                    "label": "p10",
+                    "destination": "fmp",
+                    "transition_link": []
+                },
+                {
+                    "source": "gp",
+                    "label": "p12",
+                    "destination": "fg",
+                    "transition_link": []
+                },
+                {
+                    "source": "gv",
+                    "label": "p9",
+                    "destination": "fmv",
+                    "transition_link": []
+                },
+                {
+                    "source": "gv",
+                    "label": "p11",
+                    "destination": "fg",
+                    "transition_link": []
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "source": "L",
+            "name": "L1",
+            "destination": "P",
+            "state": "\u03f5"
+        }
+    ]
+}

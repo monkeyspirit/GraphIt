@@ -1,0 +1,15 @@
+digraph 6 {
+	"6 2" [shape=circle]
+	"1 2" [shape=circle]
+	"0 2" [shape=circle]
+	"qf -" [shape=doublecircle]
+	"0 0" [shape=circle]
+	"5 2" [shape=circle]
+	"1 2" -> "0 2" [label=rem]
+	"6 2" -> "qf -" [label="ϵ"]
+	"0 2" -> "qf -" [label="ϵ"]
+	"0 0" -> "qf -" [label="ϵ|errv"]
+	"0 0" -> "6 2" [label=errp]
+	"0 0" -> "1 2" [label="ϵ"]
+	"0 0" -> "qf -" [label="ϵ"]
+}

@@ -1,0 +1,31 @@
+Numero di nodi:13
+1) id:0, stato: 20 30  ϵ ϵ
+2) id:1, stato: 20 31  e2 ϵ
+3) id:2, stato: 21 31  ϵ e3
+4) id:3, stato: 21 30  ϵ ϵ
+5) id:4, stato: 20 30  ϵ e3
+6) id:5, stato: 20 31  e2 e3
+7) id:6, stato: 20 30  e2 ϵ
+8) id:7, stato: 21 30  ϵ e3
+9) id:8, stato: 21 31  e2 e3
+10) id:9, stato: 21 31  e2 ϵ
+11) id:10, stato: 21 31  ϵ ϵ
+12) id:11, stato: 20 31  ϵ e3
+13) id:12, stato: 20 31  ϵ ϵ
+Numero di transizioni:16
+1) 0 -> t3a-> 1
+2) 1 -> t2a-> 2
+3) 2 -> t3b-> 3
+4) 3 -> t2b-> 4
+5) 4 -> t3a-> 5
+6) 5 -> t3b-> 6
+7) 6 -> t2a-> 7
+8) 7 -> t3a-> 8
+9) 8 -> t3c-> 9
+10) 9 -> t2b-> 5
+11) 5 -> t3c-> 1
+12) 3 -> t3a-> 9
+13) 2 -> t3c-> 10
+14) 10 -> t2b-> 11
+15) 11 -> t3b-> 0
+16) 11 -> t3c-> 12

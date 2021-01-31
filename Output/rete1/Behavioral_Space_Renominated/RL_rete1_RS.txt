@@ -1,0 +1,51 @@
+-------------------------------------------
+Nodi e transizioni mantenuti
+-------------------------------------------
+Stato del nodo   |      id (rinominato)    |     vecchio id  
+ 20 30  ϵ ϵ 	0 	0
+ 20 31  e2 ϵ 	1 	1
+ 21 31  ϵ e3 	2 	2
+ 21 30  ϵ ϵ 	3 	3
+ 20 30  ϵ e3 	4 	4
+ 20 31  e2 e3 	5 	5
+ 20 30  e2 ϵ 	6 	6
+ 21 30  ϵ e3 	7 	7
+ 21 31  e2 e3 	8 	8
+ 21 31  e2 ϵ 	9 	11
+ 21 31  ϵ ϵ 	10 	12
+ 20 31  ϵ e3 	11 	13
+ 20 31  ϵ ϵ 	12 	14
+* gli id delle transizioni sono quelli della ridenominazione *
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | et. ril.
+0	   t3a	      1	         o3         ϵ
+1	   t2a	      2	         o2         ϵ
+2	   t3b	      3	         ϵ         ϵ
+3	   t2b	      4	         ϵ         r
+4	   t3a	      5	         o3         ϵ
+5	   t3b	      6	         ϵ         ϵ
+6	   t2a	      7	         o2         ϵ
+7	   t3a	      8	         o3         ϵ
+8	   t3c	      9	         ϵ         f
+9	   t2b	      5	         ϵ         r
+5	   t3c	      1	         ϵ         f
+3	   t3a	      9	         o3         ϵ
+2	   t3c	      10	         ϵ         f
+10	   t2b	      11	         ϵ         r
+11	   t3b	      0	         ϵ         ϵ
+11	   t3c	      12	         ϵ         f
+
+----------------------------
+Nodi e transizioni tagliate
+----------------------------
+Stato del nodo      |     id (vecchio)  
+ 21 30  e2 ϵ 	9
+ 20 30  e2 e3 	10
+* gli id delle transizioni NON sono quelli della ridenominazione
+ sono quelli dello spazio originale *
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | et. ril.
+8	   t3b	      9	         ϵ         ϵ
+9	   t2b	      10	         ϵ         r

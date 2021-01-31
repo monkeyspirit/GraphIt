@@ -1,0 +1,8 @@
+digraph finite_state_machine {
+	0 [shape=circle]
+	1 [shape=circle]
+	0 -> 1 [label=s1]
+	1 -> 0 [label=s2]
+	0 -> 0 [label=s3]
+	1 -> 1 [label=s4]
+}

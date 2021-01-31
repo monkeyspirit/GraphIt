@@ -1,0 +1,7 @@
+Numero di stati:2
+1) 30
+2) 31
+Numero di transizioni:3
+1) 30 -> t3a -> 31
+2) 31 -> t3b -> 30
+3) 31 -> t3c -> 31
