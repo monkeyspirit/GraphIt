@@ -74,15 +74,15 @@ def create_behavioral_space_renominated(filename, space, loaded, original_filena
     for transition_after in space.transitions_after_cutting:
 
         # In this part the code is only for the printing on the graph of the observability and relevance label
-        if transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+        if transition_after.transition_link.observability_label == "-" and transition_after.transition_link.relevance_label == "-":
             f.edge(str(transition_after.source), str(transition_after.destination), label=str(transition_after.label))
 
-        elif transition_after.transition_link.observability_label != "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+        elif transition_after.transition_link.observability_label != "-" and transition_after.transition_link.relevance_label == "-":
             f.edge(str(transition_after.source), str(transition_after.destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="green">' + str(
                 transition_after.transition_link.observability_label) + '</FONT>>')
 
-        elif transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label != "ϵ":
+        elif transition_after.transition_link.observability_label == "-" and transition_after.transition_link.relevance_label != "-":
             f.edge(str(transition_after.source), str(transition_after.destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="red">' + str(
                 transition_after.transition_link.relevance_label) + '</FONT>>')
@@ -123,15 +123,15 @@ def create_behavioral_space_renominated(filename, space, loaded, original_filena
         source = find_node_by_id(transition_after.source, space.nodes_after_cutting).old_id
         destination = find_node_by_id(transition_after.destination, space.nodes_after_cutting).old_id
         # In this part the code is only for the printing on the graph of the observability and relevance label
-        if transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+        if transition_after.transition_link.observability_label == "-" and transition_after.transition_link.relevance_label == "-":
             g.edge(str(source), str(destination), label=str(transition_after.label))
 
-        elif transition_after.transition_link.observability_label != "ϵ" and transition_after.transition_link.relevance_label == "ϵ":
+        elif transition_after.transition_link.observability_label != "-" and transition_after.transition_link.relevance_label == "-":
             g.edge(str(source), str(destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="green">' + str(
                 transition_after.transition_link.observability_label) + '</FONT>>')
 
-        elif transition_after.transition_link.observability_label == "ϵ" and transition_after.transition_link.relevance_label != "ϵ":
+        elif transition_after.transition_link.observability_label == "-" and transition_after.transition_link.relevance_label != "-":
             g.edge(str(source), str(destination), label='<' + str(
                 transition_after.label) + " " + '<FONT COLOR="red">' + str(
                 transition_after.transition_link.relevance_label) + '</FONT>>')

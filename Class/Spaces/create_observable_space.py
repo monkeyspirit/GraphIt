@@ -128,7 +128,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
                         node.direct_reachable.append(reached)
                         find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i + 1)
 
-                elif edge.transition_link.observability_label == "ϵ":
+                elif edge.transition_link.observability_label == "-":
                     # if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                     next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
                                                edge.destination, observation_index)
@@ -153,7 +153,7 @@ def find_obs_nodes(node, obs_space_nodes, obs_space_transitions, obs, space, i):
                         find_obs_nodes(next_node, obs_space_nodes, obs_space_transitions, obs, space, i)
 
             else:
-                if edge.transition_link.observability_label == "ϵ":
+                if edge.transition_link.observability_label == "-":
                     if find_node_by_id(edge.destination, space.nodes_after_cutting) is not None:
                         next_node = ObservableNode(find_node_by_id(edge.destination, space.nodes_after_cutting),
                                                    edge.destination, observation_index)

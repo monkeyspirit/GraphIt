@@ -34,8 +34,8 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
 
     if c == 1:
         new_first_node = ("q0", "-")
-        e_t0 = DiagnosiTransition("ϵ", new_first_node, first_node)
-        e_t0.list_label = ["ϵ"]
+        e_t0 = DiagnosiTransition("-", new_first_node, first_node)
+        e_t0.list_label = ["-"]
         e_transition_list.append(e_t0)
     else:
         new_first_node = first_node
@@ -48,8 +48,8 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
     if len(final_nodes) > 1:
         final_node = ("qf", "-")
         for f in final_nodes:
-            e_t1 = DiagnosiTransition("ϵ", f, final_node)
-            e_t1.list_label = ["ϵ"]
+            e_t1 = DiagnosiTransition("-", f, final_node)
+            e_t1.list_label = ["-"]
             e_transition_list.append(e_t1)
     else:
         # Step 2.2
@@ -61,8 +61,8 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
 
         if c == 1:
             final_node = ("qf", "-")
-            e_t2 = DiagnosiTransition("ϵ", final_nodes[0], final_node)
-            e_t2.list_label = ["ϵ"]
+            e_t2 = DiagnosiTransition("-", final_nodes[0], final_node)
+            e_t2.list_label = ["-"]
             e_transition_list.append(e_t2)
 
         else:
@@ -132,12 +132,12 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
             for t_in in t_in_input:
                 new_list = []
                 if not auto_t:
-                    if t_out.label != "ϵ":
-                        if t_in.label != "ϵ":
+                    if t_out.label != "-":
+                        if t_in.label != "-":
                             # label = t_out.label + "" + t_in.label
                             for o in t_out.list_label:
                                 for i in t_in.list_label:
-                                    if o != "ϵ":
+                                    if o != "-":
                                         new_list.append(str(o)+""+str(i))
                                     else:
                                         new_list.append(i)
@@ -152,9 +152,9 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
                             else:
                                 new_list.append(label)
                     else:
-                        if t_in.label == "ϵ":
-                            label = "ϵ"
-                            new_list.append("ϵ")
+                        if t_in.label == "-":
+                            label = "-"
+                            new_list.append("-")
                         else:
                             label = t_in.label
                             if t_in.list_label != []:
@@ -168,26 +168,26 @@ def create_diagnosis_for_space_observable_renominated(filename, space):
                 else:
                     for a_t in auto_t:
 
-                        if a_t.label != "ϵ":
-                            if t_out.label != "ϵ":
-                                if t_in.label != "ϵ":
+                        if a_t.label != "-":
+                            if t_out.label != "-":
+                                if t_in.label != "-":
                                     label = t_out.label + t_in.label + "(" + a_t.label + ")*"
                                 else:
                                     label = t_out.label + "(" + a_t.label + ")*"
                             else:
-                                if t_in.label == "ϵ":
+                                if t_in.label == "-":
                                     label = "(" + a_t.label + ")*"
                                 else:
                                     label = t_in.label + "(" + a_t.label + ")*"
                         else:
-                            if t_out.label != "ϵ":
-                                if t_in.label != "ϵ":
+                            if t_out.label != "-":
+                                if t_in.label != "-":
                                     label = t_out.label + t_in.label
                                 else:
                                     label = t_out.label
                             else:
-                                if t_in.label == "ϵ":
-                                    label = "ϵ"
+                                if t_in.label == "-":
+                                    label = "-"
                                 else:
                                     label = t_in.label
 

@@ -46,7 +46,7 @@ def create_behavioral_space(filename, network, transitions, original_filename):
     c = 0
     for k_link, v_link in links_states_list.items():
         i = i + 1
-        if v_link == "ϵ":
+        if v_link == "-":
             c = c + 1
 
     # Create the node for the space
@@ -146,7 +146,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                                 # link_state: is the value of the state of the link
                                 for link_name, link_state in node.links_states.items():
                                     # For each link we check if the link is empty
-                                    if link_state == "ϵ":
+                                    if link_state == "-":
                                         # IF EMPTY
                                         # Check the input events
                                         if t.input == {}:
@@ -174,13 +174,13 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                                             for target_link_name, input_event_value in t.input.items():
                                                 # Check the link name
                                                 if target_link_name == link_name:
-                                                    if input_event_value == "ϵ":
+                                                    if input_event_value == "-":
                                                         # Only if the value of the event is empty the transition can click because the link is EMPTY
                                                         # The transition can click, add to the list
                                                         apply_t.append(t)
                                     else:
                                         # FULL
-                                        # this is the case where the link state is different from ϵ
+                                        # this is the case where the link state is different from -
                                         if t.input == {}:
                                             # NO INPUT EVENTS
                                             # Check the output events
@@ -196,7 +196,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                                                 for target_link_name, output_event_value in t.output.items():
                                                     # Check the link name
                                                     if target_link_name == link_name:
-                                                        if output_event_value == "ϵ":
+                                                        if output_event_value == "-":
                                                             # Only if the value of the event is empty the transition can click because the link is FULL
                                                             # The transition can click, add to the list
                                                             apply_t.append(t)
@@ -225,7 +225,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                                                                 # Check the link name
                                                                 if output_target_link_name == link_name:
                                                                     # If the name of the link is the same of the output link
-                                                                    if output_event_value == "ϵ":
+                                                                    if output_event_value == "-":
                                                                         # The transition can click, add to the list
                                                                         apply_t.append(t)
                                                                 else:
@@ -233,7 +233,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                                                                     for name_link_inner, state_link_inner in node.links_states.items():
                                                                         # If the name of another link is the same of the output link
                                                                         if output_target_link_name == name_link_inner:
-                                                                            if state_link_inner == "ϵ":
+                                                                            if state_link_inner == "-":
                                                                                 # The transition can click, add to the list
                                                                                 apply_t.append(t)
 
@@ -265,7 +265,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
                 # Check the name of the link
                 if input_link == link_name:
                     # Set the link empty in input, because if it is already empty it remains empty and if it is full becomes empty afer the clic
-                    new_links[input_link] = "ϵ"
+                    new_links[input_link] = "-"
             # - clickable_t.output: list of the output events of clickable_t
             # - output_link: name of the link that the event requires to
             # - output_event: value of the event
@@ -342,7 +342,7 @@ def find_nodes(node, f, network, transitions, space_nodes, space_transitions):
             c = 0
             for k_link, v_link in new_links.items():
                 i = i + 1
-                if v_link == "ϵ":
+                if v_link == "-":
                     c = c + 1
 
             # Create the node for the space
