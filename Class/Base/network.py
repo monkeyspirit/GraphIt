@@ -64,11 +64,13 @@ def read_link_from_txt():
         for i in split_line:
             el.append(i)
 
-
+        if len(el)>4:
+            raise IndexError
         # you can access the line
         link = Link(el[0], el[1], el[2], el[3])
         links.append(link)
 
     # close file
     f.close()
+
     return links
