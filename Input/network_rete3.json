@@ -90,19 +90,19 @@
             "source": "C2",
             "name": "L1",
             "destination": "C1",
-            "state": "\u03f5"
+            "state": "-"
         },
         {
             "source": "C2",
             "name": "L2",
             "destination": "C3",
-            "state": "\u03f5"
+            "state": "-"
         },
         {
             "source": "C3",
             "name": "L3",
             "destination": "C1",
-            "state": "\u03f5"
+            "state": "-"
         }
     ]
 }
