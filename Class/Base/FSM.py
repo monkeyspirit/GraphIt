@@ -47,6 +47,7 @@ def read_fsm_from_json():
 def read_fsm_from_txt():
     # get file object
     filename = filedialog.askopenfilename()
+
     f = open(filename, "r")
     c = 0
     name = ""

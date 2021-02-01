@@ -104,6 +104,9 @@ def read_space_from_json():
 def read_transitions_from_txt():
     # get file object
     filename = filedialog.askopenfilename()
+    f = open(filename, "a")
+    f.write("\n")
+    f.close()
     f = open(filename, "r")
 
     transitions = []
@@ -116,7 +119,7 @@ def read_transitions_from_txt():
         obs_label = ""
         rel_label = ""
         line = f.readline()
-        if not line:
+        if not line or line == "\n":
             break
         # print(line)
         line = line[:-1]

@@ -19,14 +19,13 @@ class Network:
         self.links = links
 
 
-
 class NetworkEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__
 
 
 def save_network_as_json(network, dir_filename):
-    with open("Output/"+dir_filename+"/network_" + dir_filename + ".json", "w") as write_file:
+    with open("Output/" + dir_filename + "/network_" + dir_filename + ".json", "w") as write_file:
         json.dump(network, write_file, indent=4, cls=NetworkEncoder)
 
 
@@ -41,22 +40,26 @@ def read_network_from_json():
         n = json.loads(data_str, object_hook=lambda d: SimpleNamespace(**d))
         return n
 
+
 def read_link_from_txt():
     # get file object
     filename = filedialog.askopenfilename()
+    f = open(filename, "a")
+    f.write("\n")
+    f.close()
     f = open(filename, "r")
     c = 0
 
     links = []
 
     # read next line
-    while(True):
+    while (True):
         source = ""
         name = ""
         destination = ""
         state = ""
         line = f.readline()
-        if not line:
+        if not line or line == "\n":
             break
         line = line[:-1]
         split_line = line.split(",")
@@ -64,7 +67,7 @@ def read_link_from_txt():
         for i in split_line:
             el.append(i)
 
-        if len(el)>4:
+        if len(el) > 4:
             raise IndexError
         # you can access the line
         link = Link(el[0], el[1], el[2], el[3])
