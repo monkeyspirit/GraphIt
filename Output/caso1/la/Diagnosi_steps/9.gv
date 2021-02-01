@@ -1,4 +1,0 @@
-digraph 9 {
-	"0 2" [shape=circle]
-	"0 0" -> "qf -" [label="ϵ|errv|errp|rem"]
-}

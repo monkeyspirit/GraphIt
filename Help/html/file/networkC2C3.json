@@ -60,13 +60,13 @@
             "source": "C3",
             "name": "L2",
             "destination": "C2",
-            "state": "\u03f5"
+            "state": "-"
         },
         {
             "source": "C2",
             "name": "L3",
             "destination": "C3",
-            "state": "\u03f5"
+            "state": "-"
         }
     ]
 }

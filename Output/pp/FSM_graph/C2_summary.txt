@@ -1,6 +1,0 @@
-Numero di stati:2
-1) 20
-2) 21
-Numero di transizioni:2
-1) 20 -> t2a -> 21
-2) 21 -> t2b -> 20

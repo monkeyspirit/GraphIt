@@ -1,8 +1,0 @@
-digraph network {
-	C1 [shape=box]
-	C2 [shape=box]
-	C3 [shape=box]
-	C2 -> C1 [label=L1]
-	C2 -> C3 [label=L2]
-	C3 -> C1 [label=L3]
-}

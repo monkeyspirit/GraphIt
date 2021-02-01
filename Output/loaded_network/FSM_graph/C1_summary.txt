@@ -1,7 +1,0 @@
-Numero di stati:2
-1) 10
-2) 11
-Numero di transizioni:3
-1) 10 -> t1a -> 11
-2) 11 -> t1b -> 10
-3) 10 -> t1c -> 11

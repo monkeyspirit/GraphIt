@@ -1,6 +1,0 @@
-digraph finite_state_machine {
-	n [shape=circle]
-	s [shape=circle]
-	n -> s [label=l1]
-	s -> n [label=l2]
-}

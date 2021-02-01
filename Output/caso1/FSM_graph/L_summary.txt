@@ -1,6 +1,0 @@
-Numero di stati:2
-1) n
-2) s
-Numero di transizioni:2
-1) n -> l1 -> s
-2) s -> l2 -> n
