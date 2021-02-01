@@ -1,0 +1,3 @@
+Numero di nodi:1
+1) 0, 0
+Numero di transizioni:0

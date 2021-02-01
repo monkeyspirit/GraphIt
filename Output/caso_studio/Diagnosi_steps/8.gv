@@ -1,0 +1,9 @@
+digraph 8 {
+	"0 2" [shape=circle]
+	"qf -" [shape=doublecircle]
+	"0 0" [shape=circle]
+	"1 2" [shape=circle]
+	"0 2" -> "qf -" [label="-"]
+	"0 0" -> "qf -" [label="-|errp|errv"]
+	"0 0" -> "0 2" [label=rem]
+}
