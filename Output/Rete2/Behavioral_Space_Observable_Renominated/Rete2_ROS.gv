@@ -1,0 +1,13 @@
+digraph Rete2_ROS {
+	"0, 0" [shape=circle]
+	"1, 1" [shape=circle]
+	"6, 1" [shape=circle]
+	"7, 2" [shape=circle]
+	"0, 3" [shape=doublecircle]
+	"7, 3" [shape=circle]
+	"0, 0" -> "1, 1" [label=<s1 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">act</FONT> <FONT COLOR="red">-</FONT>>]
+	"1, 1" -> "6, 1" [label=<b3 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">-</FONT> <FONT COLOR="red">f3</FONT>>]
+	"6, 1" -> "7, 2" [label=<s2 <FONT COLOR="grey">2</FONT> <FONT COLOR="blue">sby</FONT> <FONT COLOR="red">-</FONT>>]
+	"7, 2" -> "0, 3" [label=<b5 <FONT COLOR="grey">3</FONT> <FONT COLOR="blue">nop</FONT> <FONT COLOR="red">-</FONT>>]
+	"6, 1" -> "1, 1" [label=<s4 <FONT COLOR="grey">1</FONT> <FONT COLOR="blue">-</FONT> <FONT COLOR="red">f2</FONT>>]
+}

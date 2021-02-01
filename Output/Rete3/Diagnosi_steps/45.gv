@@ -1,0 +1,11 @@
+digraph 45 {
+	"10 2" [shape=circle]
+	"6 2" [shape=circle]
+	"7 2" [shape=circle]
+	"qf -" [shape=doublecircle]
+	"0 0" [shape=circle]
+	"9 2" [shape=circle]
+	"10 2" -> "qf -" [label="-"]
+	"0 0" -> "qf -" [label="-|f1f1f3|f1|f1f3f1|f3f1f1|f1f1f1|f3"]
+	"0 0" -> "10 2" [label="f3|f1|f1f1f3|f1f3f1|f3f1f1|f1f1f1"]
+}

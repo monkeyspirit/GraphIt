@@ -1,0 +1,5 @@
+Numero di automi:2
+1) S
+2) B
+Numero di transizioni:1
+1) S -> L -> B

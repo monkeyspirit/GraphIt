@@ -1,0 +1,4 @@
+digraph 8 {
+	"12 2" [shape=circle]
+	"0 0" -> "qf -" [label="-|f|fr|frf"]
+}

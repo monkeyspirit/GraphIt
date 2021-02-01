@@ -1,0 +1,34 @@
+-------------------------------------------
+Nodi e transizioni mantenuti
+-------------------------------------------
+id | indice di osservazione 
+0 	0
+1 	1
+2 	2
+3 	2
+4 	2
+5 	2
+6 	2
+1 	2
+0 	2
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | indice oss. | et. ril.
+0	   l1	      1 	         ins 	              1 	        -
+1	   p1	      2 	         la 	              2 	        -
+2	   p4	      3 	         - 	              2 	        errv
+2	   p3	      4 	         - 	              2 	        -
+4	   p7	      5 	         - 	              2 	        -
+5	   p10	      6 	         - 	              2 	        errp
+5	   p12	      1 	         - 	              2 	        -
+1	   l2	      0 	         - 	              2 	        rem
+
+----------------------------
+Nodi e transizioni tagliate
+----------------------------
+id | indice di osservazione 
+0 	1
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | indice oss. | et. ril.
+1	   l2	      0 	         - 	              1 	        rem

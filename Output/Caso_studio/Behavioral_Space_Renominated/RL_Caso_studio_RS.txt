@@ -1,0 +1,42 @@
+-------------------------------------------
+Nodi e transizioni mantenuti
+-------------------------------------------
+Stato del nodo   |      id (rinominato)    |     vecchio id  
+ n fg  - 	0 	0
+ s fg  e5 	1 	1
+ s sv  - 	2 	2
+ s fmv  - 	3 	3
+ s fs  e1 	4 	4
+ s gp  - 	5 	5
+ s fmp  - 	6 	6
+ s sp  - 	7 	7
+ s fs  e2 	8 	8
+ s gv  - 	9 	9
+* gli id delle transizioni sono quelli della ridenominazione *
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | et. ril.
+0	   l1	      1	         ins	       -
+1	   l2	      0	         -         rem
+1	   p1	      2	         la         -
+2	   p4	      3	         -         errv
+2	   p3	      4	         -         -
+4	   p7	      5	         -         -
+5	   p10	      6	         -         errp
+5	   p12	      1	         -         -
+1	   p2	      7	         re         -
+7	   p6	      6	         -         errp
+7	   p5	      8	         -         -
+8	   p8	      9	         -         -
+9	   p9	      3	         -         errv
+9	   p11	      1	         -         -
+
+----------------------------
+Nodi e transizioni tagliate
+----------------------------
+Stato del nodo      |     id (vecchio)  
+* gli id delle transizioni NON sono quelli della ridenominazione
+ sono quelli dello spazio originale *
+
+--- Transizioni ---
+ id sorgente | etichetta | id destinazione | et. oss. | et. ril.

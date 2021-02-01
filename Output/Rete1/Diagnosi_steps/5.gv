@@ -1,0 +1,15 @@
+digraph 5 {
+	"11 2" [shape=circle]
+	"0 2" [shape=circle]
+	"12 2" [shape=circle]
+	"qf -" [shape=doublecircle]
+	"0 0" [shape=circle]
+	"10 2" [shape=circle]
+	"11 2" -> "0 2" [label="-"]
+	"11 2" -> "12 2" [label=f]
+	"0 2" -> "qf -" [label="-"]
+	"12 2" -> "qf -" [label="-"]
+	"0 0" -> "qf -" [label="-"]
+	"0 0" -> "11 2" [label=fr]
+	"0 0" -> "qf -" [label=f]
+}
