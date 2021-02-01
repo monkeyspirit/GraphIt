@@ -1,5 +1,0 @@
-digraph network {
-	L [shape=box]
-	P [shape=box]
-	L -> P [label=L1]
-}

@@ -1,4 +1,0 @@
-P
-fg,fs,sv,sp,gv,gp,fmv,fmp
-fmv,fmp
-fg,sv,p1/fg,sp,p2/sv,fmv,p4/sp,fmp,p6/sv,fs,p3/sp,fs,p5/fs,gp,p7/fs,gv,p8/gp,fmp,p10/gp,fg,p12/gv,fmv,p9/gv,fg,p11
