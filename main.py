@@ -612,7 +612,7 @@ if __name__ == '__main__':
 
 
     def help():
-        webbrowser.open("Help\html\index_home.html")
+        webbrowser.open("Help/html/index_home.html")
 
 
     def load_comportamentalspace_window():
